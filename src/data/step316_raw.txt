@@ -1,0 +1,39 @@
+Created At: 2026-06-11T05:39:22Z
+Completed At: 2026-06-11T05:39:22Z
+File Path: `file:///c:/Users/thanh/OneDrive/Desktop/e-magazine/src/app.js`
+Total Lines: 676
+Total Bytes: 26324
+Showing lines 450 to 480
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+450:               <li class="detail-info-item">
+451:                 <span class="info-label">Thứ tự</span>
+452:                 <span class="info-value">${idx + 1} / 9 nghị quyết</span>
+453:               </li>
+454:             </ul>
+455:           </div>
+456: 
+457:           <div class="sidebar-card">
+458:             <div class="sidebar-card-title">Từ khóa trọng tâm</div>
+459:             <div style="display:flex;flex-direction:column;gap:8px;">
+460:               ${res.keywords.map(k => `
+461:                 <div style="padding:8px 14px;background:${res.colorLight};
+462:                             border:1px solid ${res.color}44;border-radius:var(--radius-full);
+463:                             font-size:0.8rem;font-weight:600;
+464:                             color:rgba(240,235,224,0.92);text-align:center;">${k}</div>
+465:               `).join('')}
+466:             </div>
+467:           </div>
+468: 
+469:           ${res.status === 'updating' ? `
+470:           <div class="sidebar-card">
+471:             <div class="sidebar-card-title">Trạng thái</div>
+472:             <div class="updating-notice" style="padding:var(--space-md);">
+473:               <div class="updating-notice-icon">🔄</div>
+474:               <div class="updating-notice-title">Đang cập nhật</div>
+475:               <div class="updating-notice-desc">
+476:                 Nội dung chi tiết đang bổ sung từ nguồn chính thống.<br>
+477:                 Thêm ảnh vào <code>public/images/nq${res.id}/</code>
+478:               </div>
+479:             </div>
+480:           </div>` : ''}
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.
