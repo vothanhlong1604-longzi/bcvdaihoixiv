@@ -1371,7 +1371,7 @@ button:focus-visible,
   position: relative;
   overflow: hidden;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1.25rem;
   transition: transform var(--dur-normal) var(--ease-spring),
               box-shadow var(--dur-normal) ease !important;
@@ -2090,7 +2090,7 @@ body.is-transitioning .resolution-node:not(.vt-active-node):not(.flip-morph-sour
   transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-spring);
   display: flex;
   gap: 1.25rem;
-  align-items: flex-start;
+  align-items: center;
 }
 .glass-action-card:hover {
   transform: translateY(-4px);
@@ -2581,7 +2581,7 @@ body {
   box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 }
 
 /* Custom Scrollbar for apple-ai-content */
@@ -2605,7 +2605,7 @@ body {
   color: #fff;
   line-height: 1.6;
   margin: 0;
-  text-align: justify;
+  text-align: center;
   white-space: pre-wrap;
   width: 100%;
   background: linear-gradient(to right, #ffffff, #f0f0f0);

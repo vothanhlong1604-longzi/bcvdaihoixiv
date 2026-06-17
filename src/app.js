@@ -1,6 +1,6 @@
-/**
- * app.js — E-Magazine SPA: Đại hội XIV – 9 Nghị quyết chiến lược
- * Khoa LLCT&KHXHNV · Trường Đại học Cảnh sát nhân dân
+﻿/**
+ * app.js â€” E-Magazine SPA: Đại hội XIV – 9 Nghị quyết chiến lược
+ * Khoa LLCT&KHXHNV - Trường Đại học Cảnh sát nhân dân
  *
  * Kiến trúc: Vanilla JS SPA với hash-based routing
  * Animation: CSS transitions + Intersection Observer
@@ -8,19 +8,19 @@
 
 'use strict';
 
-// ── GLOBAL APP ──────────────────────────────────────────────────────────────
+// â”€â”€ GLOBAL APP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const APP = (() => {
   let currentResolutionId = null;
   let scrollListeners = [];
 
-  // ── Init ──
+  // â”€â”€ Init â”€â”€
   function init() {
     setupGlobalScrollProgress();
     renderHomePage();
     setupParticles();
     handleRoute();
     window.addEventListener('hashchange', handleRoute);
-    // Use IntersectionObserver for performance — fallback to scroll listener
+    // Use IntersectionObserver for performance â€” fallback to scroll listener
     if ('IntersectionObserver' in window) {
       setupIntersectionObserver();
     } else {
@@ -30,7 +30,7 @@ const APP = (() => {
     initAutoCounters();
   }
 
-  // ── Intersection Observer (preferred over scroll listener) ──
+  // â”€â”€ Intersection Observer (preferred over scroll listener) â”€â”€
   let _revealObserver = null;
   function setupIntersectionObserver() {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -63,7 +63,7 @@ const APP = (() => {
     }
   }
 
-  // ── Auto Counter Logic ──
+  // â”€â”€ Auto Counter Logic â”€â”€
   let _counterObserver = null;
   function initAutoCounters() {
     if (!_counterObserver && 'IntersectionObserver' in window) {
@@ -103,7 +103,7 @@ const APP = (() => {
     }
     requestAnimationFrame(update);
   }
-  // ── Global Motion Context Tracker ──
+  // â”€â”€ Global Motion Context Tracker â”€â”€
   window._lastClickContext = { type: 'unknown', element: null };
   document.addEventListener('click', (e) => {
     const dockBtn = e.target.closest('.mac-dock-btn');
@@ -121,7 +121,7 @@ const APP = (() => {
     window._lastClickContext = { type: 'unknown', element: null };
   }, true);
 
-  // ── Routing ──
+  // â”€â”€ Routing â”€â”€
   window.isTransitioning = false;
   function handleRoute() {
     const hash = window.location.hash;
@@ -143,7 +143,7 @@ const APP = (() => {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // ── Global Scroll Progress ──
+  // â”€â”€ Global Scroll Progress â”€â”€
   function setupGlobalScrollProgress() {
     const bar = document.getElementById('scroll-progress');
     if (!bar) return;
@@ -159,7 +159,7 @@ const APP = (() => {
     return h > 0 ? (top / h) * 100 : 0;
   }
 
-  // ── Reveal on Scroll (fallback) ──
+  // â”€â”€ Reveal on Scroll (fallback) â”€â”€
   function onScrollReveal() {
     document.querySelectorAll('.reveal-on-scroll:not(.revealed)').forEach(el => {
       const rect = el.getBoundingClientRect();
@@ -169,7 +169,7 @@ const APP = (() => {
     });
   }
 
-  // ── Keyboard Navigation & Presenter Mode ──
+  // â”€â”€ Keyboard Navigation & Presenter Mode â”€â”€
   let isPresenterMode = false;
   let currentSectionIndex = -1;
 
@@ -232,7 +232,7 @@ const APP = (() => {
     });
   }
 
-  // ── Particles ──
+  // â”€â”€ Particles â”€â”€
   function setupParticles() {
     const container = document.getElementById('hero-particles');
     if (!container) return;
@@ -260,7 +260,7 @@ const APP = (() => {
     }
   }
 
-  // ── Render Home ──
+  // â”€â”€ Render Home â”€â”€
     function renderHomePage() {
     renderHomeDynamicContent();
     renderMindMapDesktop();
@@ -314,16 +314,36 @@ const APP = (() => {
       <!-- NEW HERO SECTION -->
       <header class="hero-section" id="hero-section">
         <div class="hero-bg">
-          <div class="hero-flag-bg" style="background-image:url("./images/resolutions/80/1.jpg"); opacity: 0.15;"></div>
-          <div class="hero-overlay"></div>
+          <div class="hero-flag-bg"></div>
+            <!-- Dynamic Light Rays -->
+            <div class="hero-light-ray ray-left"></div>
+            <div class="hero-light-ray ray-right"></div>
+            
+            <!-- Top Corner Logos -->
+            <div class="hero-logo-left">
+              <svg viewBox="0 0 100 100" class="flag-icon">
+                <rect width="100" height="100" fill="#DA251D" rx="10"/>
+                <g transform="translate(50, 50) scale(0.7) translate(-50, -57.5)"><polygon points="50,15 61,48 95,48 68,68 78,100 50,80 22,100 32,68 5,48 39,48" fill="#FFFF00"/></g>
+              </svg>
+            </div>
+            <div class="hero-logo-right">
+              <svg viewBox="0 0 100 100" class="flag-icon party-flag">
+                <rect width="100" height="100" fill="#DA251D" rx="10"/>
+                <!-- Hammer and Sickle SVG path -->
+                <text x="50" y="50" font-size="65" fill="#FFFF00" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif">&#9773;</text>
+              </svg>
+            </div>
+          <div class="hero-overlay">
+          <div id="particles-js" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></div>
+          <div class="bg-glow"></div></div>
         </div>
         
         <div class="hero-grid single-column section-container">
           <div class="hero-center">
             <div class="special-badge reveal-on-scroll">${data.badge}</div>
             <h1 class="hero-title reveal-on-scroll reveal-delay-1">
-              ${data.title.replace('XIV CỦA ĐẢNG', '<br>XIV CỦA ĐẢNG')}
-            </h1>
+                ${data.title}
+              </h1>
             <h2 class="hero-subtitle reveal-on-scroll reveal-delay-2">${data.subtitle}</h2>
             <div class="hero-desc reveal-on-scroll reveal-delay-3">${data.description}</div>
             
@@ -418,7 +438,7 @@ const APP = (() => {
         </div>
         <div class="center-content-wrapper" style="position: relative; z-index: 2;">
           <div class="center-text" style="color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.4);">ĐẠI HỘI XIV</div>
-          <div class="center-sub" style="color: rgba(255,255,255,0.9); text-shadow: 0 1px 5px rgba(0,0,0,0.4);">Kỷ nguyên vươn mình</div>
+          <div class="center-sub" style="color: rgba(255,255,255,0.9); text-shadow: 0 1px 5px rgba(0,0,0,0.4);">Kỷ nguyên văn minh</div>
         </div>
       </div>
     `;
@@ -455,14 +475,14 @@ const APP = (() => {
     `).join('');
   }
 
-  // ── Mind Map Mobile ──
+  // â”€â”€ Mind Map Mobile â”€â”€
   function renderMindMapMobile() {
     const el = document.getElementById('mindmap-mobile');
     if (!el) return;
     el.innerHTML = generateMobileMindMapHTML();
   }
 
-  // ── Show / Hide Pages ──
+  // â”€â”€ Show / Hide Pages â”€â”€
   function transitionPage(pageOut, pageIn, isForward, updateDOMCallback, morphNode) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -682,7 +702,7 @@ const APP = (() => {
     }, 250);
   }
 
-  // ── Build Detail Page HTML ──
+  // â”€â”€ Build Detail Page HTML â”€â”€
   
   // Particles for NQ57
   function initParticles(hexColor) {
@@ -881,7 +901,7 @@ const APP = (() => {
         <div class="content-section reveal-on-scroll">
           <div class="glass-context-box" style="--card-color: ${res.color};">
             <h2 class="glass-context-title">
-              <span class="section-icon">🌍</span>Bối cảnh ra đời
+              <span class="section-icon">📖</span>Bối cảnh ra đời
             </h2>
             <div class="glass-context-text">
               ${res.context}
@@ -896,7 +916,7 @@ const APP = (() => {
       coreIdeasHTML = `
         <div class="content-section reveal-on-scroll">
           <h2 class="content-section-title">
-            <span class="section-icon">💎</span>Tinh thần cốt lõi
+            <span class="section-icon">💡</span>Tinh thần cốt lõi
           </h2>
           <div class="glass-summary-grid balanced-grid" data-count="${res.coreIdeas.length}">
             ${res.coreIdeas.map((idea, i) => `
@@ -916,12 +936,12 @@ const APP = (() => {
       generalGoalsHTML = `
         <div class="content-section reveal-on-scroll">
           <h2 class="content-section-title">
-            <span class="section-icon">🌟</span>Mục tiêu tổng quát
+            <span class="section-icon">🎯</span>Mục tiêu tổng quát
           </h2>
           <div class="glass-pillar-grid balanced-grid" data-count="${res.generalGoals.length}">
             ${res.generalGoals.map((b, i) => `
               <div class="glass-pillar-card reveal-on-scroll" style="--card-color: ${res.color}; transition-delay: ${i*80}ms;">
-                <div class="glass-pillar-icon" style="color: ${res.color};">${b.icon || '🎯'}</div>
+                <div class="glass-pillar-icon" style="color: ${res.color};">${b.icon || 'ðŸŽ¯'}</div>
                 <h3 class="glass-pillar-title">${b.title}</h3>
                 <p class="glass-pillar-desc">${b.desc}</p>
               </div>
@@ -1000,7 +1020,7 @@ const APP = (() => {
       goalsHTML = `
         <div class="content-section reveal-on-scroll">
           <h2 class="content-section-title">
-            <span class="section-icon">🎯</span>Mục tiêu đến năm 2030
+            <span class="section-icon">⏳</span>Mục tiêu đến năm 2030
           </h2>
           ${innerHTML}
         </div>
@@ -1036,7 +1056,7 @@ const APP = (() => {
       tasksHTML = `
         <div class="content-section reveal-on-scroll">
           <h2 class="content-section-title">
-            <span class="section-icon">🚀</span>Nhiệm vụ và giải pháp chủ yếu
+            <span class="section-icon">⚙️</span>Nhiệm vụ và giải pháp chủ yếu
           </h2>
           <div class="glass-timeline">
             ${tasksData.map((t, i) => {
@@ -1073,7 +1093,7 @@ const APP = (() => {
       newPointsHTML = `
         <div class="content-section reveal-on-scroll" style="margin-top: 3rem;">
           <h2 class="content-section-title" style="color: #FFB300;">
-            <span class="section-icon">✨</span>Điểm mới đột phá
+            <span class="section-icon">✨</span>Điểm mới đột pháÃ¡
           </h2>
           <div class="glass-summary-grid balanced-grid" data-count="${res.newPoints.length}">
             ${res.newPoints.map((point, i) => `
@@ -1092,12 +1112,12 @@ const APP = (() => {
       practicalHTML = `
         <div class="content-section reveal-on-scroll" style="margin-top: 3rem; background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
           <h2 class="content-section-title" style="color: #4CAF50;">
-            <span class="section-icon">🛡️</span>Hành động của Lực lượng CSND
+            <span class="section-icon">👮</span>Hành động của Lực lượng CSND
           </h2>
           <div class="glass-pillar-grid balanced-grid" data-count="${res.practicalApplication.length}">
             ${res.practicalApplication.map((action, i) => `
               <div class="glass-action-card reveal-on-scroll" style="transition-delay: ${i*80}ms;">
-                <div class="glass-action-icon">✔️</div>
+                <div class="glass-action-icon">âœ”ï¸</div>
                 <div class="glass-action-text">${action}</div>
               </div>
             `).join('')}
@@ -1114,7 +1134,7 @@ const APP = (() => {
           <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--gold-color); opacity: 0.1; filter: blur(50px); border-radius: 50%;"></div>
           
           <h2 class="content-section-title" style="color: var(--gold-color); margin-bottom: 0.5rem; text-shadow: 0 2px 10px rgba(255, 215, 0, 0.2); font-size: 1.8rem;">
-            <span class="section-icon" style="background: rgba(255, 255, 255, 0.8); padding: 4px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; width: 50px; height: 50px; margin-right: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);"><img src="https://upload.wikimedia.org/wikipedia/vi/c/c5/Logo_dai_hoc_CSND.png" alt="Logo CSND" style="width: 100%; height: 100%; object-fit: contain;"></span>Dấu ấn Trường Đại học CSND
+            <span class="section-icon" style="background: rgba(255, 255, 255, 0.8); padding: 4px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; width: 50px; height: 50px; margin-right: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);"><img src="https://upload.wikimedia.org/wikipedia/vi/c/c5/Logo_dai_hoc_CSNDấu ấn Trường Đại học CSND
           </h2>
           <p style="color: rgba(255,255,255,0.85); font-size: 1.1rem; margin-bottom: 2rem; padding-left: 60px; font-style: italic;">Từ nghị quyết của Đảng đến đào tạo, nghiên cứu và xây dựng người cán bộ Cảnh sát nhân dân</p>
           
@@ -1137,7 +1157,7 @@ const APP = (() => {
 
           <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px dashed rgba(255,255,255,0.2);">
             <p style="font-size: 1.15rem; font-weight: 500; color: #fff; line-height: 1.8; max-width: 900px; margin: 0 auto;">
-              "Nếu các đơn vị chiến đấu trực tiếp cụ thể hóa nghị quyết bằng chiến công, mô hình và kết quả trên địa bàn, thì <span style="color: var(--gold-color);">Trường Đại học CSND</span> cụ thể hóa nghị quyết bằng việc đào tạo nên những cán bộ Cảnh sát nhân dân có <span style="color: #4CAF50;">bản lĩnh chính trị vững vàng, pháp luật vững chắc, nghiệp vụ tinh thông, công nghệ thành thạo và văn hóa ứng xử nhân văn, vì Nhân dân phục vụ.</span>"
+              "Náº¿u cÃ¡c Ä‘Æ¡n vá»‹ chiáº¿n Ä‘áº¥u trá»±c tiáº¿p cá»¥ thá»ƒ hÃ³a nghá»‹ quyáº¿t báº±ng chiáº¿n cÃ´ng, mÃ´ hÃ¬nh vÃ  káº¿t quáº£ trÃªn Ä‘á»‹a bÃ n, thÃ¬ <span style="color: var(--gold-color);">TrÆ°á»ng Äáº¡i há»c CSND</span> cá»¥ thá»ƒ hÃ³a nghá»‹ quyáº¿t báº±ng viá»‡c Ä‘Ã o táº¡o nÃªn nhá»¯ng cÃ¡n bá»™ Cáº£nh sÃ¡t nhÃ¢n dÃ¢n cÃ³ <span style="color: #4CAF50;">báº£n lÄ©nh chÃ­nh trá»‹ vá»¯ng vÃ ng, phÃ¡p luáº­t vá»¯ng cháº¯c, nghiá»‡p vá»¥ tinh thÃ´ng, cÃ´ng nghá»‡ thÃ nh tháº¡o vÃ  vÄƒn hÃ³a á»©ng xá»­ nhÃ¢n vÄƒn, vÃ¬ NhÃ¢n dÃ¢n phá»¥c vá»¥.</span>"
             </p>
           </div>
         </div>
@@ -1149,7 +1169,7 @@ const APP = (() => {
       quotesHTML = `
         <div class="content-section reveal-on-scroll">
           <h2 class="content-section-title">
-            <span class="section-icon">💬</span>Phát biểu nổi bật
+            <span class="section-icon">🎙️</span>Phát biểu nổi bật
           </h2>
           <div>
             ${res.quoteBlocks.map((q, i) => `
@@ -1169,7 +1189,7 @@ const APP = (() => {
         ${res.id === "59" ? '<canvas id="globe-particles"></canvas><canvas id="particles-bg-59" class="particles-canvas"></canvas>' : ''}
         
         <!-- iOS Style Floating Close Button -->
-        <button class="ios-close-btn interactive-surface tooltip-target" aria-label="Đóng" onclick="APP.navigateTo('#/')">
+        <button class="ios-close-btn interactive-surface tooltip-target" aria-label="ÄÃ³ng" onclick="APP.navigateTo('#/')">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -1200,7 +1220,7 @@ const APP = (() => {
               <span class="meta-value">${res.theme}</span>
             </div>
             <div class="meta-item">
-              <span class="meta-label">Thứ tự</span>
+              <span class="meta-label">Thá»© tá»±</span>
               <span class="meta-value">${idx + 1} / 9 nghị quyết</span>
             </div>
           </div>
@@ -1238,10 +1258,10 @@ const APP = (() => {
         <footer class="main-footer">
           <div class="footer-content">
             <div class="footer-brand">
-              <span class="footer-star">⭐</span>
+              <span class="footer-star">â­</span>
               <div>
                 <div class="footer-title">E-magazine kết hợp với phong cách infographic số hóa</div>
-                <div class="footer-subtitle">Khoa LLCT&amp;KHXHNV – Trường ĐH Cảnh sát nhân dân</div>
+                <div class="footer-subtitle">Khoa LLCT&amp;KHXHNV - Trường Đại học Cảnh sát nhân dân</div>
               </div>
             </div>
             <div class="footer-divider"></div>
@@ -1303,14 +1323,14 @@ const APP = (() => {
 function updatingNotice(label) {
     return `
       <div class="updating-notice">
-        <div class="updating-notice-icon">🔄</div>
-        <div class="updating-notice-title">Đang cập nhật: ${label}</div>
+        <div class="updating-notice-icon">ðŸ”„</div>
+Đang cập nhật: ${label}</div>
         <div class="updating-notice-desc">Nội dung đang được bổ sung từ nguồn tài liệu chính thống.
           Chỉnh sửa trong <code>src/data/resolutions.js</code>.</div>
       </div>`;
   }
 
-  // ── Inline Image Builder ──
+  // â”€â”€ Inline Image Builder â”€â”€
   function buildInlineImage(res, afterSection) {
     if (!res.inlineImages || res.inlineImages.length === 0) return '';
     const imgs = res.inlineImages.filter(i => i.after === afterSection);
@@ -1329,7 +1349,7 @@ function updatingNotice(label) {
                  onerror="this.closest('figure').style.display='none'"
                  onclick="APP.openLightbox('${encodeURIComponent(JSON.stringify(allImgs))}', ${galleryIdx >= 0 ? galleryIdx : 0})"
                  style="cursor:zoom-in; ${res.id === '80' ? 'object-fit: contain; max-height: none; height: auto;' : ''}">
-            <div class="inline-figure-zoom">🔍 Nhấn để phóng to</div>
+            <div class="inline-figure-zoom">ðŸ” Nhấn để phóng to</div>
           </div>
           <figcaption class="inline-figure-caption">${img.caption}</figcaption>
         </figure>
@@ -1337,14 +1357,14 @@ function updatingNotice(label) {
     }).join('');
   }
 
-  // ── Gallery Strip Builder ──
+  // â”€â”€ Gallery Strip Builder â”€â”€
   function buildGalleryStrip(res) {
     if (!res.gallery || res.gallery.length === 0) return '';
     const allImgsJson = encodeURIComponent(JSON.stringify(res.gallery));
     return `
       <div class="content-section reveal-on-scroll">
         <h2 class="content-section-title">
-          <span class="section-icon">🖼️</span>Thư viện ảnh minh họa
+          <span class="section-icon">📸</span>Thư viện ảnh minh họa
         </h2>
         <div class="gallery-strip">
           ${res.gallery.map((g, i) => `
@@ -1358,7 +1378,7 @@ function updatingNotice(label) {
       </div>`;
   }
 
-  // ── Lightbox ──
+  // â”€â”€ Lightbox â”€â”€
   let _lightboxImages = [];
   let _lightboxIdx = 0;
 
@@ -1448,9 +1468,10 @@ function updatingNotice(label) {
   };
 })();
 
-// ── Init ──
+// â”€â”€ Init â”€â”€
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', APP.init);
 } else {
   APP.init();
 }
+

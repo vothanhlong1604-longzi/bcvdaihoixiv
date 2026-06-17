@@ -36,7 +36,7 @@ const AICopilot = (() => {
   const scripts = {
     "57": "Thưa đồng chí, Nghị quyết 57 xác định chuyển đổi số là đột phá. Quán triệt tinh thần này, Trường Đại học Cảnh sát nhân dân đặt nhiệm vụ trọng tâm là xây dựng Đại học thông minh, tiên phong ứng dụng Trí tuệ nhân tạo (AI) vào huấn luyện nghiệp vụ.",
     "59": "Thưa đồng chí, Nghị quyết 59 nhấn mạnh ngoại giao chủ động. Trường Đại học Cảnh sát nhân dân không ngừng mở rộng hợp tác quốc tế, giao lưu học hỏi kinh nghiệm phòng chống tội phạm xuyên quốc gia, thiết lập vành đai an ninh từ xa.",
-    "66": "Thưa đồng chí, đối với Nghị quyết 66 về Nhà nước pháp quyền, Trường Đại học Cảnh sát nhân dân mang sứ mệnh rèn luyện những sĩ quan Cảnh sát thượng tôn pháp luật, kiên quyết chống tội phạm nhưng luôn bảo vệ tuyệt đối quyền con người.",
+    "66": "Thưa đồng chí, đối với Nghị quyết 66 về Nhà nước pháp quyền, Trường Đại học Cảnh sát nhân dân mang sứ mệnh rèn luyện những sĩ quan Cảnh sát tinh thông pháp luật, kiên quyết chống tội phạm nhưng luôn bảo vệ tuyệt đối quyền con người.",
     "68": "Thưa đồng chí, Nghị quyết 68 khẳng định kinh tế tư nhân là mũi nhọn. Nhiệm vụ cốt lõi của Trường Đại học Cảnh sát nhân dân là đào tạo cán bộ Cảnh sát Kinh tế nhạy bén, tinh thông để bảo vệ môi trường kinh doanh minh bạch.",
     "70": "Thưa đồng chí, Nghị quyết 70 hướng tới Net Zero. Từ góc độ đào tạo, Trường Đại học Cảnh sát nhân dân chú trọng bồi dưỡng kiến thức phòng chống tội phạm môi trường, bảo vệ an ninh tại các công trình năng lượng trọng điểm.",
     "71": "Thưa đồng chí, bám sát Nghị quyết 71 về thực học thực tài, Trường Đại học Cảnh sát nhân dân quyết liệt đổi mới phương pháp giảng dạy, triệt tiêu bệnh thành tích, nhằm đào tạo ra những sĩ quan tinh nhuệ nhất.",
@@ -46,34 +46,63 @@ const AICopilot = (() => {
     "generic": "Thưa đồng chí, Trường Đại học Cảnh sát nhân dân luôn sẵn sàng. Xin đồng chí vui lòng chọn một chủ đề cụ thể để tôi báo cáo."
   };
 
-  
-  let selectedVoice = null;
 
-  function getFixedVietnameseVoice() {
-    if (selectedVoice && selectedVoice.lang.toLowerCase().includes('vi')) {
-        return selectedVoice;
-    }
-    
-    let voices = synth.getVoices();
-    if (voices.length === 0) return null;
-    
-    // Ưu tiên 1: Cố gắng tìm đích danh giọng Hoài My hoặc các giọng tiếng Việt Online tốt nhất
-    let bestVoice = voices.find(v => v.name.includes('HoaiMy') || (v.name.includes('Natural') && v.name.includes('Vietnamese')) || (v.name.includes('Online') && v.name.includes('Vietnamese')));
-    
-    // Ưu tiên 2: Giọng tiếng Việt của Google / Microsoft An
-    if (!bestVoice) bestVoice = voices.find(v => (v.lang.toLowerCase().includes('vi') || v.name.toLowerCase().includes('vietnam')) && (v.name.includes('Google') || v.name.includes('An')));
-    
-    // Ưu tiên 3: Bất kỳ giọng nào có thẻ tiếng Việt
-    if (!bestVoice) bestVoice = voices.find(v => v.lang.toLowerCase().includes('vi') || v.name.toLowerCase().includes('vietnam'));
-    
-    if (bestVoice) {
-        selectedVoice = bestVoice;
-        console.log("Đã khóa giọng TTS:", selectedVoice.name);
-        return selectedVoice;
-    }
-    
-    console.warn("Chưa tìm thấy giọng tiếng Việt. Trình duyệt sẽ tự chọn dựa trên lang='vi-VN'");
-    return null;
+const STUDIO_VIDEO_MAP = {
+    "lời chào": "./data/video/studio_greeting.mp4",
+    "bản đồ tri thức": "./data/video/studio_mindmap.mp4",
+    "đại học csnd": "./data/video/studio_csnd.mp4",
+    "nghị quyết 71": "./data/video/studio_nq71.mp4",
+    "đoạn trích nghị quyết": "./data/video/studio_qa1.mp4",
+    "5 nội dung cơ bản": "./data/video/studio_qa2.mp4"
+};
+const STUDIO_VOICE_MAP = {
+    "lời chào": "./data/audio/studio_greeting.mp3",
+    "bản đồ tri thức": "./data/audio/studio_mindmap.mp3",
+    "đại học csnd": "./data/audio/studio_csnd.mp3",
+    "nghị quyết 71": "./data/audio/studio_nq71.mp3",
+    "đoạn trích nghị quyết": "./data/audio/studio_qa1.mp3",
+    "5 nội dung cơ bản": "./data/audio/studio_qa2.mp3"
+};
+
+function playVideoAvatar(intentKey, text, onComplete) {
+      const videoUrl = STUDIO_VIDEO_MAP[intentKey];
+      if (!videoUrl) return false;
+      
+      const videoEl = document.getElementById('ai-avatar-video');
+      const imgEl = document.getElementById('ai-avatar-img');
+      if (!videoEl || !imgEl) return false;
+      
+      videoEl.src = videoUrl;
+      videoEl.style.display = 'block';
+      imgEl.style.display = 'none';
+      videoEl.onended = () => {
+          videoEl.style.display = 'none';
+          imgEl.style.display = 'block';
+          if (onComplete) onComplete();
+      };
+      
+      const audioUrl = STUDIO_VOICE_MAP[intentKey];
+      if (audioUrl) {
+          let audio = window.__ttsAudioPlayer || new Audio();
+          audio.src = audioUrl;
+          currentAudio = audio;
+          audio.onloadedmetadata = () => {
+              const duration = audio.duration * 1000 || 5000;
+              const msPerChar = Math.max(10, Math.floor(duration / text.length));
+              typeWriterEffect(text, 'apple-ai-text', msPerChar);
+          };
+          const p1 = videoEl.play().catch(e => { console.error(e); videoEl.style.display='none'; imgEl.style.display='block'; });
+          const p2 = audio.play().catch(e => {
+              console.error("Studio audio blocked", e);
+              typeWriterEffect(text, 'apple-ai-text', 12);
+              speakDynamicText(text);
+          });
+      } else {
+          videoEl.play().catch(e => { console.error(e); videoEl.style.display='none'; imgEl.style.display='block'; });
+          typeWriterEffect(text, 'apple-ai-text', 12);
+          speakDynamicText(text);
+      }
+      return true;
   }
 
   const RESOLUTION_MAP = {
@@ -151,6 +180,69 @@ const AICopilot = (() => {
     }
   };
 
+  function playVideoAvatar(intentKey, text, onComplete) {
+      const videoUrl = STUDIO_VIDEO_MAP[intentKey];
+      if (!videoUrl) return false;
+      
+      const videoEl = document.getElementById('ai-avatar-video');
+      const imgEl = document.getElementById('ai-avatar-img');
+      if (!videoEl || !imgEl) return false;
+      
+      videoEl.src = videoUrl;
+      videoEl.style.display = 'block';
+      imgEl.style.display = 'none';
+      videoEl.onended = () => {
+          videoEl.style.display = 'none';
+          imgEl.style.display = 'block';
+          if (onComplete) onComplete();
+      };
+      
+      const audioUrl = STUDIO_VOICE_MAP[intentKey];
+      if (audioUrl) {
+          let audio = window.__ttsAudioPlayer || new Audio();
+          audio.src = audioUrl;
+          currentAudio = audio;
+          audio.onloadedmetadata = () => {
+              const duration = audio.duration * 1000 || 5000;
+              const msPerChar = Math.max(10, Math.floor(duration / text.length));
+              typeWriterEffect(text, 'apple-ai-text', msPerChar);
+          };
+          videoEl.play().catch(e => { console.error(e); videoEl.style.display='none'; imgEl.style.display='block'; });
+          audio.play().catch(e => {
+              console.error("Studio audio blocked", e);
+              typeWriterEffect(text, 'apple-ai-text', 12);
+              speakDynamicText(text);
+          });
+      } else {
+          videoEl.play().catch(e => { console.error(e); videoEl.style.display='none'; imgEl.style.display='block'; });
+          typeWriterEffect(text, 'apple-ai-text', 12);
+          speakDynamicText(text);
+      }
+      return true;
+  }
+
+  function playStudioVoice(intentKey, text, onComplete) {
+      const audioUrl = STUDIO_VOICE_MAP[intentKey];
+      if (!audioUrl) return false;
+      
+      let audio = window.__ttsAudioPlayer || new Audio();
+      audio.src = audioUrl;
+      currentAudio = audio;
+      audio.onended = () => { if (onComplete) onComplete(); };
+      audio.onloadedmetadata = () => {
+          const duration = audio.duration * 1000 || 5000;
+          const msPerChar = Math.max(10, Math.floor(duration / text.length));
+          typeWriterEffect(text, 'apple-ai-text', msPerChar);
+      };
+      audio.play().catch(e => {
+          console.error("Studio audio blocked or missing", e);
+          typeWriterEffect(text, 'apple-ai-text', 12);
+          speakDynamicText(text);
+      });
+      return true;
+  }
+
+
   const INTENT_TYPES = {
     "QUOTE_DOCUMENT": "Trích dẫn văn kiện, nghị quyết",
     "SUMMARY": "Khái quát nội dung chính",
@@ -175,12 +267,32 @@ function initUI() {
     overlay.style.display = 'none'; // BULLETPROOF FIX: hidden by default
     overlay.style.pointerEvents = 'none'; // BULLETPROOF FIX: never capture clicks
     overlay.innerHTML = `
-      <button id="apple-ai-close" style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: white; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10000; pointer-events: auto; backdrop-filter: blur(10px); font-size: 1.2rem; transition: all 0.3s;">✕</button>
+      <button id="apple-ai-close" style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: white; width: 44px; height: 44px; border-radius: 50%; display: flex; flex-direction: column; cursor: pointer; z-index: 10000; pointer-events: auto; backdrop-filter: blur(10px); font-size: 1.2rem; transition: all 0.3s;">✕</button>
       <div class="apple-edge-glow" style="pointer-events: none;"></div>
-      <div class="apple-ai-content" style="pointer-events: auto;">
-        <p id="apple-ai-text"></p>
-        <input type="text" id="apple-ai-input" placeholder="Hỏi AI (Hoặc nói vào Micro)..." autocomplete="off" style="width: 100%; max-width: 600px; padding: 12px 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.5); color: #fff; font-size: 1.1rem; margin-top: 15px; outline: none; display: none; align-self: center;">
-        <div class="apple-ai-hint" style="align-self: center; margin-top: 10px;"><strong>Trợ lý XIV</strong></div>
+      <div class="apple-ai-content anchor-mode" style="pointer-events: auto; display: flex; flex-direction: column; height: 100%; justify-content: center;">
+        
+        <!-- TOP SECTION: AVATAR & MINDMAP -->
+        <div class="ai-top-section" style="flex: 5.5; position: relative; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 20px; transition: all 0.5s ease;">
+           
+           <div id="ai-avatar-container" style="position: relative; transition: all 0.5s ease; z-index: 2;">
+               <div id="ai-audio-visualizer" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 140px; height: 140px; border-radius: 50%; border: 3px solid rgba(0, 242, 254, 0.4); box-shadow: 0 0 20px rgba(0, 242, 254, 0.5); opacity: 0; pointer-events: none; transition: opacity 0.3s;"></div>
+               <video id="ai-avatar-video" playsinline muted style="display:none;"></video>
+               <img id="ai-avatar-img" src="./images/csnd_avatar.png" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #00f2fe; box-shadow: 0 0 30px rgba(0, 242, 254, 0.5); position: relative; z-index: 3;" />
+           </div>
+           
+           <!-- Mindmap Container -->
+           <div id="apple-ai-mindmap" style="position: absolute; width: 100%; max-width: 600px; height: 100%; top: 0; left: 50%; transform: translateX(-50%); display: none; opacity: 0; transition: opacity 0.5s ease; z-index: 1;"></div>
+        </div>
+
+        <!-- BOTTOM SECTION: SUBTITLES -->
+        <div class="ai-bottom-section" style="flex: 4.5; display: flex; flex-direction: column; align-items: center; padding: 0 20px; position: relative; z-index: 10;">
+            <div id="ai-subtitle-box" style="width: 100%; max-width: 600px; height: 180px; background: rgba(0,0,0,0.5); border-radius: 15px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; backdrop-filter: blur(10px); overflow-y: auto;">
+                <p id="apple-ai-text" style="margin: auto 0; font-size: 1.25rem; line-height: 1.6; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.8); font-family: 'Be Vietnam Pro', sans-serif; font-weight: 500;"></p>
+            </div>
+            
+            <input type="text" id="apple-ai-input" placeholder="Hỏi AI (Hoặc nói vào Micro)..." autocomplete="off" style="width: 100%; max-width: 600px; padding: 12px 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.5); color: #fff; font-size: 1.1rem; margin-top: 15px; outline: none; display: none;">
+            <div class="apple-ai-hint" style="margin-top: 15px;"><strong>Đại học CSND - Trợ lý XIV</strong></div>
+        </div>
       </div>
     `;
     document.body.appendChild(overlay);
@@ -198,13 +310,13 @@ function initUI() {
     const fab = document.createElement('button');
     fab.id = 'apple-ai-fab';
         fab.innerHTML = `
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
-        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
-        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-        <line x1="12" y1="19" x2="12" y2="22"></line>
-      </svg>
-      <span style="font-weight: 600; font-size: 14px; white-space: nowrap;">Trợ lý AI</span>
-    `;
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:28px; height:28px; filter: drop-shadow(0 0 5px #00f2fe);">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+        </svg>
+`;
+      fab.classList.add('biometric-btn');
+      fab.title = "Quét vân tay khởi động";
+
     // Thêm CSS keyframes cho hiệu ứng nháy (pulse)
     if (!document.getElementById('ai-fab-style')) {
       const style = document.createElement('style');
@@ -251,7 +363,39 @@ function initUI() {
     };
 
     fab.onclick = () => {
-      if (currentState === 'IDLE') {
+        if (!window.aiIntroPlayed) {
+          window.aiIntroPlayed = true;
+          const splash = document.getElementById('intro-splash');
+          if (splash) {
+              splash.style.display = 'flex';
+              setTimeout(() => { splash.style.opacity = '1'; }, 50);
+              
+              // Fake beep
+              const beep = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA='); 
+              beep.play().catch(()=>{});
+              
+              setTimeout(() => {
+                  splash.style.opacity = '0';
+                  setTimeout(() => {
+                      splash.style.display = 'none';
+                      if (currentState === 'IDLE') {
+                          startInteraction();
+                          setTimeout(() => {
+                              setUIState('SPEAKING');
+                              const greetingText = "Kính chào Ban giám khảo. Tôi là Báo cáo viên Ảo của đội thi Trường Đại học Cảnh sát nhân dân. Hệ thống đã sẵn sàng kết nối dữ liệu báo cáo.";
+                              if (!playStudioVoice('lời chào', greetingText, () => setUIState('LISTENING'))) {
+                                  typeWriterEffect(greetingText, 'apple-ai-text', 12);
+                                  speakDynamicText(greetingText);
+                              }
+                          }, 100);
+                      }
+                  }, 1000);
+              }, 2500);
+              return;
+          }
+        }
+        
+        if (currentState === 'IDLE') {
         startInteraction();
       } else if (currentState === 'LISTENING') {
         // Chủ động ngắt ghi âm để trả lời ngay lập tức (Bỏ qua 1.5s chờ của trình duyệt)
@@ -291,15 +435,31 @@ function initUI() {
     // Reset classes
     overlay.className = 'apple-ai-overlay';
     
-    if (state === 'IDLE') { 
+    if (state === 'IDLE') {
+      const vis = document.getElementById('ai-audio-visualizer');
+      if (vis) {
+          vis.style.opacity = '0';
+          vis.classList.remove('visualizer-anim');
+      } 
       overlay.style.display = 'none';
       document.body.classList.remove('apple-ai-active');
       textEl.innerHTML = '';
       if(inputEl) { inputEl.style.display = 'none'; inputEl.value = ''; }
       clearHighlight();
     } 
-    else if (state === 'LISTENING') { 
+    else if (state === 'LISTENING') {
+      const vis = document.getElementById('ai-audio-visualizer');
+      if (vis) {
+          vis.style.opacity = '0';
+          vis.classList.remove('visualizer-anim');
+      } 
       overlay.style.display = 'flex';
+    const avatarImg = document.getElementById('ai-avatar-img');
+    if (avatarImg) {
+        avatarImg.classList.remove('avatar-bootup');
+        void avatarImg.offsetWidth;
+        avatarImg.classList.add('avatar-bootup');
+    }
       document.body.classList.add('apple-ai-active');
       overlay.classList.add('active', 'listening');
       textEl.innerHTML = text || '<em>Tôi đang nghe...</em>';
@@ -310,12 +470,29 @@ function initUI() {
     } 
     else if (state === 'PROCESSING') {
       overlay.style.display = 'flex';
+    const avatarImg = document.getElementById('ai-avatar-img');
+    if (avatarImg) {
+        avatarImg.classList.remove('avatar-bootup');
+        void avatarImg.offsetWidth;
+        avatarImg.classList.add('avatar-bootup');
+    }
       overlay.classList.add('active', 'processing');
       textEl.innerHTML = ''; // Không hiển thị text khi đang xử lý (Apple style)
       if(inputEl) inputEl.style.display = 'block';
     } 
     else if (state === 'SPEAKING') {
+      const vis = document.getElementById('ai-audio-visualizer');
+      if (vis) {
+          vis.style.opacity = '1';
+          vis.classList.add('visualizer-anim');
+      }
       overlay.style.display = 'flex';
+    const avatarImg = document.getElementById('ai-avatar-img');
+    if (avatarImg) {
+        avatarImg.classList.remove('avatar-bootup');
+        void avatarImg.offsetWidth;
+        avatarImg.classList.add('avatar-bootup');
+    }
       overlay.classList.add('active', 'speaking');
       textEl.innerHTML = '';
       if(inputEl) {
@@ -505,14 +682,11 @@ function initUI() {
       } else {
          console.warn("Không tìm được giọng Web Speech vi-VN. Kích hoạt Google Translate TTS API dự phòng.");
          
-         // Nếu có preload từ trước thì tái sử dụng để phát ngay lập tức
-         let audio;
-         if (window.__nextAudioPreload && window.__nextAudioPreload.dataset.chunkIndex == currentChunk) {
-             audio = window.__nextAudioPreload;
-         } else {
-             const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q=${encodeURIComponent(chunkText)}`;
-             audio = new Audio(url);
-         }
+         const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q=${encodeURIComponent(chunkText)}`;
+         
+         // Bắt buộc phải tái sử dụng global audio player đã được unlock bằng User Gesture trên Safari/iOS
+         let audio = window.__ttsAudioPlayer || new Audio();
+         audio.src = url;
          
          currentAudio = audio;
          audio.onended = () => {
@@ -529,18 +703,6 @@ function initUI() {
              currentChunk++;
              playNextChunk();
          });
-         
-         // Preload audio cho chunk tiếp theo để loại bỏ hoàn toàn độ trễ mạng
-         if (currentChunk + 1 < chunks.length) {
-             const nextText = chunks[currentChunk + 1].trim();
-             if (nextText) {
-                 const nextUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q=${encodeURIComponent(nextText)}`;
-                 const nextAudio = new Audio(nextUrl);
-                 nextAudio.preload = 'auto';
-                 nextAudio.dataset.chunkIndex = currentChunk + 1;
-                 window.__nextAudioPreload = nextAudio;
-             }
-         }
       }
     };
 
@@ -556,6 +718,50 @@ function initUI() {
       if (currentState === 'IDLE') return;
       
       let finalAnswerText = "";
+      window.isMindmapIntent = false;
+      const mmContainer = document.getElementById('apple-ai-mindmap');
+      if (mmContainer) { mmContainer.style.display = 'none'; mmContainer.style.opacity = '0'; mmContainer.innerHTML = ''; }
+      const topSec = document.querySelector('.ai-top-section');
+      if (topSec) topSec.classList.remove('mindmap-active');
+      
+      let lowerPrompt = transcript.toLowerCase();
+
+      if (lowerPrompt.includes('đoạn trích') || (lowerPrompt.includes('năng lực lãnh đạo') && lowerPrompt.includes('đoạn trích'))) {
+          finalAnswerText = "Báo cáo đồng chí! Văn kiện Đại hội đại biểu toàn quốc lần thứ XIV, tại trang 383, tập 2, đã khẳng định một quan điểm mang tính kim chỉ nam: Tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng trong sạch, vững mạnh toàn diện; nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng. Tăng cường xây dựng, chỉnh đốn, tự đổi mới để Đảng ta thật sự là đạo đức, là văn minh. Đối với lực lượng Công an nhân dân, đây chính là cội nguồn sức mạnh để xây dựng lực lượng thật sự trong sạch, chính quy, tinh nhuệ và hiện đại.";
+          window.lastFinalAnswerText = finalAnswerText;
+          setUIState('SPEAKING');
+          if (!playVideoAvatar('đoạn trích nghị quyết', finalAnswerText, null)) {
+              if (!playStudioVoice('đoạn trích nghị quyết', finalAnswerText, null)) {
+                  typeWriterEffect(finalAnswerText, 'apple-ai-text', 12);
+                  speakDynamicText(finalAnswerText);
+              }
+          }
+          return;
+      } else if (lowerPrompt.includes('nội dung cơ bản') || lowerPrompt.includes('5 nội dung') || (lowerPrompt.includes('nâng cao') && lowerPrompt.includes('cơ bản nào'))) {
+          finalAnswerText = "Rõ thưa đồng chí! Để hiện thực hóa mục tiêu đó, Đảng ta đã chỉ rõ 5 nhóm giải pháp cốt lõi mang tính chiến lược:\n\nMột là, Đẩy mạnh xây dựng, chỉnh đốn Đảng toàn diện.\nHai là, Xây dựng đội ngũ cán bộ hội đủ tâm và tầm.\nBa là, Đổi mới đồng bộ phương thức lãnh đạo.\nBốn là, Siết chặt kỷ luật, kiên quyết đẩy lùi suy thoái.\nNăm là, Chủ động bảo vệ nền tảng tư tưởng của Đảng.\n\nMỗi giải pháp trên đều là mệnh lệnh chiến đấu đối với mỗi chiến sĩ Công an nhân dân chúng ta!";
+          window.lastFinalAnswerText = finalAnswerText;
+          setUIState('SPEAKING');
+          if (!playVideoAvatar('5 nội dung cơ bản', finalAnswerText, null)) {
+              if (!playStudioVoice('5 nội dung cơ bản', finalAnswerText, null)) {
+                  typeWriterEffect(finalAnswerText, 'apple-ai-text', 12);
+                  speakDynamicText(finalAnswerText);
+              }
+          }
+          return;
+      } else if (lowerPrompt.includes('bản đồ tri thức') || lowerPrompt.includes('sơ đồ') || lowerPrompt.includes('nghị quyết 71') || lowerPrompt.includes('đại học csnd')) {
+          finalAnswerText = "Báo cáo đồng chí. Hệ thống đang trích xuất Bản đồ Tri thức kết nối Nghị quyết 71 với công tác đào tạo tại Đại học Cảnh sát Nhân dân.\n\nTừ cốt lõi Đổi mới giáo dục của Nghị quyết 71.\n\nNhà trường đẩy mạnh phát triển kỹ năng số cho học viên.\n\nNhằm tạo ra lực lượng Cảnh sát chính quy tinh nhuệ.\n\nĐáp ứng xuất sắc yêu cầu tác chiến an ninh mạng trong thời kỳ mới.";
+          window.isMindmapIntent = true;
+          window.lastFinalAnswerText = finalAnswerText;
+          setUIState('SPEAKING');
+          if (!playVideoAvatar('bản đồ tri thức', finalAnswerText, null)) {
+              if (!playStudioVoice('bản đồ tri thức', finalAnswerText, null)) {
+                  typeWriterEffect(finalAnswerText, 'apple-ai-text', 12);
+                  speakDynamicText(finalAnswerText);
+              }
+          }
+          return;
+      }
+
       let normText = transcript.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[?,.!]/g, '');
       
       let detectedResolutionId = null;
@@ -710,6 +916,21 @@ function initUI() {
   function startInteraction() {
     if (currentState !== 'IDLE') return;
 
+    // iOS/Mobile Audio Unlock workaround
+    if (!window.__audioUnlocked) {
+        window.__audioUnlocked = true;
+        try {
+            // Khởi tạo một global audio player duy nhất để tái sử dụng (Bắt buộc cho Safari/iOS)
+            window.__ttsAudioPlayer = new Audio("data:audio/mp3;base64,//OExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+            window.__ttsAudioPlayer.play().catch(()=>{});
+            
+            const unlockSpeech = new SpeechSynthesisUtterance('');
+            unlockSpeech.volume = 0;
+            window.speechSynthesis.speak(unlockSpeech);
+        } catch (e) {}
+    }
+
+
     // Luôn hiển thị giao diện và bật LISTENING
     setUIState('LISTENING');
 
@@ -850,5 +1071,64 @@ function initUI() {
   return { init, startInteraction, stopAI };
 })();
 
-AICopilot.init();
-
+AICopilot.init();  function drawMindmapStep(step) {
+      const container = document.getElementById('apple-ai-mindmap');
+      if (!container) return;
+      
+      if (step === 0) {
+          container.style.display = 'block';
+          setTimeout(() => container.style.opacity = '1', 50);
+          const topSec = document.querySelector('.ai-top-section');
+          if (topSec) topSec.classList.add('mindmap-active');
+          // Initialize SVG
+          container.innerHTML = `
+            <svg width="100%" height="100%" viewBox="0 0 600 350">
+                <!-- Lines -->
+                <path class="mm-line" id="mm-line-1" d="M 300,175 L 150,80" />
+                <path class="mm-line" id="mm-line-2" d="M 300,175 L 450,80" />
+                <path class="mm-line" id="mm-line-3" d="M 300,175 L 150,270" />
+                <path class="mm-line" id="mm-line-4" d="M 300,175 L 450,270" />
+                
+                <!-- Nodes -->
+                <g class="mm-node mm-center-node" id="mm-node-0" transform="translate(300,175)">
+                    <circle r="0" cx="0" cy="0" />
+                    <text x="0" y="5" text-anchor="middle">NQ 71</text>
+                </g>
+                <g class="mm-node" id="mm-node-1" transform="translate(150,80)">
+                    <circle r="0" cx="0" cy="0" />
+                    <text x="0" y="5" text-anchor="middle">Đổi mới Giáo dục</text>
+                </g>
+                <g class="mm-node" id="mm-node-2" transform="translate(450,80)">
+                    <circle r="0" cx="0" cy="0" />
+                    <text x="0" y="5" text-anchor="middle">Kỹ năng Số</text>
+                </g>
+                <g class="mm-node" id="mm-node-3" transform="translate(150,270)">
+                    <circle r="0" cx="0" cy="0" />
+                    <text x="0" y="5" text-anchor="middle">Lực lượng Tinh nhuệ</text>
+                </g>
+                <g class="mm-node" id="mm-node-4" transform="translate(450,270)">
+                    <circle r="0" cx="0" cy="0" />
+                    <text x="0" y="5" text-anchor="middle">An ninh Mạng</text>
+                </g>
+            </svg>
+          `;
+          
+          setTimeout(() => {
+              const node0 = document.querySelector('#mm-node-0 circle');
+              if(node0) node0.setAttribute('r', '50');
+              document.getElementById('mm-node-0').classList.add('active');
+          }, 100);
+      }
+      else if (step >= 1 && step <= 4) {
+          // Draw line
+          const line = document.getElementById('mm-line-' + step);
+          if (line) line.classList.add('drawn');
+          
+          // Pop node
+          setTimeout(() => {
+              const nodeCircle = document.querySelector('#mm-node-' + step + ' circle');
+              if (nodeCircle) nodeCircle.setAttribute('r', '40');
+              document.getElementById('mm-node-' + step).classList.add('active');
+          }, 500); // delay node activation slightly after line starts drawing
+      }
+  }
