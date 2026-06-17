@@ -1,4 +1,4 @@
-# Node.js and dependencies
+﻿# Node.js and dependencies
 node_modules/
 .npm/
 
@@ -8,5 +8,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 
-# Heavy reference documents (Do not upload 40MB of PDFs to GitHub)
+# Heavy reference documents
+VAN KIEN DAI HOI XIV/
 VĂN KIỆN ĐẠI HỘI XIV/
+*.pdf
+*.log
