@@ -7,7 +7,16 @@
 const RESOLUTIONS_DATA = [
   {
     id: "57",
-    number: "57-NQ/TW",
+
+    responsibilityTitle: "TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND",
+    responsibilitySubtitle: "Cụ thể hóa nghị quyết thành nhận thức, trách nhiệm và hành động trong giáo dục, đào tạo, nghiên cứu khoa học và xây dựng lực lượng CAND.",
+    responsibilities: [
+      { id: "01", title: "Nâng cao năng lực số", content: "Chủ động học tập, làm chủ công nghệ số, trí tuệ nhân tạo và các công cụ hiện đại phục vụ công tác chuyên môn.", icon: "<i class='fas fa-laptop-code'></i>" },
+      { id: "02", title: "Đổi mới giáo dục, đào tạo", content: "Ứng dụng công nghệ vào giảng dạy, kiểm tra, đánh giá; phát triển học liệu số và nâng cao năng lực tự học của học viên.", icon: "<i class='fas fa-chalkboard-teacher'></i>" },
+      { id: "03", title: "Đẩy mạnh nghiên cứu khoa học", content: "Ưu tiên nghiên cứu, sáng kiến và sản phẩm công nghệ giải quyết những vấn đề thực tiễn trong công tác Cảnh sát.", icon: "<i class='fas fa-flask'></i>" },
+      { id: "04", title: "Bảo đảm an toàn dữ liệu", content: "Tuân thủ quy định về bảo mật, an ninh mạng, bảo vệ dữ liệu và sử dụng trí tuệ nhân tạo có trách nhiệm.", icon: "<i class='fas fa-shield-alt'></i>" },
+      { id: "05", title: "Xây dựng Nhà trường thông minh", content: "Góp phần số hóa quản trị, đào tạo và nghiên cứu, từng bước xây dựng Trường Đại học CSND hiện đại, thông minh.", icon: "<i class='fas fa-school'></i>" },
+    ],    number: "57-NQ/TW",
     title: "Đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia",
     shortTitle: "Khoa học, Công nghệ & Chuyển đổi số",
     date: "22/12/2024",
@@ -52,25 +61,13 @@ const RESOLUTIONS_DATA = [
       { title: "Ứng dụng công nghệ vào các ngành kinh tế", description: "Số hóa nông nghiệp, y tế, tài chính, giáo dục, giao thông vận tải; thúc đẩy hợp tác công–tư trong R&D." },
       { title: "Phát triển hệ sinh thái ĐMST", description: "Xây dựng trung tâm ĐMST quốc gia; vườn ươm startup; kết nối doanh nghiệp – trường đại học – viện nghiên cứu." }
     ],
+    
     newPoints: [
       "Chính thức luật hóa cơ chế Sandbox: Chấp nhận thử nghiệm công nghệ mới ngoài khuôn khổ pháp luật hiện hành.",
       "Lần đầu tiên khẳng định: Coi thất bại trong nghiên cứu khoa học là rủi ro nghề nghiệp, không hình sự hóa.",
       "Xác định AI và Bán dẫn là mũi nhọn ưu tiên quốc gia thay vì dàn trải."
     ],
-        csndApplication: {
-      intro: "Trường Đại học CSND cần cụ thể hóa Nghị quyết 57 bằng việc đẩy mạnh chuyển đổi số trong giáo dục, xây dựng học liệu số, bài giảng số, ngân hàng câu hỏi số, lớp học thông minh, hệ thống quản lý đào tạo hiện đại; ứng dụng AI trong hỗ trợ giảng viên soạn bài, thiết kế tình huống, kiểm tra đánh giá và cá nhân hóa hoạt động tự học của học viên.",
-      slogan: "Ở Trường Đại học CSND, chuyển đổi số không chỉ là thay đổi công cụ dạy học, mà là chuẩn bị năng lực số cho người cán bộ Cảnh sát nhân dân trong kỷ nguyên mới.",
-      cards: [
-        { title: "Đào tạo", desc: "Phát triển năng lực số, kỹ năng khai thác dữ liệu cho học viên." },
-        { title: "Nghiên cứu", desc: "Ứng dụng AI, phân tích dữ liệu lớn, phát triển học liệu số." },
-        { title: "Hành động", desc: "Xây dựng môi trường đại học số tiên tiến trong CAND." }
-      ]
-    },
-    practicalApplication: [
-      "Lực lượng CAND tiên phong triển khai Cơ sở dữ liệu quốc gia về dân cư (Đề án 06), tạo nền tảng cốt lõi cho Chính phủ số.",
-      "Trường ĐH CSND đưa ứng dụng AI, khoa học dữ liệu và an ninh mạng vào chương trình đào tạo nghiệp vụ cảnh sát điều tra tội phạm công nghệ cao.",
-      "Số hóa 100% hồ sơ giảng dạy, ứng dụng sa bàn ảo (VR/AR) trong huấn luyện chiến thuật phòng chống khủng bố."
-    ],
+    
     quoteBlocks: [
       {
         quote: "Chuyển đổi số không chỉ là ứng dụng công nghệ, mà là sự thay đổi tư duy, cách làm, là động lực để dân tộc vươn mình.",
@@ -92,7 +89,16 @@ const RESOLUTIONS_DATA = [
   },
   {
     id: "59",
-    number: "59-NQ/TW",
+
+    responsibilityTitle: "TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND",
+    responsibilitySubtitle: "Cụ thể hóa nghị quyết thành nhận thức, trách nhiệm và hành động trong giáo dục, đào tạo, nghiên cứu khoa học và xây dựng lực lượng CAND.",
+    responsibilities: [
+      { id: "01", title: "Nâng cao nhận thức hội nhập", content: "Nhận thức đầy đủ thời cơ, thách thức của hội nhập quốc tế đối với nhiệm vụ bảo vệ an ninh, trật tự.", icon: "<i class='fas fa-globe-asia'></i>" },
+      { id: "02", title: "Phát triển ngoại ngữ và kỹ năng quốc tế", content: "Chủ động nâng cao ngoại ngữ, năng lực số và khả năng tiếp cận tri thức, tài liệu khoa học quốc tế.", icon: "<i class='fas fa-language'></i>" },
+      { id: "03", title: "Đổi mới nội dung đào tạo", content: "Lồng ghép kiến thức hội nhập, an ninh phi truyền thống và tội phạm xuyên quốc gia vào chương trình, bài giảng.", icon: "<i class='fas fa-book'></i>" },
+      { id: "04", title: "Mở rộng hợp tác đào tạo, nghiên cứu", content: "Tham gia hiệu quả các hoạt động hợp tác, trao đổi học thuật và nghiên cứu quốc tế phù hợp quy định của ngành.", icon: "<i class='fas fa-handshake'></i>" },
+      { id: "05", title: "Bảo vệ lợi ích quốc gia", content: "Giữ vững bản lĩnh chính trị, chủ động đấu tranh với thông tin xuyên tạc trong môi trường truyền thông xuyên quốc gia.", icon: "<i class='fas fa-flag'></i>" },
+    ],    number: "59-NQ/TW",
     title: "Hội nhập quốc tế trong tình hình mới",
     shortTitle: "Hội nhập quốc tế",
     date: "24/01/2025",
@@ -143,20 +149,7 @@ const RESOLUTIONS_DATA = [
         "Xác định Hội nhập Khoa học Công nghệ và Không gian mạng là mũi nhọn mới, bên cạnh kinh tế và an ninh truyền thống.",
         "Đặt vị trí trung tâm cho người dân và doanh nghiệp trong chiến lược vươn mình ra biển lớn."
       ],
-          csndApplication: {
-      intro: "Trường Đại học CSND cần chủ động nâng cao năng lực hội nhập quốc tế trong đào tạo và nghiên cứu khoa học; tăng cường cập nhật tri thức mới về tội phạm xuyên quốc gia, an ninh phi truyền thống, tội phạm công nghệ cao; phát triển năng lực ngoại ngữ, kỹ năng hội nhập, tư duy toàn cầu cho học viên nhưng vẫn giữ vững bản lĩnh chính trị.",
-      slogan: "Hội nhập để học hỏi tri thức tiến bộ, nhưng phải giữ vững bản lĩnh chính trị, bản sắc CAND và lợi ích quốc gia – dân tộc.",
-      cards: [
-        { title: "Đào tạo", desc: "Tăng cường ngoại ngữ, cập nhật tri thức tội phạm xuyên quốc gia." },
-        { title: "Nghiên cứu", desc: "Hợp tác nghiên cứu, trao đổi học thuật quốc tế." },
-        { title: "Hành động", desc: "Giữ vững bản lĩnh chính trị, bản sắc CAND trong hội nhập." }
-      ]
-    },
-    practicalApplication: [
-        "Trường Đại học CSND tiên phong hợp tác quốc tế, liên kết với Cảnh sát quốc tế (INTERPOL), ASEANAPOL để nâng cao năng lực phòng chống tội phạm xuyên quốc gia.",
-        "Trang bị tư duy toàn cầu, năng lực ngoại ngữ và kỹ năng số cho học viên Cảnh sát, sẵn sàng làm nhiệm vụ quốc tế (Gìn giữ hòa bình LHQ).",
-        "Chủ động thiết lập các kênh trao đổi thông tin tội phạm mạng với các lực lượng thực thi pháp luật khu vực."
-      ],
+    
       quoteBlocks: [
         {
           quote: "Việt Nam không chỉ hòa mình vào dòng chảy của thế giới, mà còn phải là người góp phần khơi dòng, tạo dựng những dòng chảy mới mang lại hòa bình và thịnh vượng.",
@@ -204,7 +197,16 @@ const RESOLUTIONS_DATA = [
 },
   {
       id: "66",
-    number: "66-NQ/TW",
+
+    responsibilityTitle: "TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND",
+    responsibilitySubtitle: "Cụ thể hóa nghị quyết thành nhận thức, trách nhiệm và hành động trong giáo dục, đào tạo, nghiên cứu khoa học và xây dựng lực lượng CAND.",
+    responsibilities: [
+      { id: "01", title: "Nêu cao tinh thần thượng tôn pháp luật", content: "Gương mẫu chấp hành pháp luật, điều lệnh CAND, quy chế đào tạo và các quy định của Nhà trường.", icon: "<i class='fas fa-gavel'></i>" },
+      { id: "02", title: "Cập nhật pháp luật vào giảng dạy", content: "Thường xuyên bổ sung chủ trương, chính sách và quy định pháp luật mới vào chương trình, giáo trình và bài giảng.", icon: "<i class='fas fa-balance-scale'></i>" },
+      { id: "03", title: "Phát triển tư duy pháp lý", content: "Rèn luyện cho học viên khả năng phân tích, vận dụng pháp luật và giải quyết tình huống nghiệp vụ đúng quy định.", icon: "<i class='fas fa-brain'></i>" },
+      { id: "04", title: "Nâng cao chất lượng nghiên cứu pháp luật", content: "Đẩy mạnh nghiên cứu, tổng kết thực tiễn và đề xuất hoàn thiện pháp luật về bảo đảm an ninh, trật tự.", icon: "<i class='fas fa-search'></i>" },
+      { id: "05", title: "Xây dựng môi trường kỷ cương", content: "Gắn giáo dục pháp luật với đạo đức công vụ, trách nhiệm nghề nghiệp và xây dựng môi trường sư phạm chính quy.", icon: "<i class='fas fa-university'></i>" },
+    ],    number: "66-NQ/TW",
     title: "Đổi mới công tác xây dựng và thi hành pháp luật đáp ứng yêu cầu phát triển đất nước trong kỷ nguyên mới",
     shortTitle: "Đổi mới xây dựng & thi hành pháp luật",
     date: "30/04/2025",
@@ -251,20 +253,7 @@ const RESOLUTIONS_DATA = [
       "Chuyển mạnh thẩm quyền quy định chi tiết từ Quốc hội sang Chính phủ, giao quyền mạnh mẽ cho địa phương.",
       "Thiết lập cơ chế bảo vệ cán bộ dám nghĩ, dám làm vì lợi ích chung, tránh tình trạng đùn đẩy trách nhiệm vì sợ sai."
     ],
-        csndApplication: {
-      intro: "Là nơi đào tạo lực lượng thực thi pháp luật tương lai, Trường Đại học CSND quán triệt Nghị quyết 66 bằng việc đổi mới chương trình giảng dạy pháp luật, nghiệp vụ, kỹ năng xử lý tình huống; nhấn mạnh yêu cầu hành động đúng quy trình, tôn trọng Nhân dân, bảo vệ công lý và quyền con người.",
-      slogan: "Muốn pháp luật được thực thi nghiêm minh trong thực tiễn, trước hết người cán bộ Cảnh sát tương lai phải được đào tạo vững vàng về pháp luật ngay từ giảng đường.",
-      cards: [
-        { title: "Đào tạo", desc: "Đổi mới giảng dạy pháp luật, tăng cường tình huống thực tiễn." },
-        { title: "Nghiên cứu", desc: "Phát triển lý luận về bảo vệ quyền con người, thi hành pháp luật." },
-        { title: "Hành động", desc: "Hình thành tư duy pháp lý, ý thức thượng tôn pháp luật cho học viên." }
-      ]
-    },
-    practicalApplication: [
-      "Lực lượng CAND đổi mới mạnh mẽ quy trình điều tra, xử lý tội phạm theo hướng bảo vệ quyền con người, tuân thủ nguyên tắc suy đoán vô tội.",
-      "Trường ĐH CSND đẩy mạnh giảng dạy Pháp luật Hình sự & Tố tụng Hình sự theo tư tưởng kiến tạo, dạy học viên tư duy phân tích luật chứ không học thuộc lòng.",
-      "Số hóa quy trình tiếp nhận tin báo, tố giác tội phạm, rút ngắn thủ tục hành chính, lấy sự hài lòng của người dân làm thước đo hiệu quả."
-    ],
+    
     quoteBlocks: [
       { quote: "Hoàn thiện thể chế là 'đột phá của đột phá'. Pháp luật phải kiến tạo phát triển, không phải rào cản; lấy người dân và doanh nghiệp làm trung tâm.", speaker: "Tổng Bí thư Tô Lâm", context: "Phát biểu chỉ đạo về Nghị quyết 66" }
     ],
@@ -281,7 +270,16 @@ const RESOLUTIONS_DATA = [
   },
   {
     id: "68",
-    number: "68-NQ/TW",
+
+    responsibilityTitle: "TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND",
+    responsibilitySubtitle: "Cụ thể hóa nghị quyết thành nhận thức, trách nhiệm và hành động trong giáo dục, đào tạo, nghiên cứu khoa học và xây dựng lực lượng CAND.",
+    responsibilities: [
+      { id: "01", title: "Nhận thức đúng vai trò kinh tế tư nhân", content: "Quán triệt đầy đủ quan điểm của Đảng về vai trò, vị trí của kinh tế tư nhân trong phát triển đất nước.", icon: "<i class='fas fa-lightbulb'></i>" },
+      { id: "02", title: "Cập nhật nội dung đào tạo", content: "Bổ sung kiến thức về kinh tế tư nhân, môi trường kinh doanh và quản lý nhà nước vào các học phần phù hợp.", icon: "<i class='fas fa-chart-line'></i>" },
+      { id: "03", title: "Nghiên cứu an ninh kinh tế", content: "Đẩy mạnh nghiên cứu các nguy cơ, phương thức vi phạm và tội phạm phát sinh trong hoạt động kinh tế tư nhân.", icon: "<i class='fas fa-search-dollar'></i>" },
+      { id: "04", title: "Giáo dục tinh thần phục vụ", content: "Rèn luyện cho học viên thái độ đúng mực, trách nhiệm, không gây phiền hà đối với người dân và doanh nghiệp.", icon: "<i class='fas fa-hands-helping'></i>" },
+      { id: "05", title: "Bảo đảm môi trường kinh doanh an toàn", content: "Gắn đào tạo nghiệp vụ với yêu cầu phòng ngừa tội phạm, bảo vệ quyền lợi hợp pháp và giữ vững trật tự xã hội.", icon: "<i class='fas fa-shield-alt'></i>" },
+    ],    number: "68-NQ/TW",
     title: "Phát triển kinh tế tư nhân",
     shortTitle: "Phát triển kinh tế tư nhân",
     date: "04/05/2025",
@@ -330,20 +328,7 @@ const RESOLUTIONS_DATA = [
       "Chuyển hẳn phương thức quản lý nhà nước từ 'tiền kiểm' (cấp phép) sang 'hậu kiểm' (giám sát chuẩn mực).",
       "Khẳng định rõ nguyên tắc: Không hình sự hóa các quan hệ kinh tế dân sự, tạo tâm lý an tâm đầu tư."
     ],
-        csndApplication: {
-      intro: "Trường Đại học CSND đóng góp vào Nghị quyết 68 thông qua việc đào tạo cán bộ Cảnh sát có nhận thức đúng về kinh tế tư nhân, có năng lực phòng chống tội phạm kinh tế, tội phạm công nghệ cao trong lĩnh vực tài chính, thương mại.",
-      slogan: "Nhà trường góp phần thực hiện Nghị quyết 68 thông qua đào tạo cán bộ Cảnh sát có năng lực bảo vệ môi trường kinh doanh an toàn, minh bạch, đúng pháp luật.",
-      cards: [
-        { title: "Đào tạo", desc: "Trang bị kỹ năng nhận diện tội phạm kinh tế, thương mại, tài chính." },
-        { title: "Nghiên cứu", desc: "Nghiên cứu phương thức, thủ đoạn mới của tội phạm kinh tế." },
-        { title: "Hành động", desc: "Bảo vệ môi trường kinh doanh an toàn, lành mạnh." }
-      ]
-    },
-    practicalApplication: [
-      "Lực lượng CAND quán triệt tinh thần bảo vệ quyền tài sản hợp pháp của cá nhân và tổ chức, kiên quyết không hình sự hóa quan hệ dân sự, kinh tế.",
-      "Xử lý nghiêm minh các hành vi nhũng nhiễu, 'tham nhũng vặt' gây khó khăn cho doanh nghiệp, tạo môi trường kinh doanh minh bạch.",
-      "Ứng dụng chuyển đổi số trong thủ tục hành chính công (PCCC, an ninh trật tự), giúp doanh nghiệp tiết kiệm thời gian và chi phí."
-    ],
+    
     quoteBlocks: [
       { quote: "Kinh tế tư nhân không chỉ là 'bộ phận quan trọng' mà phải là 'động lực quan trọng nhất', là 'lực lượng tiên phong' trong phát triển kinh tế đất nước.", speaker: "Thông điệp cốt lõi", context: "Nghị quyết 68-NQ/TW – Bước ngoặt lịch sử" }
     ],
@@ -361,7 +346,16 @@ const RESOLUTIONS_DATA = [
   },
   {
     id: "70",
-    number: "70-NQ/TW",
+
+    responsibilityTitle: "TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND",
+    responsibilitySubtitle: "Cụ thể hóa nghị quyết thành nhận thức, trách nhiệm và hành động trong giáo dục, đào tạo, nghiên cứu khoa học và xây dựng lực lượng CAND.",
+    responsibilities: [
+      { id: "01", title: "Nâng cao nhận thức về an ninh năng lượng", content: "Xác định an ninh năng lượng là bộ phận quan trọng của an ninh quốc gia và phát triển bền vững.", icon: "<i class='fas fa-bolt'></i>" },
+      { id: "02", title: "Bổ sung kiến thức vào đào tạo", content: "Lồng ghép nội dung an ninh năng lượng, hạ tầng trọng yếu và an ninh phi truyền thống vào bài giảng phù hợp.", icon: "<i class='fas fa-layer-group'></i>" },
+      { id: "03", title: "Nghiên cứu nguy cơ mất an ninh", content: "Chủ động nghiên cứu các nguy cơ tội phạm, phá hoại và mất an toàn đối với công trình, hệ thống năng lượng.", icon: "<i class='fas fa-exclamation-triangle'></i>" },
+      { id: "04", title: "Thực hành tiết kiệm, hiệu quả", content: "Gương mẫu sử dụng điện, nhiên liệu và tài sản công tiết kiệm, an toàn trong học tập và công tác.", icon: "<i class='fas fa-leaf'></i>" },
+      { id: "05", title: "Chuẩn bị nguồn nhân lực CAND", content: "Trang bị cho học viên kiến thức và kỹ năng bảo vệ hạ tầng năng lượng, xử lý các tình huống an ninh phức tạp.", icon: "<i class='fas fa-hard-hat'></i>" },
+    ],    number: "70-NQ/TW",
     title: "Bảo đảm an ninh năng lượng quốc gia đến năm 2030, tầm nhìn đến năm 2045",
     shortTitle: "An ninh năng lượng quốc gia",
     date: "2025",
@@ -405,20 +399,7 @@ const RESOLUTIONS_DATA = [
       "Khẳng định chuyển dịch năng lượng xanh là xu thế không thể đảo ngược, biến thách thức thành cơ hội.",
       "Khuyến khích mạnh mẽ kinh tế tư nhân tham gia đầu tư lưới điện truyền tải (phá bỏ thế độc quyền trước đây)."
     ],
-        csndApplication: {
-      intro: "Trường Đại học CSND giáo dục nhận thức cho học viên về mối quan hệ giữa an ninh năng lượng với an ninh quốc gia; đồng thời tiên phong xây dựng ý thức sử dụng năng lượng tiết kiệm, an toàn, hiệu quả trong môi trường học đường.",
-      slogan: "Từ giảng đường CAND, ý thức bảo đảm an ninh năng lượng bắt đầu bằng nhận thức đúng, sử dụng tiết kiệm và trách nhiệm với tài sản công.",
-      cards: [
-        { title: "Đào tạo", desc: "Giáo dục nhận thức chiến lược về an ninh năng lượng quốc gia." },
-        { title: "Nghiên cứu", desc: "Đánh giá tác động của an ninh năng lượng đến trật tự xã hội." },
-        { title: "Hành động", desc: "Xây dựng campus xanh, an toàn, kỷ luật, sử dụng năng lượng tiết kiệm." }
-      ]
-    },
-    practicalApplication: [
-      "Trường ĐH CSND triển khai mô hình 'Học viện Xanh': sử dụng năng lượng mặt trời áp mái, tối ưu hóa thiết bị tiết kiệm điện.",
-      "Lực lượng CAND tiên phong trong việc chuyển đổi, sử dụng các phương tiện tuần tra chạy bằng năng lượng điện, năng lượng sạch.",
-      "Bảo vệ vững chắc an ninh kinh tế, phòng ngừa tham nhũng và thất thoát tại các dự án năng lượng trọng điểm quốc gia."
-    ],
+    
     quoteBlocks: [
       { quote: "Không có năng lượng thì không có phát triển. An ninh năng lượng là trụ cột không thể thiếu cho mọi mục tiêu kinh tế – xã hội.", speaker: "Thông điệp cốt lõi", context: "Nghị quyết 70-NQ/TW" }
     ],
@@ -435,7 +416,16 @@ const RESOLUTIONS_DATA = [
   },
   {
     id: "71",
-    number: "71-NQ/TW",
+
+    responsibilityTitle: "TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND",
+    responsibilitySubtitle: "Cụ thể hóa nghị quyết thành nhận thức, trách nhiệm và hành động trong giáo dục, đào tạo, nghiên cứu khoa học và xây dựng lực lượng CAND.",
+    responsibilities: [
+      { id: "01", title: "Đổi mới phương pháp giảng dạy", content: "Phát huy vai trò người học, tăng thực hành, tương tác, xử lý tình huống và gắn lý luận với thực tiễn công tác.", icon: "<i class='fas fa-chalkboard-teacher'></i>" },
+      { id: "02", title: "Hoàn thiện chương trình đào tạo", content: "Thường xuyên cập nhật chương trình, giáo trình theo yêu cầu xây dựng lực lượng CAND chính quy, tinh nhuệ, hiện đại.", icon: "<i class='fas fa-book'></i>" },
+      { id: "03", title: "Ứng dụng công nghệ giáo dục", content: "Khai thác hiệu quả bảng tương tác, học liệu số, trí tuệ nhân tạo và các nền tảng hỗ trợ dạy học.", icon: "<i class='fas fa-laptop'></i>" },
+      { id: "04", title: "Nâng cao chất lượng đội ngũ", content: "Chủ động tự học, nghiên cứu, nâng cao trình độ chuyên môn, ngoại ngữ, công nghệ và năng lực sư phạm.", icon: "<i class='fas fa-user-graduate'></i>" },
+      { id: "05", title: "Xây dựng văn hóa học tập suốt đời", content: "Tạo môi trường học tập kỷ luật, sáng tạo, nhân văn; khuyến khích cán bộ, giảng viên và học viên phát triển toàn diện.", icon: "<i class='fas fa-infinity'></i>" },
+    ],    number: "71-NQ/TW",
     title: "Đột phá phát triển giáo dục và đào tạo",
     shortTitle: "Đột phá Giáo dục & Đào tạo",
     date: "2025",
@@ -479,20 +469,7 @@ const RESOLUTIONS_DATA = [
       "Lần đầu tiên đặt mục tiêu định lượng đưa 5-7 trường đại học vào top 500 thế giới.",
       "Xác định rõ ràng: Tự chủ đại học phải đi liền với trách nhiệm giải trình và hệ thống kiểm định chất lượng quốc tế."
     ],
-        csndApplication: {
-      intro: "Trường Đại học CSND giữ vai trò then chốt trong đổi mới căn bản, toàn diện giáo dục đào tạo CAND; tập trung nâng cao chất lượng đội ngũ giảng viên; đổi mới phương pháp dạy học nhằm phát triển năng lực tự học, tư duy phản biện và năng lực thực hành cho học viên.",
-      slogan: "Nghị quyết 71 đi vào Trường Đại học CSND bằng đổi mới từng bài giảng, từng giờ học, từng tình huống thực hành và từng chuẩn đầu ra của người học.",
-      cards: [
-        { title: "Đào tạo", desc: "Đổi mới chương trình, phương pháp, hướng tới chuẩn đầu ra thực chất." },
-        { title: "Nghiên cứu", desc: "Tổng kết thực tiễn, phát triển lý luận giáo dục đào tạo CAND." },
-        { title: "Hành động", desc: "Đào tạo người cán bộ Cảnh sát vừa hồng, vừa chuyên, tinh nhuệ, hiện đại." }
-      ]
-    },
-    practicalApplication: [
-      "Trường Đại học CSND đổi mới mạnh mẽ phương pháp giảng dạy: lấy học viên làm trung tâm, tăng cường thực hành sa bàn ảo, diễn tập thực chiến.",
-      "Phát triển đội ngũ giảng viên CAND chuẩn mực, vững về chính trị, giỏi về chuyên môn nghiệp vụ, làm chủ ngoại ngữ và công nghệ.",
-      "Số hóa toàn bộ học liệu, hệ thống quản lý đào tạo, tiến tới mô hình 'Đại học CSND thông minh'."
-    ],
+    
     quoteBlocks: [
       { quote: "Đột phá giáo dục là đột phá nền tảng – tạo ra con người, nhân lực và trí tuệ cho mọi đột phá khác của đất nước trong kỷ nguyên mới.", speaker: "Thông điệp cốt lõi", context: "Nghị quyết 71-NQ/TW" }
     ],
@@ -512,7 +489,16 @@ const RESOLUTIONS_DATA = [
   },
   {
     id: "72",
-    number: "72-NQ/TW",
+
+    responsibilityTitle: "TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND",
+    responsibilitySubtitle: "Cụ thể hóa nghị quyết thành nhận thức, trách nhiệm và hành động trong giáo dục, đào tạo, nghiên cứu khoa học và xây dựng lực lượng CAND.",
+    responsibilities: [
+      { id: "01", title: "Nâng cao nhận thức về an ninh con người", content: "Gắn nhiệm vụ bảo vệ sức khỏe Nhân dân với bảo đảm an ninh, trật tự và ổn định xã hội.", icon: "<i class='fas fa-heartbeat'></i>" },
+      { id: "02", title: "Giáo dục tinh thần vì Nhân dân phục vụ", content: "Bồi dưỡng cho học viên thái độ nhân văn, gần dân, trọng dân và trách nhiệm hỗ trợ Nhân dân trong khó khăn.", icon: "<i class='fas fa-hands-helping'></i>" },
+      { id: "03", title: "Xây dựng môi trường giáo dục lành mạnh", content: "Duy trì điều kiện học tập, công tác an toàn; quan tâm sức khỏe thể chất và tinh thần của cán bộ, học viên.", icon: "<i class='fas fa-spa'></i>" },
+      { id: "04", title: "Nghiên cứu các vấn đề liên quan sức khỏe", content: "Chủ động nghiên cứu tội phạm, vi phạm pháp luật và nguy cơ an ninh phát sinh trong lĩnh vực y tế, sức khỏe.", icon: "<i class='fas fa-microscope'></i>" },
+      { id: "05", title: "Rèn luyện lối sống khoa học", content: "Gương mẫu chấp hành quy định phòng bệnh, rèn luyện thể lực và xây dựng lối sống kỷ luật, lành mạnh.", icon: "<i class='fas fa-running'></i>" },
+    ],    number: "72-NQ/TW",
     title: "Một số giải pháp đột phá, tăng cường bảo vệ, chăm sóc và nâng cao sức khỏe nhân dân",
     shortTitle: "Sức khỏe nhân dân – Y tế đột phá",
     date: "2025",
@@ -556,20 +542,7 @@ const RESOLUTIONS_DATA = [
       "Chuyển hướng trọng tâm chiến lược từ 'điều trị bệnh' sang 'dự phòng và chăm sóc sức khỏe ban đầu'.",
       "Xác lập cơ chế bảo vệ, tôn vinh và đãi ngộ đặc thù xứng đáng cho nhân viên y tế."
     ],
-        csndApplication: {
-      intro: "Trường Đại học CSND đặc biệt chú trọng công tác giáo dục thể chất, rèn luyện thể lực và chăm sóc sức khỏe tinh thần; xây dựng ý chí, sức bền nghề nghiệp và khả năng thích ứng cao cho học viên để sẵn sàng nhận và hoàn thành mọi nhiệm vụ.",
-      slogan: "Chăm sóc sức khỏe trong Nhà trường CAND là chuẩn bị nền tảng thể lực, tâm lý và ý chí cho người cán bộ Cảnh sát tương lai.",
-      cards: [
-        { title: "Đào tạo", desc: "Tăng cường huấn luyện thể lực, võ thuật, rèn luyện kỷ luật." },
-        { title: "Nghiên cứu", desc: "Nghiên cứu các giải pháp nâng cao sức khỏe tinh thần cho CBCS." },
-        { title: "Hành động", desc: "Xây dựng môi trường học đường lành mạnh, chuẩn bị sức bền nghề nghiệp." }
-      ]
-    },
-    practicalApplication: [
-      "Bệnh viện 30/4, hệ thống Y tế CAND liên tục nâng cao chất lượng khám chữa bệnh, bảo đảm sức khỏe tốt nhất cho cán bộ chiến sĩ.",
-      "Công an cơ sở phối hợp chặt chẽ với trạm y tế xã phường trong phòng chống dịch bệnh, quản lý bệnh nhân tâm thần tại cộng đồng.",
-      "Kiên quyết đấu tranh trấn áp tội phạm sản xuất, buôn bán thuốc giả, vật tư y tế kém chất lượng, bảo vệ tính mạng người dân."
-    ],
+    
     quoteBlocks: [
       { quote: "Sức khỏe nhân dân là vốn quý nhất, là nền tảng của hạnh phúc và sức mạnh quốc gia. Đầu tư cho sức khỏe là đầu tư cho phát triển.", speaker: "Thông điệp cốt lõi", context: "Nghị quyết 72-NQ/TW" }
     ],
@@ -589,7 +562,16 @@ const RESOLUTIONS_DATA = [
   },
   {
     id: "79",
-    number: "79-NQ/TW",
+
+    responsibilityTitle: "TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND",
+    responsibilitySubtitle: "Cụ thể hóa nghị quyết thành nhận thức, trách nhiệm và hành động trong giáo dục, đào tạo, nghiên cứu khoa học và xây dựng lực lượng CAND.",
+    responsibilities: [
+      { id: "01", title: "Nhận thức đúng vai trò kinh tế nhà nước", content: "Quán triệt quan điểm của Đảng về vai trò chủ đạo của kinh tế nhà nước trong nền kinh tế quốc dân.", icon: "<i class='fas fa-building'></i>" },
+      { id: "02", title: "Đổi mới nội dung giảng dạy", content: "Gắn kiến thức kinh tế chính trị, quản lý nhà nước và pháp luật với thực tiễn phát triển kinh tế nhà nước.", icon: "<i class='fas fa-chalkboard'></i>" },
+      { id: "03", title: "Nghiên cứu bảo vệ an ninh kinh tế", content: "Nhận diện nguy cơ tội phạm, thất thoát, tham nhũng và các hành vi xâm phạm tài sản nhà nước.", icon: "<i class='fas fa-search-dollar'></i>" },
+      { id: "04", title: "Giáo dục trách nhiệm bảo vệ tài sản công", content: "Gương mẫu thực hành tiết kiệm, chống lãng phí, sử dụng đúng mục đích và hiệu quả nguồn lực được giao.", icon: "<i class='fas fa-box-open'></i>" },
+      { id: "05", title: "Đào tạo cán bộ có năng lực tổng hợp", content: "Trang bị cho học viên kiến thức kinh tế, pháp luật và nghiệp vụ phục vụ nhiệm vụ bảo đảm an ninh kinh tế.", icon: "<i class='fas fa-user-tie'></i>" },
+    ],    number: "79-NQ/TW",
     title: "Phát triển kinh tế nhà nước",
     shortTitle: "Phát triển kinh tế nhà nước",
     date: "2025",
@@ -632,20 +614,7 @@ const RESOLUTIONS_DATA = [
       "Tách bạch triệt để chức năng chủ sở hữu tài sản nhà nước và chức năng quản lý, điều hành kinh doanh.",
       "Lấy 'Hiệu quả hoạt động ngang tầm ASEAN' làm thước đo bắt buộc, xóa bỏ tư duy bao cấp, bù lỗ."
     ],
-        csndApplication: {
-      intro: "Là đơn vị sự nghiệp công lập trong CAND, Trường Đại học CSND chú trọng nâng cao hiệu quả quản trị đại học, sử dụng tiết kiệm, minh bạch nguồn lực công, cơ sở vật chất, hệ thống công nghệ thông tin phục vụ tốt nhất cho giáo dục đào tạo.",
-      slogan: "Thực hiện Nghị quyết 79 trong Nhà trường là sử dụng hiệu quả từng nguồn lực công để phục vụ tốt nhất cho đào tạo, nghiên cứu và xây dựng lực lượng CAND.",
-      cards: [
-        { title: "Đào tạo", desc: "Giáo dục ý thức trách nhiệm bảo vệ tài sản nhà nước cho học viên." },
-        { title: "Nghiên cứu", desc: "Đề xuất mô hình quản trị nguồn lực công hiệu quả trong CAND." },
-        { title: "Hành động", desc: "Hiện đại hóa cơ sở vật chất, sử dụng minh bạch, tiết kiệm ngân sách." }
-      ]
-    },
-    practicalApplication: [
-      "Lực lượng Cảnh sát Kinh tế (C03) bám sát các dự án đầu tư công trọng điểm, phát hiện sớm nguy cơ thất thoát, lãng phí.",
-      "Kiên quyết điều tra, xử lý nghiêm minh các 'đại án' kinh tế tại các Tập đoàn, Tổng công ty nhà nước, thu hồi tối đa tài sản cho Nhà nước.",
-      "Bảo vệ an ninh kinh tế, không để các thế lực thù địch lợi dụng quá trình cổ phần hóa, thoái vốn để thâu tóm tài sản quốc gia."
-    ],
+    
     quoteBlocks: [
       { quote: "Kinh tế nhà nước giữ vai trò chủ đạo, là công cụ, lực lượng vật chất quan trọng để Nhà nước điều tiết kinh tế, ổn định kinh tế vĩ mô.", speaker: "Thông điệp cốt lõi", context: "Nghị quyết 79-NQ/TW" }
     ],
@@ -665,7 +634,16 @@ const RESOLUTIONS_DATA = [
   },
   {
     id: "80",
-    number: "80-NQ/TW",
+
+    responsibilityTitle: "TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND",
+    responsibilitySubtitle: "Cụ thể hóa nghị quyết thành nhận thức, trách nhiệm và hành động trong giáo dục, đào tạo, nghiên cứu khoa học và xây dựng lực lượng CAND.",
+    responsibilities: [
+      { id: "01", title: "Giữ gìn bản sắc và truyền thống", content: "Gương mẫu gìn giữ giá trị văn hóa dân tộc, truyền thống CAND và truyền thống của Trường Đại học CSND.", icon: "<i class='fas fa-landmark'></i>" },
+      { id: "02", title: "Xây dựng văn hóa học đường", content: "Thực hiện chuẩn mực giao tiếp, ứng xử, kỷ luật và trách nhiệm trong môi trường giáo dục CAND.", icon: "<i class='fas fa-users'></i>" },
+      { id: "03", title: "Đưa văn hóa vào giáo dục, đào tạo", content: "Lồng ghép giá trị văn hóa Việt Nam, tư tưởng Hồ Chí Minh và đạo đức cách mạng vào nội dung giảng dạy.", icon: "<i class='fas fa-book-reader'></i>" },
+      { id: "04", title: "Phát triển môi trường văn hóa số", content: "Lan tỏa nội dung tích cực, ứng xử có văn hóa và chủ động phòng ngừa sản phẩm độc hại trên không gian mạng.", icon: "<i class='fas fa-wifi'></i>" },
+      { id: "05", title: "Đào tạo người cán bộ Cảnh sát toàn diện", content: "Góp phần hình thành người sĩ quan Cảnh sát có bản lĩnh, tri thức, nhân cách và tinh thần phụng sự Nhân dân.", icon: "<i class='fas fa-star'></i>" },
+    ],    number: "80-NQ/TW",
     title: "Phát triển văn hóa Việt Nam",
     shortTitle: "Phát triển văn hóa Việt Nam",
     date: "2025",
@@ -709,20 +687,7 @@ const RESOLUTIONS_DATA = [
       "Nhấn mạnh nhiệm vụ bảo vệ 'Biên giới văn hóa trên không gian mạng' trước sự xâm lăng của văn hóa ngoại lai.",
       "Lấy hệ giá trị quốc gia, hệ giá trị gia đình và chuẩn mực con người Việt Nam làm thước đo cho sự phát triển xã hội."
     ],
-        csndApplication: {
-      intro: "Khoa Lý luận chính trị và Khoa học xã hội nhân văn đóng vai trò nòng cốt trong việc xây dựng văn hóa học đường CAND; giáo dục đạo đức cách mạng, bản lĩnh chính trị, văn hóa ứng xử, văn hóa nêu gương và tinh thần phụng sự Nhân dân.",
-      slogan: "Ở Trường Đại học CSND, phát triển văn hóa Việt Nam được cụ thể hóa thành văn hóa CAND: bản lĩnh, nhân văn, kỷ luật, trách nhiệm và vì Nhân dân phục vụ.",
-      cards: [
-        { title: "Đào tạo", desc: "Bồi dưỡng bản lĩnh chính trị, đạo đức cách mạng, văn hóa CAND." },
-        { title: "Nghiên cứu", desc: "Phát triển lý luận về văn hóa học đường, văn hóa ứng xử CAND." },
-        { title: "Hành động", desc: "Xây dựng người học viên Cảnh sát nhân văn, kỷ luật, trách nhiệm." }
-      ]
-    },
-    practicalApplication: [
-      "Lực lượng An ninh mạng (A05) chủ động rà quét, bóc gỡ các nội dung xấu độc, 'rác văn hóa', bảo vệ nền tảng tư tưởng trên không gian số.",
-      "Ngăn chặn kịp thời các sản phẩm văn hóa đồi trụy, độc hại, lai căng xâm nhập vào học đường và giới trẻ.",
-      "Lan tỏa hình ảnh người chiến sĩ CAND 'Vì nước quên thân, vì dân phục vụ' trở thành một biểu tượng văn hóa đẹp, nhân văn trong thời đại mới."
-    ],
+    
     quoteBlocks: [
       { quote: "Văn hóa là hồn cốt dân tộc. Văn hóa còn thì dân tộc còn. Phải đặt văn hóa ngang hàng với kinh tế, chính trị, xã hội.", speaker: "Tổng Bí thư Nguyễn Phú Trọng", context: "Phát biểu tại Hội nghị Văn hóa toàn quốc năm 2021" }
     ],

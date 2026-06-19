@@ -265,7 +265,8 @@ const APP = (() => {
     renderHomeDynamicContent();
     renderMindMapDesktop();
     renderMindMapMobile();
-    setTimeout(onScrollReveal, 120);
+    initDynamicBackgrounds();
+      setTimeout(onScrollReveal, 120);
   }
 
     function renderHomeDynamicContent() {
@@ -274,12 +275,55 @@ const APP = (() => {
 
     const data = CONGRESS_XIV_OVERVIEW;
 
+    const mottoHTML = data.motto ? `
+      <div class="motto-container reveal-on-scroll">
+        ${data.motto.map((m, i) => `<div class="motto-chip" style="animation-delay: ${i * 0.1}s">${m}</div>`).join('')}
+      </div>
+    ` : '';
+
+    const themeHTML = data.theme ? `
+      <div class="theme-panel readable-glass-card theme-on-red content-backplate reveal-on-scroll" style="margin-top: 2rem;">
+        <div class="theme-title">CHỦ ĐỀ ĐẠI HỘI XIV</div>
+        <div class="theme-text">
+          ${data.theme
+            .replace("thực hiện thắng lợi các mục tiêu phát triển đất nước đến năm 2030", "<span class=\"highlight-text\">thực hiện thắng lợi các mục tiêu phát triển đất nước đến năm 2030</span>")
+            .replace("tự chủ chiến lược, tự cường, tự tin", "<span class=\"highlight-text\">tự chủ chiến lược, tự cường, tự tin</span>")
+            .replace("kỷ nguyên vươn mình của dân tộc", "<span class=\"highlight-text\">kỷ nguyên vươn mình của dân tộc</span>")
+            .replace("phồn vinh, văn minh, hạnh phúc", "<span class=\"highlight-text\">phồn vinh, văn minh, hạnh phúc</span>")}
+        </div>
+      </div>
+    ` : '';
+
+    const responsibilitiesHTML = data.responsibilities ? `
+      <section class="congress-action-section theme-on-red" id="congress-action" style="padding: 4rem 0;">
+        <div class="section-container">
+          <div class="section-header reveal-on-scroll">
+            <h2 class="section-title" style="color: var(--accent-on-red);">TỪ NGHỊ QUYẾT ĐẾN HÀNH ĐỘNG</h2>
+            <div class="action-section-subtitle">Trách nhiệm cán bộ, đảng viên Trường Đại học CSND trong thực hiện Nghị quyết Đại hội XIV</div>
+            <div class="title-divider" style="background: var(--accent-on-red);"></div>
+          </div>
+          
+          <div class="action-grid-5">
+            ${data.responsibilities.map((resp, i) => `
+              <div class="action-card readable-glass-card content-backplate reveal-on-scroll reveal-delay-${i}">
+                <div class="action-card-icon" style="color: var(--accent-on-red); font-size: 2rem; margin-bottom: 1rem;">
+                  <span style="font-size: 1.2rem; font-weight: 800; opacity: 0.8; margin-right: 10px;">${resp.id}.</span>${resp.icon}
+                </div>
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.8rem; color: #fff;">${resp.title}</h3>
+                <div class="action-card-text readable-text" style="color: var(--text-on-red-secondary); font-size: 1.05rem; line-height: 1.6;">${resp.content}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>
+    ` : '';
+    
     const statsHTML = data.stats.map((s, i) => `
-      <div class="hero-stat-card reveal-on-scroll reveal-delay-${i + 1}">
+      <div class="hero-stat-card readable-glass-card theme-on-red reveal-on-scroll reveal-delay-${i + 1}">
         <div class="stat-icon">${s.icon}</div>
         <div class="stat-info">
-          <div class="stat-value">${s.value}</div>
-          <div class="stat-label">${s.label}</div>
+          <div class="stat-value" style="font-weight: 900; font-size: 2.2rem; color: #FFE7A3; text-shadow: 0 2px 10px rgba(0,0,0,0.9);">${s.value}</div>
+          <div class="stat-label readable-text" style="font-weight: 600 !important;">${s.label}</div>
         </div>
       </div>
     `).join('');
@@ -290,7 +334,7 @@ const APP = (() => {
         miniStatsHTML = `<div class="focus-mini-stats">` + b.miniStats.map(m => `
           <div class="mini-stat">
             <span class="ms-val">${m.value}</span>
-            <span class="ms-lbl">${m.label}</span>
+            <span class="ms-lbl readable-text">${m.label}</span>
           </div>
         `).join('') + `</div>`;
       }
@@ -298,13 +342,13 @@ const APP = (() => {
       let imgHTML = b.image ? `<img src="${b.image}" alt="${b.title}" class="fb-img">` : '';
 
       return `
-        <div class="focus-block-card reveal-on-scroll reveal-delay-${i + 1}" id="focus-${b.id}">
+        <div class="focus-block-card readable-glass-card theme-on-red content-backplate" reveal-on-scroll reveal-delay-${i + 1}" id="focus-${b.id}">
           <div class="fb-header-flex" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
             <div class="fb-icon" style="margin:0;">${b.icon}</div>
             <h3 class="fb-title" style="margin:0;">${b.title}</h3>
           </div>
           ${imgHTML}
-          <p class="fb-desc">${b.description || ''}</p>
+          <p class="fb-desc readable-text">${b.description || ''}</p>
           ${miniStatsHTML}
         </div>
       `;
@@ -323,14 +367,16 @@ const APP = (() => {
             <div class="hero-logo-left">
               <svg viewBox="0 0 100 100" class="flag-icon">
                 <rect width="100" height="100" fill="#DA251D" rx="10"/>
-                <g transform="translate(50, 50) scale(0.7) translate(-50, -57.5)"><polygon points="50,15 61,48 95,48 68,68 78,100 50,80 22,100 32,68 5,48 39,48" fill="#FFFF00"/></g>
+                <polygon points="50.00,20.00 56.74,40.73 78.53,40.73 60.90,53.54 67.63,74.27 50.00,61.46 32.37,74.27 39.10,53.54 21.47,40.73 43.26,40.73" fill="#FFFF00"/>
               </svg>
             </div>
             <div class="hero-logo-right">
               <svg viewBox="0 0 100 100" class="flag-icon party-flag">
                 <rect width="100" height="100" fill="#DA251D" rx="10"/>
-                <!-- Hammer and Sickle SVG path -->
-                <text x="50" y="50" font-size="65" fill="#FFFF00" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif">&#9773;</text>
+                <g transform="translate(50, 50) scale(0.357) translate(-198.29, -186.21)" fill="#FFFF00">
+                    <path d="m 137.43744,171.69421 18.86296,18.9937 17.78834,-17.66589 c 27.05847,29.021 55.43807,56.99501 82.28704,86.12782 4.03444,4.06233 10.59815,4.085 14.66056,0.0506 4.06232,-4.03445 4.08499,-10.59815 0.0506,-14.66056 -28.81871,-27.1901 -57.72545,-54.60143 -86.55328,-81.89095 l 23.96499,-23.80003 -33.34026,-4.61605 z" />
+                    <path d="m 198.2887,110.1955 c 15.51743,8.7394 27.29872,21.28122 34.2484,34.3924 7.04394,13.28902 10.13959,27.16218 10.20325,38.25433 0.13054,22.74374 -18.43771,41.18184 -41.18183,41.18184 -12.13597,0 -23.04607,-5.24868 -30.58302,-13.60085 l -4.16863,3.51033 c -0.70999,-0.27231 -1.46387,-0.41221 -2.22429,-0.41276 -1.82948,1.9e-4 -3.56621,0.80531 -4.74859,2.20136 -2.97368,0.38896 -5.46251,2.44529 -6.40534,5.29224 -3.13486,6.28843 -8.63524,11.21997 -15.29104,13.4776 -0.0637,0.0216 -0.11992,0.05 -0.1758,0.0783 -3.07749,1.12758 -6.16259,3.1643 -8.78919,5.80245 -5.19155,5.23656 -7.72858,11.93658 -6.30024,16.63822 -0.14098,0.40857 -0.21361,0.83759 -0.21498,1.26979 1.5e-4,2.17082 1.75991,3.93058 3.93073,3.93073 0.54341,-0.002 1.08053,-0.11639 1.57745,-0.33632 4.69369,1.05881 11.06885,-1.54582 16.05444,-6.55917 2.82624,-2.85072 4.94356,-6.22349 5.98303,-9.53062 2.31696,-6.62278 7.29699,-12.01856 13.62281,-15.05312 0.15105,-0.0725 0.27303,-0.14714 0.38218,-0.22358 2.12082,-1.01408 3.67251,-2.92895 4.225,-5.2139 9.70222,11.44481 24.25255,18.75299 40.51876,19.13577 29.83352,0.70205 52.13299,-21.25802 53.16414,-52.83642 0.51894,-15.89259 -5.62993,-36.3847 -19.6412,-53.19089 -10.70835,-12.84441 -26.40987,-23.50795 -44.18699,-28.20777 z" />
+                  </g>
               </svg>
             </div>
           <div class="hero-overlay">
@@ -340,12 +386,15 @@ const APP = (() => {
         
         <div class="hero-grid single-column section-container">
           <div class="hero-center">
+              <div class="god-rays"></div>
             <div class="special-badge reveal-on-scroll">${data.badge}</div>
             <h1 class="hero-title reveal-on-scroll reveal-delay-1">
                 ${data.title}
               </h1>
             <h2 class="hero-subtitle reveal-on-scroll reveal-delay-2">${data.subtitle}</h2>
             <div class="hero-desc reveal-on-scroll reveal-delay-3">${data.description}</div>
+              ${mottoHTML}
+              ${themeHTML}
             
             <div class="hero-actions reveal-on-scroll reveal-delay-4">
               <button class="btn-primary interactive-surface" onclick="APP.scrollToSection('mindmap-section')">Khám phá 9 nghị quyết</button>
@@ -378,6 +427,8 @@ const APP = (() => {
           </div>
         </div>
       </section>
+
+        ${responsibilitiesHTML}
     `;
   }
 
@@ -407,8 +458,8 @@ const APP = (() => {
                  onclick="APP.navigateTo('#/nghi-quyet/${res.id}')"
                  onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();APP.navigateTo('#/nghi-quyet/${res.id}');}">
               <div class="node-inner" style="background: radial-gradient(circle at 35% 35%, ${res.colorLight} 0%, ${res.color}22 100%); border-color: ${res.color}88; box-shadow: 0 0 15px ${res.colorGlow};">
-                <div class="node-number-big" style="color: ${res.color}; text-shadow: 0 2px 10px ${res.colorLight};">${res.number.replace('-NQ/TW', '')}</div>
-                <div class="node-title-small">${res.shortTitle}</div>
+                <div class="node-number-big high-contrast-heading" style="color: ${getContrastColor(res.color)}; text-shadow: 0 2px 15px rgba(0,0,0,0.8), 0 0 5px ${res.color};">${res.number.replace('-NQ/TW', '')}</div>
+                <div class="node-title-small readable-text" style="font-weight: 700 !important; font-size: 0.95rem;">${res.shortTitle}</div>
               </div>
             </div>
           </div>
@@ -425,7 +476,7 @@ const APP = (() => {
               <stop offset="100%" stop-color="rgba(0,0,0,0.2)"/>
             </radialGradient>
           </defs>
-          <circle cx="50%" cy="50%" r="44%" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="0.3" stroke-dasharray="4 4" />
+          <circle cx="50%" cy="50%" r="44%" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.6" stroke-dasharray="4 4" />
         </svg>
         ${nodesHTML}
       </div>
@@ -454,7 +505,7 @@ const APP = (() => {
   function generateMobileMindMapHTML() {
     return RESOLUTIONS_DATA.map(res => `
       <div class="resolution-card interactive-surface"
-           style="--card-color: ${res.color};"
+           style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)};"
            onclick="APP.navigateTo('#/nghi-quyet/${res.id}')"
            role="button" tabindex="0"
            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();APP.navigateTo('#/nghi-quyet/${res.id}');}">
@@ -462,8 +513,8 @@ const APP = (() => {
           ${res.icon}
         </div>
         <div class="card-body">
-          <div class="card-num" style="color:${res.color};">${res.number}</div>
-          <div class="card-title">${res.shortTitle}</div>
+          <div class="card-num high-contrast-heading" style="color:${getContrastColor(res.color)};">${res.number}</div>
+          <div class="card-title readable-text" style="font-weight: 600 !important;">${res.shortTitle}</div>
         </div>
         <div class="card-arrow">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -623,6 +674,7 @@ const APP = (() => {
   }
 
   function showDetailPage(id) {
+    if (typeof activateBgLayer === "function") activateBgLayer(1);
     const res = RESOLUTIONS_DATA.find(r => r.id === id);
     if (!res) { showHomePage(); return; }
 
@@ -880,14 +932,31 @@ const APP = (() => {
     drawGlobe();
   }
 
-  function buildDetailHTML(res, idx, prev, next) {
+  
+function getContrastColor(hex) {
+  if (!hex) return '#FFFFFF';
+  hex = hex.replace('#', '');
+  if (hex.length === 3) hex = hex.split('').map(c => c+c).join('');
+  const r = parseInt(hex.substring(0,2), 16);
+  const g = parseInt(hex.substring(2,4), 16);
+  const b = parseInt(hex.substring(4,6), 16);
+  const yiq = ((r*299)+(g*587)+(b*114))/1000;
+  return (yiq >= 128) ? '#1A1515' : '#FFFFFF';
+}
+
+function buildDetailHTML(res, idx, prev, next) {
+    
+
+
+    
+    // Refactored University Responsibilities Section
     const hasDate = res.date && res.date !== '2025' && res.date !== '2026';
 
     let introHTML = '';
     if (res.intro) {
       introHTML = `
         <div class="content-section reveal-on-scroll">
-          <div class="resolution-intro" style="font-size:1.1rem; line-height:1.8; color:var(--clr-text); border-left: 4px solid ${res.color}; padding-left: 20px; margin-bottom: 30px; background: var(--glass-bg); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
+          <div class="resolution-intro theme-on-red content-backplate" style="font-size:1.25rem; line-height:1.9; font-weight:500; border-left: 4px solid ${res.color}; padding-left: 20px; margin-bottom: 30px; background: var(--glass-bg); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.1);">
             ${res.intro}
           </div>
         </div>
@@ -899,11 +968,11 @@ const APP = (() => {
     if (res.context) {
       contextHTML = `
         <div class="content-section reveal-on-scroll">
-          <div class="glass-context-box" style="--card-color: ${res.color};">
+          <div class="glass-context-box theme-on-red content-backplate" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)};">
             <h2 class="glass-context-title">
               <span class="section-icon">📖</span>Bối cảnh ra đời
             </h2>
-            <div class="glass-context-text">
+            <div class="glass-context-text readable-text" style="font-size: 1.1rem;">
               ${res.context}
             </div>
           </div>
@@ -920,7 +989,7 @@ const APP = (() => {
           </h2>
           <div class="glass-summary-grid balanced-grid" data-count="${res.coreIdeas.length}">
             ${res.coreIdeas.map((idea, i) => `
-              <div class="glass-summary-card reveal-on-scroll" style="--card-color: ${res.color}; transition-delay: ${i*50}ms;">
+              <div class="glass-summary-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*50}ms;">
                 <div class="glass-summary-num">${i + 1}</div>
                 <div class="glass-summary-text">${idea}</div>
               </div>
@@ -940,7 +1009,7 @@ const APP = (() => {
           </h2>
           <div class="glass-pillar-grid balanced-grid" data-count="${res.generalGoals.length}">
             ${res.generalGoals.map((b, i) => `
-              <div class="glass-pillar-card reveal-on-scroll" style="--card-color: ${res.color}; transition-delay: ${i*80}ms;">
+              <div class="glass-pillar-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*80}ms;">
                 <div class="glass-pillar-icon" style="color: ${res.color};">${b.icon || 'ðŸŽ¯'}</div>
                 <h3 class="glass-pillar-title">${b.title}</h3>
                 <p class="glass-pillar-desc">${b.desc}</p>
@@ -961,7 +1030,7 @@ const APP = (() => {
           </h2>
           <div class="glass-pillar-grid balanced-grid" data-count="${res.infographicBlocks.length}">
             ${res.infographicBlocks.map((b, i) => `
-              <div class="glass-pillar-card reveal-on-scroll" style="--card-color: ${res.color}; transition-delay: ${i*80}ms;">
+              <div class="glass-pillar-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*80}ms;">
                 ${b.image ? `<img src="${b.image}" alt="${b.title}" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:var(--r-md); margin-bottom:1.5rem; border:1px solid rgba(0,0,0,0.05);">` : ''}
                 <h3 class="glass-pillar-title">${b.title}</h3>
                 <p class="glass-pillar-desc">${b.desc}</p>
@@ -991,7 +1060,7 @@ const APP = (() => {
             let circumference = 2 * Math.PI * 45;
             let offset = circumference - (percentage / 100) * circumference;
             return `
-              <div class="glass-radial-card reveal-on-scroll" style="--card-color: ${res.color}; transition-delay: ${i*50}ms;">
+              <div class="glass-radial-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*50}ms;">
                 <div class="glass-radial-circle">
                   <svg viewBox="0 0 100 100">
                     <circle class="glass-radial-bg" cx="50" cy="50" r="45"></circle>
@@ -1008,7 +1077,7 @@ const APP = (() => {
       } else {
         innerHTML = `<div class="glass-stat-grid balanced-grid" data-count="${res.goals2030.length}">
           ${res.goals2030.map((g, i) => `
-            <div class="glass-stat-card reveal-on-scroll" style="--card-color: ${res.color}; transition-delay: ${i*60}ms;">
+            <div class="glass-stat-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*60}ms;">
               <div class="glass-stat-value auto-counter" data-raw-text="${g.value}">${g.value}</div>
               <div class="glass-stat-label">${g.label}</div>
               <div class="glass-stat-desc">${g.description}</div>
@@ -1037,7 +1106,7 @@ const APP = (() => {
           </h2>
           <div class="glass-timeline">
             ${res.vision2045.map((v, i) => `
-              <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; transition-delay: ${i*70}ms;">
+              <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*70}ms;">
                 <div class="glass-timeline-dot"></div>
                 <div class="glass-timeline-content">
                   <div class="glass-timeline-desc">${v}</div>
@@ -1051,7 +1120,7 @@ const APP = (() => {
     }
 
     let tasksHTML = '';
-    let tasksData = res.tasks || res.tasksList || [];
+    let tasksData = (res.tasks || res.tasksList || []).filter(t => typeof t === 'string' || !(/hành động|trách nhiệm|CSND/i.test(t.title || '')));
     if (tasksData.length > 0) {
       tasksHTML = `
         <div class="content-section reveal-on-scroll">
@@ -1062,7 +1131,7 @@ const APP = (() => {
             ${tasksData.map((t, i) => {
               if (typeof t === 'string') {
                 return `
-                  <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; transition-delay: ${(i%5)*60}ms;">
+                  <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${(i%5)*60}ms;">
                     <div class="glass-timeline-dot"></div>
                     <div class="glass-timeline-content">
                       <div class="glass-timeline-desc">${t}</div>
@@ -1071,7 +1140,7 @@ const APP = (() => {
                 `;
               } else {
                 return `
-                  <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; transition-delay: ${(i%5)*60}ms;">
+                  <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${(i%5)*60}ms;">
                     <div class="glass-timeline-dot"></div>
                     <div class="glass-timeline-content">
                       <h3 class="glass-timeline-title">${t.title}</h3>
@@ -1091,34 +1160,15 @@ const APP = (() => {
     let newPointsHTML = '';
     if (res.newPoints && res.newPoints.length > 0) {
       newPointsHTML = `
-        <div class="content-section reveal-on-scroll" style="margin-top: 3rem;">
-          <h2 class="content-section-title" style="color: #FFB300;">
-            <span class="section-icon">✨</span>Điểm mới đột pháÃ¡
+        <div class="action-section theme-on-red reveal-on-scroll" style="margin-top: 3rem;">
+          <h2 class="action-section-title theme-on-red" style="color: var(--accent-on-red) !important;">
+            <i class="fas fa-lightbulb"></i> Điểm mới đột phá
           </h2>
-          <div class="glass-summary-grid balanced-grid" data-count="${res.newPoints.length}">
+          <div class="action-grid">
             ${res.newPoints.map((point, i) => `
-              <div class="glass-highlight-card reveal-on-scroll" style="transition-delay: ${i*50}ms;">
-                <div class="glass-highlight-badge">NEW</div>
-                <div class="glass-highlight-text">${point}</div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `;
-    }
-
-    let practicalHTML = '';
-    if (res.practicalApplication && res.practicalApplication.length > 0) {
-      practicalHTML = `
-        <div class="content-section reveal-on-scroll" style="margin-top: 3rem; background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
-          <h2 class="content-section-title" style="color: #4CAF50;">
-            <span class="section-icon">👮</span>Hành động của Lực lượng CSND
-          </h2>
-          <div class="glass-pillar-grid balanced-grid" data-count="${res.practicalApplication.length}">
-            ${res.practicalApplication.map((action, i) => `
-              <div class="glass-action-card reveal-on-scroll" style="transition-delay: ${i*80}ms;">
-                <div class="glass-action-icon">âœ”ï¸</div>
-                <div class="glass-action-text">${action}</div>
+              <div class="action-card readable-glass-card theme-on-red" reveal-on-scroll reveal-delay-${i}" style="border-top-color: var(--accent-on-red);">
+                <div class="action-card-icon" style="background: rgba(255,231,163,0.15); color: var(--accent-on-red);"><i class="fas fa-star"></i></div>
+                <div class="action-card-text readable-text">${point}</div>
               </div>
             `).join('')}
           </div>
@@ -1127,42 +1177,33 @@ const APP = (() => {
     }
 
     
-    let csndHTML = '';
-    if (res.csndApplication) {
-      csndHTML = `
-        <div class="content-section reveal-on-scroll" style="margin-top: 3.5rem; background: linear-gradient(135deg, rgba(30, 60, 114, 0.2) 0%, rgba(42, 82, 152, 0.1) 100%); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid rgba(100, 150, 255, 0.3); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); position: relative; overflow: hidden;">
-          <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--gold-color); opacity: 0.1; filter: blur(50px); border-radius: 50%;"></div>
-          
-          <h2 class="content-section-title" style="color: var(--gold-color); margin-bottom: 0.5rem; text-shadow: 0 2px 10px rgba(255, 215, 0, 0.2); font-size: 1.8rem;">
-            <span class="section-icon" style="background: rgba(255, 255, 255, 0.8); padding: 4px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; width: 50px; height: 50px; margin-right: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);"><img src="https://upload.wikimedia.org/wikipedia/vi/c/c5/Logo_dai_hoc_CSNDấu ấn Trường Đại học CSND
+    let responsibilityHTML = '';
+    if (res.responsibilities && res.responsibilities.length === 5) {
+      responsibilityHTML = `
+        <div class="action-section theme-on-red content-backplate reveal-on-scroll" style="margin-top: 4rem; padding: 3rem 2rem; border-radius: var(--radius-lg); background: rgba(0,0,0,0.2);">
+          <div class="action-section-subtitle" style="text-align: center; color: var(--accent-on-red); font-weight: 700; letter-spacing: 2px; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 0.5rem;">TỪ NGHỊ QUYẾT ĐẾN HÀNH ĐỘNG</div>
+          <h2 class="action-section-title" style="color: #fff !important; text-align: center; margin-bottom: 1rem; font-size: 1.8rem;">
+            ${res.responsibilityTitle || 'TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND'}
           </h2>
-          <p style="color: rgba(255,255,255,0.85); font-size: 1.1rem; margin-bottom: 2rem; padding-left: 60px; font-style: italic;">Từ nghị quyết của Đảng đến đào tạo, nghiên cứu và xây dựng người cán bộ Cảnh sát nhân dân</p>
-          
-          <div style="margin-bottom: 2.5rem; padding: 1.5rem; background: rgba(0,0,0,0.3); border-left: 4px solid var(--gold-color); border-radius: 0 var(--radius-md) var(--radius-md) 0;">
-            <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 1rem;">${res.csndApplication.intro}</p>
-            <p style="font-size: 1.25rem; font-weight: 600; color: #4CAF50; line-height: 1.6; text-shadow: 0 1px 5px rgba(0,0,0,0.5);"><em>"${res.csndApplication.slogan}"</em></p>
+          <div style="text-align: center; color: var(--text-on-red-secondary); margin-bottom: 2.5rem; font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            ${res.responsibilitySubtitle || 'Cụ thể hóa nghị quyết thành nhận thức, trách nhiệm và hành động trong giáo dục, đào tạo, nghiên cứu khoa học và xây dựng lực lượng CAND.'}
           </div>
-
-          <div class="glass-pillar-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
-            ${res.csndApplication.cards.map((card, i) => `
-              <div class="glass-action-card reveal-on-scroll" style="transition-delay: ${i*100}ms; background: rgba(255,255,255,0.05); border-top: 2px solid ${i===0 ? '#4CAF50' : i===1 ? '#2196F3' : '#FF9800'}; padding: 1.5rem; height: 100%; display: flex; flex-direction: column;">
-                <div style="font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.1); font-size: 0.9rem;">${i+1}</span>
-                  ${card.title}
+          
+          <div class="action-grid-5">
+            ${res.responsibilities.map((resp, i) => `
+              <div class="action-card readable-glass-card content-backplate reveal-on-scroll reveal-delay-${i}" style="border-top-color: var(--accent-on-red);">
+                <div class="action-card-icon" style="color: var(--accent-on-red); font-size: 1.8rem; margin-bottom: 1rem;">
+                  <span style="font-size: 1.2rem; font-weight: 800; opacity: 0.9; margin-right: 12px; font-family: monospace;">${resp.id}</span>${resp.icon}
                 </div>
-                <div style="color: rgba(255,255,255,0.8); line-height: 1.6; flex-grow: 1;">${card.desc}</div>
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.8rem; color: #fff;">${resp.title}</h3>
+                <div class="action-card-text readable-text" style="color: var(--text-on-red-secondary); font-size: 1.05rem; line-height: 1.6;">${resp.content}</div>
               </div>
             `).join('')}
-          </div>
-
-          <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px dashed rgba(255,255,255,0.2);">
-            <p style="font-size: 1.15rem; font-weight: 500; color: #fff; line-height: 1.8; max-width: 900px; margin: 0 auto;">
-              "Náº¿u cÃ¡c Ä‘Æ¡n vá»‹ chiáº¿n Ä‘áº¥u trá»±c tiáº¿p cá»¥ thá»ƒ hÃ³a nghá»‹ quyáº¿t báº±ng chiáº¿n cÃ´ng, mÃ´ hÃ¬nh vÃ  káº¿t quáº£ trÃªn Ä‘á»‹a bÃ n, thÃ¬ <span style="color: var(--gold-color);">TrÆ°á»ng Äáº¡i há»c CSND</span> cá»¥ thá»ƒ hÃ³a nghá»‹ quyáº¿t báº±ng viá»‡c Ä‘Ã o táº¡o nÃªn nhá»¯ng cÃ¡n bá»™ Cáº£nh sÃ¡t nhÃ¢n dÃ¢n cÃ³ <span style="color: #4CAF50;">báº£n lÄ©nh chÃ­nh trá»‹ vá»¯ng vÃ ng, phÃ¡p luáº­t vá»¯ng cháº¯c, nghiá»‡p vá»¥ tinh thÃ´ng, cÃ´ng nghá»‡ thÃ nh tháº¡o vÃ  vÄƒn hÃ³a á»©ng xá»­ nhÃ¢n vÄƒn, vÃ¬ NhÃ¢n dÃ¢n phá»¥c vá»¥.</span>"
-            </p>
           </div>
         </div>
       `;
     }
+
 
     let quotesHTML = '';
     if (res.quoteBlocks && res.quoteBlocks.length > 0) {
@@ -1173,9 +1214,9 @@ const APP = (() => {
           </h2>
           <div>
             ${res.quoteBlocks.map((q, i) => `
-              <div class="glass-impact-card reveal-on-scroll" style="--card-color: ${res.color}; transition-delay: ${i*50}ms;">
-                <div class="glass-impact-text">${q.quote}</div>
-                <div class="glass-impact-speaker">${q.speaker}${q.context ? `<br><span style="font-size:0.85em; font-weight:normal; opacity:0.8;">${q.context}</span>` : ''}</div>
+              <div class="glass-impact-card readable-glass-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*50}ms;">
+                <div class="glass-impact-text readable-text" style="font-size: 1.25rem; font-style: italic; margin-bottom: 1rem; color: #fff;">"${q.quote}"</div>
+                <div class="glass-impact-speaker high-contrast-heading" style="color: var(--clr-accent-light); font-size: 1.1rem;">- ${q.speaker}${q.context ? `<br><span style="font-size:0.85em; font-weight:normal; opacity:0.8;">${q.context}</span>` : ''}</div>
               </div>
             `).join('')}
           </div>
@@ -1183,8 +1224,9 @@ const APP = (() => {
       `;
     }
 
+    
     return `
-      <div class="detail-page">
+      <div class="detail-page theme-on-red">
         ${res.id === "57" ? '<canvas id="particles-bg"></canvas>' : ''}
         ${res.id === "59" ? '<canvas id="globe-particles"></canvas><canvas id="particles-bg-59" class="particles-canvas"></canvas>' : ''}
         
@@ -1220,7 +1262,7 @@ const APP = (() => {
               <span class="meta-value">${res.theme}</span>
             </div>
             <div class="meta-item">
-              <span class="meta-label">Thá»© tá»±</span>
+              <span class="meta-label">Thứ tự</span>
               <span class="meta-value">${idx + 1} / 9 nghị quyết</span>
             </div>
           </div>
@@ -1235,8 +1277,9 @@ const APP = (() => {
             ${visionHTML}
             ${tasksHTML}
             ${newPointsHTML}
-            ${practicalHTML}
-            ${csndHTML}
+            
+            
+            ${responsibilityHTML}
             ${quotesHTML}
           </div>
         </div>
@@ -1270,7 +1313,7 @@ const APP = (() => {
         </footer>
 
         <!-- macOS Style Floating Navigation Dock -->
-        <nav class="mac-dock-nav">
+        <nav class="mac-dock-nav" style="background: rgba(10,10,10,0.85); border: 1px solid rgba(255,255,255,0.15);">
           ${prev ? `
           <button class="mac-dock-btn interactive-surface tooltip-target" aria-label="Nghị quyết trước: ${prev.number}" onclick="APP.navigateTo('#/nghi-quyet/${prev.id}')">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -1455,7 +1498,57 @@ function updatingNotice(label) {
   }
 
   // Public API
-  return { 
+  
+    // ==========================================
+    // DYNAMIC BACKGROUND TRANSITIONS
+    // ==========================================
+    let bgObserver = null;
+    
+    function initDynamicBackgrounds() {
+      // Disconnect existing observer if any
+      if (bgObserver) {
+        bgObserver.disconnect();
+      }
+      
+
+      
+      const layer1Target = document.querySelector('.hero-grid');
+      const layer2Target = document.querySelector('.congress-intro-section');
+      const layer3Target = document.getElementById('mindmap-section');
+      
+      const options = {
+        root: null,
+        rootMargin: '-30% 0px -30% 0px', // Trigger when section is around middle of screen
+        threshold: 0
+      };
+      
+      bgObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (entry.target === layer1Target) activateBgLayer(1);
+            else if (entry.target === layer2Target) activateBgLayer(2);
+            else if (entry.target === layer3Target) activateBgLayer(3);
+          }
+        });
+      }, options);
+      
+      if (layer1Target) bgObserver.observe(layer1Target);
+      if (layer2Target) bgObserver.observe(layer2Target);
+      if (layer3Target) bgObserver.observe(layer3Target);
+      
+      // Default fallback
+      activateBgLayer(1);
+    }
+    
+    function activateBgLayer(layerNum) {
+      document.querySelectorAll('.dynamic-bg-layer').forEach(el => el.classList.remove('active'));
+      const activeLayer = document.getElementById('bg-layer-' + layerNum);
+      if (activeLayer) {
+        activeLayer.classList.add('active');
+      }
+    }
+
+    return { 
     init, 
     navigateTo, 
     scrollToSection, 
