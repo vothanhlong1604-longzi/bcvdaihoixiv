@@ -1,4 +1,4 @@
-﻿# Node.js and dependencies
+# Node.js and dependencies
 node_modules/
 .npm/
 
@@ -9,7 +9,12 @@ node_modules/
 Thumbs.db
 
 # Heavy reference documents
-VAN KIEN DAI HOI XIV/
 VĂN KIỆN ĐẠI HỘI XIV/
 *.pdf
 *.log
+
+# Python cache and temp files
+__pycache__/
+*.pyc
+scratch/
+
