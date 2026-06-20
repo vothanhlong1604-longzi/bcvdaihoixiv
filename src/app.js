@@ -1,4 +1,4 @@
-﻿/**
+/**
  * app.js â€” E-Magazine SPA: Đại hội XIV – 9 Nghị quyết chiến lược
  * Khoa LLCT&KHXHNV - Trường Đại học Cảnh sát nhân dân
  *
@@ -359,49 +359,48 @@ const APP = (() => {
       <header class="hero-section" id="hero-section">
         <div class="hero-bg">
           <div class="hero-flag-bg"></div>
-            <!-- Dynamic Light Rays -->
-            <div class="hero-light-ray ray-left"></div>
-            <div class="hero-light-ray ray-right"></div>
-            
-            <!-- Top Corner Logos -->
-            <div class="hero-logo-left">
-              <svg viewBox="0 0 100 100" class="flag-icon">
-                <rect width="100" height="100" fill="#DA251D" rx="10"/>
-                <polygon points="50.00,20.00 56.74,40.73 78.53,40.73 60.90,53.54 67.63,74.27 50.00,61.46 32.37,74.27 39.10,53.54 21.47,40.73 43.26,40.73" fill="#FFFF00"/>
-              </svg>
-            </div>
-            <div class="hero-logo-right">
-              <svg viewBox="0 0 100 100" class="flag-icon party-flag">
-                <rect width="100" height="100" fill="#DA251D" rx="10"/>
-                <g transform="translate(50, 50) scale(0.357) translate(-198.29, -186.21)" fill="#FFFF00">
-                    <path d="m 137.43744,171.69421 18.86296,18.9937 17.78834,-17.66589 c 27.05847,29.021 55.43807,56.99501 82.28704,86.12782 4.03444,4.06233 10.59815,4.085 14.66056,0.0506 4.06232,-4.03445 4.08499,-10.59815 0.0506,-14.66056 -28.81871,-27.1901 -57.72545,-54.60143 -86.55328,-81.89095 l 23.96499,-23.80003 -33.34026,-4.61605 z" />
-                    <path d="m 198.2887,110.1955 c 15.51743,8.7394 27.29872,21.28122 34.2484,34.3924 7.04394,13.28902 10.13959,27.16218 10.20325,38.25433 0.13054,22.74374 -18.43771,41.18184 -41.18183,41.18184 -12.13597,0 -23.04607,-5.24868 -30.58302,-13.60085 l -4.16863,3.51033 c -0.70999,-0.27231 -1.46387,-0.41221 -2.22429,-0.41276 -1.82948,1.9e-4 -3.56621,0.80531 -4.74859,2.20136 -2.97368,0.38896 -5.46251,2.44529 -6.40534,5.29224 -3.13486,6.28843 -8.63524,11.21997 -15.29104,13.4776 -0.0637,0.0216 -0.11992,0.05 -0.1758,0.0783 -3.07749,1.12758 -6.16259,3.1643 -8.78919,5.80245 -5.19155,5.23656 -7.72858,11.93658 -6.30024,16.63822 -0.14098,0.40857 -0.21361,0.83759 -0.21498,1.26979 1.5e-4,2.17082 1.75991,3.93058 3.93073,3.93073 0.54341,-0.002 1.08053,-0.11639 1.57745,-0.33632 4.69369,1.05881 11.06885,-1.54582 16.05444,-6.55917 2.82624,-2.85072 4.94356,-6.22349 5.98303,-9.53062 2.31696,-6.62278 7.29699,-12.01856 13.62281,-15.05312 0.15105,-0.0725 0.27303,-0.14714 0.38218,-0.22358 2.12082,-1.01408 3.67251,-2.92895 4.225,-5.2139 9.70222,11.44481 24.25255,18.75299 40.51876,19.13577 29.83352,0.70205 52.13299,-21.25802 53.16414,-52.83642 0.51894,-15.89259 -5.62993,-36.3847 -19.6412,-53.19089 -10.70835,-12.84441 -26.40987,-23.50795 -44.18699,-28.20777 z" />
-                  </g>
-              </svg>
-            </div>
+          <!-- Dynamic Light Rays -->
+          <div class="hero-light-ray ray-left"></div>
+          <div class="hero-light-ray ray-right"></div>
+          
+          <!-- Top Corner Logos -->
+          <div class="hero-logo-left">
+            <svg viewBox="0 0 150 100" class="flag-icon">
+              <rect width="150" height="100" fill="#DA251D" rx="10"/>
+              <polygon points="75.00,20.00 81.74,40.73 103.53,40.73 85.90,53.54 92.63,74.27 75.00,61.46 57.37,74.27 64.10,53.54 46.47,40.73 68.26,40.73" fill="#FFFF00"/>
+            </svg>
+          </div>
+          <div class="hero-logo-right">
+            <svg viewBox="0 0 150 100" class="flag-icon party-flag">
+              <rect width="150" height="100" fill="#DA251D" rx="10"/>
+              <g transform="translate(75, 50) scale(0.357) translate(-198.29, -186.21)" fill="#FFFF00">
+                <path d="m 137.43744,171.69421 18.86296,18.9937 17.78834,-17.66589 c 27.05847,29.021 55.43807,56.99501 82.28704,86.12782 4.03444,4.06233 10.59815,4.085 14.66056,0.0506 4.06232,-4.03445 4.08499,-10.59815 0.0506,-14.66056 -28.81871,-27.1901 -57.72545,-54.60143 -86.55328,-81.89095 l 23.96499,-23.80003 -33.34026,-4.61605 z" />
+                <path d="m 198.2887,110.1955 c 15.51743,8.7394 27.29872,21.28122 34.2484,34.3924 7.04394,13.28902 10.13959,27.16218 10.20325,38.25433 0.13054,22.74374 -18.43771,41.18184 -41.18183,41.18184 -12.13597,0 -23.04607,-5.24868 -30.58302,-13.60085 l -4.16863,3.51033 c -0.70999,-0.27231 -1.46387,-0.41221 -2.22429,-0.41276 -1.82948,1.9e-4 -3.56621,0.80531 -4.74859,2.20136 -2.97368,0.38896 -5.46251,2.44529 -6.40534,5.29224 -3.13486,6.28843 -8.63524,11.21997 -15.29104,13.4776 -0.0637,0.0216 -0.11992,0.05 -0.1758,0.0783 -3.07749,1.12758 -6.16259,3.1643 -8.78919,5.80245 -5.19155,5.23656 -7.72858,11.93658 -6.30024,16.63822 -0.14098,0.40857 -0.21361,0.83759 -0.21498,1.26979 1.5e-4,2.17082 1.75991,3.93058 3.93073,3.93073 0.54341,-0.002 1.08053,-0.11639 1.57745,-0.33632 4.69369,1.05881 11.06885,-1.54582 16.05444,-6.55917 2.82624,-2.85072 4.94356,-6.22349 5.98303,-9.53062 2.31696,-6.62278 7.29699,-12.01856 13.62281,-15.05312 0.15105,-0.0725 0.27303,-0.14714 0.38218,-0.22358 2.12082,-1.01408 3.67251,-2.92895 4.225,-5.2139 9.70222,11.44481 24.25255,18.75299 40.51876,19.13577 29.83352,0.70205 52.13299,-21.25802 53.16414,-52.83642 0.51894,-15.89259 -5.62993,-36.3847 -19.6412,-53.19089 -10.70835,-12.84441 -26.40987,-23.50795 -44.18699,-28.20777 z" />
+              </g>
+            </svg>
+          </div>
           <div class="hero-overlay">
-          <div id="particles-js" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></div>
-          <div class="bg-glow"></div></div>
+            <div id="particles-js" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></div>
+            <div class="bg-glow"></div>
+          </div>
         </div>
         
         <div class="hero-grid single-column section-container">
           <div class="hero-center">
-              <div class="god-rays"></div>
+            <div class="god-rays"></div>
             <div class="special-badge reveal-on-scroll">${data.badge}</div>
             <h1 class="hero-title reveal-on-scroll reveal-delay-1">
-                ${data.title}
-              </h1>
+              ${data.title}
+            </h1>
             <h2 class="hero-subtitle reveal-on-scroll reveal-delay-2">${data.subtitle}</h2>
             <div class="hero-desc reveal-on-scroll reveal-delay-3">${data.description}</div>
-              ${mottoHTML}
-              ${themeHTML}
+            ${mottoHTML}
+            ${themeHTML}
             
             <div class="hero-actions reveal-on-scroll reveal-delay-4">
               <button class="btn-primary interactive-surface" onclick="APP.scrollToSection('mindmap-section')">Khám phá 9 nghị quyết</button>
               <button class="btn-secondary interactive-surface" onclick="window.open('https://notebooklm.google.com/notebook/0b782612-6ac3-4fce-ae16-cce64a7beaac', '_blank')">HỎI NOTEBOOKLM</button>
             </div>
-
-            
 
             <div class="hero-stats-grid balanced-grid" data-count="${data.stats.length}">
               ${statsHTML}
@@ -428,7 +427,7 @@ const APP = (() => {
         </div>
       </section>
 
-        ${responsibilitiesHTML}
+      ${responsibilitiesHTML}
     `;
   }
 
@@ -1301,7 +1300,7 @@ function buildDetailHTML(res, idx, prev, next) {
         <footer class="main-footer">
           <div class="footer-content">
             <div class="footer-brand">
-              <span class="footer-star">â­</span>
+              <span class="footer-star">⭐</span>
               <div>
                 <div class="footer-title">E-magazine kết hợp với phong cách infographic số hóa</div>
                 <div class="footer-subtitle">Khoa LLCT&amp;KHXHNV - Trường Đại học Cảnh sát nhân dân</div>

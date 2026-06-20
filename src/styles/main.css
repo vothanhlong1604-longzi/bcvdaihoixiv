@@ -1744,8 +1744,8 @@ a:hover { color: var(--clr-accent-light); }
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.85;
-    filter: brightness(0.85) contrast(1.1) saturate(1.2);
+    opacity: 0.95;
+    filter: brightness(1.05) contrast(1.1) saturate(1.25);
     transform: scale(1.05);
     animation: hero-flag-parallax 30s ease-in-out infinite alternate;
     z-index: 0;
@@ -1757,8 +1757,8 @@ a:hover { color: var(--clr-accent-light); }
     position: absolute;
     inset: 0;
     background: 
-      radial-gradient(circle at center, transparent 20%, rgba(10, 17, 40, 0.7) 90%),
-      linear-gradient(to top, rgba(10, 17, 40, 0.98) 0%, rgba(10, 17, 40, 0.4) 30%, transparent 100%);
+      radial-gradient(circle at center, transparent 20%, rgba(10, 17, 40, 0.45) 90%),
+      linear-gradient(to top, rgba(10, 17, 40, 0.8) 0%, rgba(10, 17, 40, 0.3) 30%, transparent 100%);
     z-index: 1;
 }
 
@@ -4191,7 +4191,7 @@ a:hover { color: var(--clr-accent-light); }
 .bg-effect {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.7) 100%);
+    background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.45) 100%);
     z-index: 0;
     pointer-events: none;
 }
@@ -4206,7 +4206,7 @@ a:hover { color: var(--clr-accent-light); }
     transform: translate(-50%, -50%);
     width: 80vw;
     height: 80vw;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, transparent 70%);
     z-index: 0;
     pointer-events: none;
     animation: pulseGlow 10s infinite alternate;
@@ -4247,8 +4247,8 @@ a:hover { color: var(--clr-accent-light); }
 .hero-logo-left, .hero-logo-right {
     position: absolute;
     top: 40px;
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    height: 60px;
     z-index: 10;
     filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
     
@@ -4262,7 +4262,7 @@ a:hover { color: var(--clr-accent-light); }
 .flag-icon {
     width: 100%;
     height: 100%;
-    border-radius: 12px;
+    border-radius: 8px;
     border: 2px solid rgba(255, 215, 0, 0.5);
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.5), inset 0 0 10px rgba(255, 215, 0, 0.3);
 }
@@ -4410,7 +4410,7 @@ a:hover { color: var(--clr-accent-light); }
   height: 100vh;
   z-index: 0;
   pointer-events: none;
-  background-color: #1a0000;
+  background-color: #350a0a;
 }
 
 .dynamic-bg-layer {
@@ -4425,6 +4425,7 @@ a:hover { color: var(--clr-accent-light); }
   opacity: 0;
   transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 3s ease-out;
   transform: scale(1.05); /* Slight zoom for parallax feel */
+  filter: brightness(1.25) saturate(1.15);
 }
 
 .dynamic-bg-layer.active {

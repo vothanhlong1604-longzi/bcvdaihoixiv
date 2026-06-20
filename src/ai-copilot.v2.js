@@ -220,21 +220,15 @@ const STUDIO_VOICE_MAP = {
     if (typeWriterInterval) clearInterval(typeWriterInterval);
     
     typeWriterInterval = setInterval(() => {
-      if (i < text.length) {
-        // Xử lý render tức thì nếu gặp thẻ HTML (giúp in đậm, gạch đầu dòng, etc.)
-        if (text.charAt(i) === '<') {
-          let tag = '';
+      if (i <= text.length) {
+        while (i < text.length && text.charAt(i) === '<') {
           while (i < text.length && text.charAt(i) !== '>') {
-            tag += text.charAt(i);
             i++;
           }
-          tag += '>';
-          el.innerHTML += tag;
-          i++;
-        } else {
-          el.innerHTML += text.charAt(i);
           i++;
         }
+        el.innerHTML = text.slice(0, i);
+        i++;
       } else {
         clearInterval(typeWriterInterval);
       }
@@ -451,9 +445,9 @@ const STUDIO_VOICE_MAP = {
 
   const ANSWER_01_TEXT = "Xin trân trọng thông tin tới quý vị. Nghị quyết Đại hội đại biểu toàn quốc lần thứ XIV của Đảng khẳng định: “Tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng trong sạch, vững mạnh toàn diện; nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng. Tăng cường xây dựng, chỉnh đốn, tự đổi mới để Đảng ta thật sự là đạo đức, là văn minh”.";
 
-  const ANSWER_02_TEXT = "Dạ vâng. Có thể khái quát việc nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng thành năm nội dung cơ bản sau đây:<br><br>Thứ nhất, tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng và hệ thống chính trị trong sạch, vững mạnh toàn diện; nâng cao chất lượng xây dựng Đảng về chính trị, tư tưởng, đạo đức và tổ chức.<br><br>Thứ hai, xây dựng đội ngũ cán bộ, nhất là cán bộ lãnh đạo, quản lý và người đứng đầu các cấp, có đủ phẩm chất, năng lực, uy tín, ngang tầm nhiệm vụ.<br><br>Thứ ba, đổi mới đồng bộ phương thức lãnh đạo; nâng cao năng lực lãnh đạo, năng lực cầm quyền và hiệu quả tổ chức thực hiện các chủ trương, nghị quyết của Đảng.<br><br>Thứ tư, tăng cường kiểm soát quyền lực; kiên quyết, kiên trì phòng, chống tham nhũng, lãng phí, tiêu cực; ngăn chặn, đẩy lùi suy thoái về tư tưởng chính trị, đạo đức, lối sống và những biểu hiện “tự diễn biến”, “tự chuyển hóa” trong nội bộ.<br><br>Thứ năm, tăng cường bảo vệ nền tảng tư tưởng của Đảng; chủ động đấu tranh phản bác các quan điểm sai trái, thù địch, góp phần củng cố niềm tin của Nhân dân đối với Đảng, Nhà nước và chế độ xã hội chủ nghĩa.<br><br>Đó là những nội dung có quan hệ chặt chẽ, thống nhất, góp phần xây dựng Đảng thật sự trong sạch, vững mạnh, nâng cao hiệu lực, hiệu quả lãnh đạo, cầm quyền trong kỷ nguyên phát triển mới.";
+  const ANSWER_02_TEXT = "Có thể khái quát việc nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng thành năm nội dung cơ bản sau đây:<br><br>Thứ nhất, tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng và hệ thống chính trị trong sạch, vững mạnh toàn diện; nâng cao chất lượng xây dựng Đảng về chính trị, tư tưởng, đạo đức và tổ chức.<br><br>Thứ hai, xây dựng đội ngũ cán bộ, nhất là cán bộ lãnh đạo, quản lý và người đứng đầu các cấp, có đủ phẩm chất, năng lực, uy tín, ngang tầm nhiệm vụ.<br><br>Thứ ba, đổi mới đồng bộ phương thức lãnh đạo; nâng cao năng lực lãnh đạo, năng lực cầm quyền và hiệu quả tổ chức thực hiện các chủ trương, nghị quyết của Đảng.<br><br>Thứ tư, tăng cường kiểm soát quyền lực; kiên quyết, kiên trì phòng, chống tham nhũng, lãng phí, tiêu cực; ngăn chặn, đẩy lùi suy thoái về tư tưởng chính trị, đạo đức, lối sống và những biểu hiện “tự diễn biến”, “tự chuyển hóa” trong nội bộ.<br><br>Thứ năm, tăng cường bảo vệ nền tảng tư tưởng của Đảng; chủ động đấu tranh phản bác các quan điểm sai trái, thù địch, góp phần củng cố niềm tin của Nhân dân đối với Đảng, Nhà nước và chế độ xã hội chủ nghĩa.<br><br>Đó là những nội dung có quan hệ chặt chẽ, thống nhất, góp phần xây dựng Đảng thật sự trong sạch, vững mạnh, nâng cao hiệu lực, hiệu quả lãnh đạo, cầm quyền trong kỷ nguyên phát triển mới.";
 
-  const FALLBACK_TEXT = "Xin đồng chí vui lòng nhắc lại ngắn gọn nội dung cần trao đổi về Văn kiện Đại hội XIV để tôi hỗ trợ chính xác hơn.";
+  const FALLBACK_TEXT = "Báo cáo đồng chí, hiện tại kho tri thức chưa ghi nhận dữ liệu trùng khớp hoàn toàn cho câu hỏi này. Xin đồng chí vui lòng cung cấp thêm từ khóa hoặc diễn đạt lại câu hỏi để tôi được hỗ trợ chính xác hơn.";
 
   function normalizeText(text) {
     let t = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -499,6 +493,46 @@ const STUDIO_VOICE_MAP = {
       score = (semanticSim * 0.45) + (kwCov * 0.25) + (ctxCont * 0.20) + (stepMatch * 0.10);
     }
     return score;
+  }
+
+  function formatCANDReporterResponse(item, query) {
+    let topicName = item.topic || "Văn kiện Đại hội XIV";
+    let content = item.content || "";
+    
+    // If the content already has a formal greeting or is structured, return it directly
+    let hasGreeting = content.includes("Báo cáo đồng chí") || content.includes("Xin trân trọng") || content.includes("Dạ vâng") || content.includes("Kính thưa");
+    if (hasGreeting) {
+      return content;
+    }
+
+    let normQuery = normalizeText(query);
+    let isQuoteRequest = normQuery.includes("trich") || normQuery.includes("nguyen van") || normQuery.includes("doc doan") || normQuery.includes("viet nhu the nao");
+
+    let intro = "";
+    if (isQuoteRequest) {
+      intro = `Báo cáo đồng chí, bám sát văn bản chính thống và các văn kiện chỉ đạo, tôi xin trích dẫn nguyên văn tinh thần chỉ đạo về <b>${topicName}</b> như sau:<br><br>`;
+    } else {
+      const intros = [
+        `Báo cáo đồng chí, liên quan đến nội dung quán triệt chỉ đạo về <b>${topicName}</b>, tôi xin được khái quát và trình bày theo đúng tôn chỉ xây dựng lực lượng Công an nhân dân cách mạng, chính quy, tinh nhuệ, hiện đại như sau:<br><br>`,
+        `Báo cáo đồng chí, về tinh thần cốt lõi của <b>${topicName}</b> nhằm đáp ứng yêu cầu phát triển đất nước trong kỷ nguyên mới, tôi xin tóm lược các định hướng và nội dung trọng tâm như sau:<br><br>`,
+        `Báo cáo đồng chí, triển khai thực hiện thắng lợi các chủ trương của Đại hội XIV đối với chuyên đề <b>${topicName}</b>, hệ thống tri thức ghi nhận định hướng chiến lược như sau:<br><br>`
+      ];
+      let index = content.length % intros.length;
+      intro = intros[index];
+    }
+
+    let outro = "";
+    if (!isQuoteRequest) {
+      const outros = [
+        `<br><br>Định hướng nêu trên là kim chỉ nam quan trọng giúp lực lượng Công an nhân dân nói chung và cán bộ, giảng viên, học viên Trường Đại học Cảnh sát nhân dân nói riêng nhận thức sâu sắc, ra sức học tập và quyết tâm chuyển hóa nghị quyết thành hành động thực tiễn.`,
+        `<br><br>Đây là định hướng chính trị quan trọng, làm cơ sở lý luận và thực tiễn để cán bộ, chiến sĩ, đảng viên CAND vận dụng sáng tạo, góp phần xây dựng lực lượng chính quy, tinh nhuệ, hiện đại, bảo vệ vững chắc Tổ quốc trong tình hình mới.`,
+        `<br><br>Nội dung chỉ đạo này là yêu cầu thiết thực để cán bộ, đảng viên nghiên cứu học tập, nâng cao bản lĩnh chính trị thép và chuyên môn nghiệp vụ tinh thông nhằm hoàn thành xuất sắc nhiệm vụ chính trị được giao.`
+      ];
+      let indexOut = (content.length + query.length) % outros.length;
+      outro = outros[indexOut];
+    }
+
+    return intro + content + outro;
   }
 
   function playResponse(transcript = '') {
@@ -630,72 +664,71 @@ const STUDIO_VOICE_MAP = {
              }
          }
          
-         // 3. Third priority: RAG document chunks in VANKIEN_DB (where exactResponse is not true)
-         if (!matchedPriority && hasKnowledgeBase && state.conversationMode !== "scripted-presentation") {
-             let searchResults = [];
-             for (let item of VANKIEN_DB) {
-                 if (!item.exactResponse) {
-                     let score = 0.0;
-                     let kwMatchCount = 0;
-                     if (item.keywords) {
-                         item.keywords.forEach(kw => {
-                             let normKw = normalizeText(kw);
-                             if (normText.includes(normKw)) kwMatchCount++;
-                         });
-                         score += Math.min(kwMatchCount * 0.2, 0.5);
-                     }
-                     let synMatchCount = 0;
-                     if (item.synonyms) {
-                         item.synonyms.forEach(syn => {
-                             let normSyn = normalizeText(syn);
-                             if (normText.includes(normSyn)) synMatchCount++;
-                         });
-                         if (synMatchCount > 0) score += 0.2;
-                     }
-                     let words = normText.split(' ');
-                     let importantWords = words.filter(w => w.length > 2);
-                     let matchWords = 0;
-                     if (importantWords.length > 0) {
-                         importantWords.forEach(w => {
-                             let normTopic = normalizeText(item.topic);
-                             let normContent = normalizeText(item.content);
-                             if (normTopic.includes(w)) matchWords += 1.5;
-                             else if (normContent.includes(w)) matchWords += 1.0;
-                         });
-                         score += (matchWords / importantWords.length) * 0.35;
-                     }
-                     if (score > 0) {
-                         searchResults.push({ item, score });
-                     }
-                 }
-             }
-             searchResults.sort((a, b) => b.score - a.score);
-             if (searchResults.length > 0 && searchResults[0].score >= 0.62) {
-                 let bestMatch = searchResults[0];
-                 matchedPriority = true;
-                 
-                 let isQuoteRequest = normText.includes("trich") || normText.includes("nguyen van") || normText.includes("doc doan") || normText.includes("viet nhu the nao");
-                 if (isQuoteRequest && bestMatch.item.content.includes("“") && bestMatch.item.content.includes("”")) {
-                     finalAnswerText = bestMatch.item.content;
-                     state.lastIntent = 'VERBATIM_QUOTE';
-                 } else {
-                     if (bestMatch.score >= 0.78) {
-                         finalAnswerText = bestMatch.item.content;
-                     } else {
-                         finalAnswerText = "Báo cáo đồng chí, dựa trên nguồn tri thức Văn kiện Đại hội XIV, tôi xin khái quát nội dung cụ thể như sau:<br><br>" + bestMatch.item.content;
-                     }
-                     state.lastIntent = 'SUMMARIZE_CONTENT';
-                 }
-                 state.currentTopic = bestMatch.item.topic;
-                 state.lastAnswerMode = 'official-document-assistant';
-                 if (bestMatch.item.source) {
-                     window.lastCitationText = "Nguồn: " + bestMatch.item.source;
-                 } else {
-                     window.lastCitationText = null;
-                 }
-             }
-         }
-         
+          // 3. Third priority: RAG document chunks in VANKIEN_DB (where exactResponse is not true)
+          if (!matchedPriority && hasKnowledgeBase && state.conversationMode !== "scripted-presentation") {
+              let searchResults = [];
+              for (let item of VANKIEN_DB) {
+                  if (!item.exactResponse) {
+                      let score = 0.0;
+                      let kwMatchCount = 0;
+                      if (item.keywords) {
+                          item.keywords.forEach(kw => {
+                              let normKw = normalizeText(kw);
+                              if (normText.includes(normKw)) kwMatchCount++;
+                          });
+                          score += Math.min(kwMatchCount * 0.2, 0.5);
+                      }
+                      let synMatchCount = 0;
+                      if (item.synonyms) {
+                          item.synonyms.forEach(syn => {
+                              let normSyn = normalizeText(syn);
+                              if (normText.includes(normSyn)) synMatchCount++;
+                          });
+                          if (synMatchCount > 0) score += 0.2;
+                      }
+                      let words = normText.split(' ');
+                      let importantWords = words.filter(w => w.length > 2);
+                      let matchWords = 0;
+                      if (importantWords.length > 0) {
+                          importantWords.forEach(w => {
+                              let normTopic = normalizeText(item.topic);
+                              let normContent = normalizeText(item.content);
+                              if (normTopic.includes(w)) matchWords += 1.5;
+                              else if (normContent.includes(w)) matchWords += 1.0;
+                          });
+                          score += (matchWords / importantWords.length) * 0.35;
+                      }
+                      if (score > 0) {
+                          searchResults.push({ item, score });
+                      }
+                  }
+              }
+              searchResults.sort((a, b) => b.score - a.score);
+              let bestMatch = searchResults.length > 0 ? searchResults[0] : null;
+              if (bestMatch && bestMatch.score >= 0.62) {
+                  matchedPriority = true;
+                  finalAnswerText = formatCANDReporterResponse(bestMatch.item, transcript);
+                  state.lastIntent = 'SUMMARIZE_CONTENT';
+                  state.currentTopic = bestMatch.item.topic;
+                  state.lastAnswerMode = 'official-document-assistant';
+                  if (bestMatch.item.source) {
+                      window.lastCitationText = "Nguồn: " + bestMatch.item.source;
+                  } else {
+                      window.lastCitationText = null;
+                  }
+              } else if (bestMatch && bestMatch.score >= 0.45) {
+                  matchedPriority = true;
+                  finalAnswerText = "Báo cáo đồng chí, hệ thống chưa tìm thấy đoạn thông tin trùng khớp hoàn toàn với câu hỏi. Tuy nhiên, liên quan đến các từ khóa đồng chí đề cập, tôi xin đề xuất nội dung học tập về <b>" + bestMatch.item.topic + "</b> dưới đây:<br><br>" + formatCANDReporterResponse(bestMatch.item, transcript);
+                  state.lastIntent = 'SUGGEST_CONTENT';
+                  state.currentTopic = bestMatch.item.topic;
+                  state.lastAnswerMode = 'official-document-assistant';
+                  if (bestMatch.item.source) {
+                      window.lastCitationText = "Nguồn (đề xuất): " + bestMatch.item.source;
+                  } else {
+                      window.lastCitationText = null;
+                  }
+              }
+          }
          // 4. Fourth priority: Fallback
          if (!matchedPriority) {
              if (normText.includes('ban do tri thuc') || normText.includes('so do')) {
