@@ -1,0 +1,1805 @@
+# -*- coding: utf-8 -*-
+import io
+import sys
+import os
+import re
+7: sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+let currentState = 'IDLE'; // IDLE, LISTENING, PROCESSING, SPEAKING
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+10: file_part1 = "scratch/extracted_view_step_8683.txt"
+- **Tệp tin**: [blind-spot-reasoning-engine.js](file:///c:/Users/thanh/OneDrive/Desktop/e-magazine/src/ai/blind-spot-reasoning-engine.js)
+file_part2 = "scratch/extracted_view_step_8840.txt"
+output_file = "src/ai-copilot.v2.js"
+14: print("Combining files with correct newlines...")
+- **Tệp tin**: [ai-copilot.v2.js](file:///c:/Users/thanh/OneDrive/Desktop/e-magazine/src/ai-copilot.v2.js)
+16: def clean_line_prefixes(lines):
+- **Hội thoại liên tục**: Sử dụng `window.conversationContext` để ghi nhớ khối văn bản đang phân tích và hỗ trợ chuỗi câu hỏi nối tiếp (*"Còn điểm mù nào nữa?"*, *"Nếu loại bỏ cảm xúc?"*, *"Điểm nào nghiêm trọng nhất?"*) mà không cần người dùng chọn lại.
+cleaned = []
+for line in lines:
+# Check if the line has line number prefix like "  1: /**" or "  1045:"
+match = re.match(r'^\s*(\d+):(.*)$', line)
+if match:
+# We append the matched text with a newline
+# match.group(2) contains the code without the line prefix
+cleaned.append(match.group(2) + "\n")
+return cleaned
+27: with io.open(file_part1, "r", encoding="utf-8") as f1:
+- *Cách giải thích thay thế khác?*
+lines1 = f1.readlines()
+30: with io.open(file_part2, "r", encoding="utf-8") as f2:
+31: ## Xác Thực & Kiểm Thử Tự Động
+lines2 = f2.readlines()
+33: cleaned1 = clean_line_prefixes(lines1)
+}
+cleaned2 = clean_line_prefixes(lines2)
+36: print(f"Extracted {len(cleaned1)} lines from part 1")
+# Lượt 1: Gửi yêu cầu phân tích lập luận
+print(f"Extracted {len(cleaned2)} lines from part 2")
+39: # Combine them by dropping the duplicate line 800 in cleaned2
+query2 = "Có cách giải thích nào khác?"
+combined = cleaned1 + cleaned2[1:]
+42: combined_text = "".join(combined)
+# Lượt 4: Yêu cầu loại bỏ yếu tố cảm xúc
+44: # Apply the Step 8816 edits:
+```
+# 1. Remove greeting 'Xin trân trọng thông tin tới quý vị. ' from ANSWER_01_TEXT
+old_quote = '"Xin trân trọng thông tin tới quý vị. Nghị quyết Đại hội đại biểu toàn quốc lần thứ XIV của Đảng khẳng định: “Tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng trong sạch, vững mạnh toàn diện; nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng. Tăng cường xây dựng, chỉnh đốn, tự đổi mới để Đảng ta thật sự là đạo đức, là văn minh”.";'
+new_quote = '"Nghị quyết Đại hội đại biểu toàn quốc lần thứ XIV của Đảng khẳng định: “Tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng trong sạch, vững mạnh toàn diện; nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng. Tăng cường xây dựng, chỉnh đốn, tự đổi mới để Đảng ta thật sự là đạo đức, là văn minh”.";'
+49: if old_quote in combined_text:
+Sending Query 1: 'Phân tích điểm mù lập luận phần này'
+print("Found old quote in combined text. Replacing...")
+combined_text = combined_text.replace(old_quote, new_quote)
+else:
+# Try with different quote characters or spaces if needed
+print("Exact quote match not found in literal search, attempting regex replacement.")
+combined_text, count = re.subn(
+r'const\s+ANSWER_01_TEXT\s*=\s*"Xin trân trọng thông tin tới quý vị\.\s*([^"]+)"',
+r'const ANSWER_01_TEXT = "\1"',
+combined_text
+)
+print(f"Regex replacements made for ANSWER_01_TEXT: {count}")
+62: # 2. Replace the string replacement in playResponse to match new prefix
+```
+old_replace = 'ANSWER_01_TEXT.replace("Xin trân trọng thông tin tới quý vị. Nghị quyết Đại hội đại biểu toàn quốc lần thứ XIV của Đảng khẳng định: ", "")'
+new_replace = 'ANSWER_01_TEXT.replace("Nghị quyết Đại hội đại biểu toàn quốc lần thứ XIV của Đảng khẳng định: ", "")'
+66: if old_replace in combined_text:
+3.  Hỏi: *"Điểm nào nghiêm trọng nhất?"*
+print("Found old replace code in combined text. Replacing...")
+combined_text = combined_text.replace(old_replace, new_replace)
+else:
+print("Could not find exact replace code.")
+72: # Write the combined content to src/ai-copilot.v2.js
+];
+with io.open(output_file, "w", encoding="utf-8") as out_f:
+out_f.write(combined_text)
+76: print(f"\nSuccessfully wrote {len(combined)} lines to {output_file}!")
+}
+The above content shows the entire, complete file contents of the requested file.
+}
+80:    function getCurrentResolutionId() {
+<div>
+const hash = window.location.hash || '';
+const match = hash.match(/nghi-quyet\/([\w-]+)/);
+if (match) return match[1];
+const activeEl = document.querySelector('[data-res-id]');
+return activeEl ? activeEl.dataset.resId : null;
+}
+88:    function playVideoAvatar(keyword, text, onComplete) {
+</div>
+const videoUrl = STUDIO_VIDEO_MAP[keyword];
+const audioUrl = STUDIO_VOICE_MAP[keyword];
+const videoEl = document.getElementById('ai-avatar-video');
+const imgEl = document.getElementById('ai-avatar-img');
+if (!videoEl && !audioUrl) return false;
+const audio = audioUrl ? new Audio(audioUrl) : null;
+if (audio) {
+currentAudio = audio;
+audio.onended = () => {
+if (videoEl && imgEl) { videoEl.style.display = 'none'; imgEl.style.display = 'block'; }
+if (onComplete) onComplete();
+};
+}
+103:      if (videoUrl && videoEl && imgEl) {
+<div class="lightbox-inner">
+videoEl.src = videoUrl;
+videoEl.style.display = 'block';
+imgEl.style.display = 'none';
+108:          // If there's no audio, video onended should trigger onComplete
+</div>
+if (!audioUrl) {
+videoEl.onended = () => {
+videoEl.style.display = 'none';
+imgEl.style.display = 'block';
+if (onComplete) onComplete();
+};
+}
+117:          videoEl.play().then(() => {
+<div class="ai-fab-glow"></div>
+isVideoPlaying = true;
+}).catch(e => {
+console.error("Video failed to play:", e);
+videoEl.style.display = 'none';
+imgEl.style.display = 'block';
+});
+}
+<script src="./src/data/vankien_db.js?v=1782105300"></script>
+<script src="./src/data/congress.js?v=1782105300"></script>
+<script src="./src/data/resolutions.js?v=1782105300"></script>
+<!-- App -->
+<script src="./src/app.js?v=1782105300"></script>
+131:   <!-- AI Context Engine Modules -->
+});
+<script src="./src/ai/screen-context-store.js?v=1782105300"></script>
+<script src="./src/ai/screen-context-collector.js?v=1782105300"></script>
+<script src="./src/ai/viewport-focus-engine.js?v=1782105300"></script>
+<script src="./src/ai/interaction-context.js?v=1782105300"></script>
+<script src="./src/ai/visual-context-adapter.js?v=1782105300"></script>
+<script src="./src/ai/conversation-context.js?v=1782105300"></script>
+<script src="./src/ai/reference-resolver.js?v=1782105300"></script>
+<script src="./src/ai/context-query-rewriter.js?v=1782105300"></script>
+<script src="./src/ai/context-validator.js?v=1782105300"></script>
+<script src="./src/ai/screen-action-controller.js?v=1782105300"></script>
+<script src="./src/ai/blind-spot-reasoning-engine.js?v=1782105300"></script>
+144:   <script src="./src/ai-copilot.v2.js?v=1782105300"></script>
+typeWriterEffect(text, 'apple-ai-text', 12);
+146:   <!-- Particles.js for Majestic Background -->
+console.error('Studio voice failed:', e);
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+if(document.getElementById('particles-js')) {
+particlesJS("particles-js", {
+"particles": {
+"number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+"color": { "value": ["#d4af37", "#ffcf70", "#ffffff"] },
+"shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" } },
+const textEl = document.getElementById('apple-ai-text');
+const inputEl = document.getElementById('apple-ai-input');
+const stopBtn = document.getElementById('apple-ai-stop-btn');
+overlay.className = 'apple-ai-overlay';
+currentState = state;
+162:       // Hiển thị/Ẩn nút Dừng tùy theo trạng thái
+"detect_on": "canvas",
+if (stopBtn) {
+if (state === 'PROCESSING' || state === 'SPEAKING') {
+stopBtn.style.display = 'flex';
+} else {
+stopBtn.style.display = 'none';
+}
+}
+171:       if (state === 'IDLE') {
+</body>
+overlay.style.display = 'none';
+document.body.classList.remove('apple-ai-active');
+clearHighlight();
+const vis = document.getElementById('ai-audio-visualizer');
+if (vis) { vis.style.opacity = '0'; vis.classList.remove('visualizer-anim'); }
+if (inputEl) inputEl.style.display = 'none';
+} else if (state === 'LISTENING') {
+overlay.style.display = 'flex';
+document.body.classList.add('apple-ai-active');
+overlay.classList.add('active', 'listening');
+if (textEl && !keepText) textEl.innerHTML = '<em style="color:rgba(255,255,255,0.7);">🎤 Đang lắng nghe... Hãy đặt câu hỏi!</em>';
+if (inputEl) { 
+inputEl.style.display = 'block'; 
+setTimeout(() => inputEl.focus(), 150); 
+}
+} 
+else if (state === 'PROCESSING') {
+overlay.style.display = 'flex';
+const avatarImg = document.getElementById('ai-avatar-img');
+if (avatarImg) {
+avatarImg.classList.remove('avatar-bootup');
+void avatarImg.offsetWidth;
+avatarImg.classList.add('avatar-bootup');
+}
+overlay.classList.add('active', 'processing');
+if (textEl) textEl.innerHTML = '<em style="color:rgba(255,255,255,0.5);">⏳ Đang phân tích...</em>';
+if (inputEl) inputEl.style.display = 'block';
+} 
+else if (state === 'SPEAKING') {
+const vis = document.getElementById('ai-audio-visualizer');
+if (vis) {
+vis.style.opacity = '1';
+vis.classList.add('visualizer-anim');
+}
+overlay.style.display = 'flex';
+const avatarImg = document.getElementById('ai-avatar-img');
+if (avatarImg) {
+avatarImg.classList.remove('avatar-bootup');
+void avatarImg.offsetWidth;
+avatarImg.classList.add('avatar-bootup');
+}
+overlay.classList.add('active', 'speaking');
+if (inputEl) {
+inputEl.style.display = 'block';
+setTimeout(() => inputEl.focus(), 150); 
+}
+}
+}
+221:    function typeWriterEffect(text, elementId, speed = 40) {
+avatarImg.classList.add('avatar-bootup');
+const el = document.getElementById(elementId);
+if (!el) return;
+225:       if (window.__instantTypewriter || speed === 0) {
+let i = 0;
+el.innerHTML = text;
+return;
+}
+230:       el.innerHTML = '';
+if (i <= text.length) {
+let i = 0;
+233:      if (typeWriterInterval) clearInterval(typeWriterInterval);
+i++;
+235:      typeWriterInterval = setInterval(() => {
+i++;
+if (i <= text.length) {
+while (i < text.length && text.charAt(i) === '<') {
+while (i < text.length && text.charAt(i) !== '>') {
+i++;
+}
+i++;
+}
+el.innerHTML = text.slice(0, i);
+i++;
+} else {
+clearInterval(typeWriterInterval);
+}
+}, speed);
+}
+251:    function clearHighlight() {
+252:    // --- LOCAL RAG: SCREEN-ON AWARENESS ---
+if (lastHighlightedElement) {
+lastHighlightedElement.classList.remove('apple-ai-highlight');
+lastHighlightedElement = null;
+}
+}
+258:    // --- LOCAL RAG: SCREEN-ON AWARENESS ---
+259:       if (resolvedRef && resolvedRef.contextId) {
+function analyzeScreenContext(transcript) {
+if (!transcript || transcript.trim().length < 5) return null;
+262:       const storeSnapshot = window.screenContextStore.getState();
+263:       if (storeSnapshot.viewport.primaryContextId) {
+const resolvedRef = window.referenceResolver.resolve(transcript, storeSnapshot, window.conversationContext);
+265:       if (resolvedRef && resolvedRef.contextId) {
+}
+return document.querySelector(`[data-context-id="${resolvedRef.contextId}"]`);
+}
+269:       if (storeSnapshot.viewport.primaryContextId) {
+270:    // Xử lý văn bản trước khi đọc để tránh lỗi giọng Anh xen lẫn giọng Việt trên Chrome/Edge
+return document.querySelector(`[data-context-id="${storeSnapshot.viewport.primaryContextId}"]`);
+}
+273:       return null;
+.replace(/<[^>]*>?/gm, '') // Xóa toàn bộ thẻ HTML trước khi đọc
+}
+276:    // Xử lý văn bản trước khi đọc để tránh lỗi giọng Anh xen lẫn giọng Việt trên Chrome/Edge
+.replace(/\bIT\b/g, 'Ai Ti')
+function sanitizeTextForTTS(text) {
+return text
+.replace(/<[^>]*>?/gm, '') // Xóa toàn bộ thẻ HTML trước khi đọc
+.replace(/\bAI\b/g, 'Ay Ai')
+.replace(/\bFDI\b/g, 'Ép Đê Y')
+.replace(/\bIT\b/g, 'Ai Ti')
+.replace(/\bInternet\b/g, 'In tơ nét')
+.replace(/\bSmartphone\b/g, 'Sờ mát phôn')
+.replace(/\bWTO\b/g, 'Vê kép tê ô')
+.replace(/\bCPTPP\b/g, 'Xê Pê Tê Pê Pê')
+.replace(/\bEVFTA\b/g, 'E Vê Ép Tê A')
+.replace(/\bCNTT\b/g, 'Công nghệ thông tin')
+.replace(/\bCách mạng công nghiệp 4\.0\b/gi, 'Cách mạng công nghiệp bốn chấm không')
+.replace(/\b4\.0\b/g, 'bốn chấm không')
+.replace(/\bApp\b/g, 'Áp')
+.replace(/\bBig Data\b/gi, 'Bích Đa ta')
+.replace(/\bBlockchain\b/gi, 'Bờ lốc chain')
+.replace(/\bCloud\b/gi, 'Cờ lau')
+.replace(/\bWeb\b/gi, 'Goép');
+}
+298:    function speakDynamicText(text) {
+.replace(/\b4\.0\b/g, 'bốn chấm không')
+synth.cancel();
+if (currentAudio) {
+currentAudio.pause();
+currentAudio.currentTime = 0;
+}
+305:      const cleanText = sanitizeTextForTTS(text);
+.replace(/\bCNTT\b/g, 'Công nghệ thông tin')
+307:      // Split into chunks to prevent clipping (Web Speech API limits ~200 chars)
+.replace(/\b4\.0\b/g, 'bốn chấm không')
+const rawChunks = cleanText.match(/[^.!?\n]+[.!?\n]*/g) || [cleanText];
+const chunks = [];
+rawChunks.forEach(chunk => {
+if (chunk.length <= 180) {
+chunks.push(chunk);
+} else {
+const subChunks = chunk.match(/[^,;:]+[,;:]*/g) || [chunk];
+let tempChunk = "";
+subChunks.forEach(sub => {
+if ((tempChunk + sub).length <= 180) {
+tempChunk += sub;
+} else {
+if (tempChunk.trim()) chunks.push(tempChunk.trim());
+if (sub.length > 180) {
+const words = sub.split(' ');
+let wordTemp = "";
+words.forEach(w => {
+if ((wordTemp + " " + w).length <= 180) wordTemp += (wordTemp ? " " : "") + w;
+else {
+if (wordTemp) chunks.push(wordTemp);
+wordTemp = w;
+}
+});
+if (wordTemp) tempChunk = wordTemp;
+} else {
+tempChunk = sub;
+}
+}
+});
+if (tempChunk.trim()) chunks.push(tempChunk.trim());
+}
+});
+341:      let currentChunk = 0;
+words.forEach(w => {
+343:      const playNextChunk = () => {
+else {
+if (currentChunk >= chunks.length || currentState !== 'SPEAKING') {
+return;
+}
+348:        let chunkText = chunks[currentChunk].trim();
+if (wordTemp) tempChunk = wordTemp;
+if (!chunkText) {
+currentChunk++;
+playNextChunk();
+return;
+}
+355:        const utterance = new SpeechSynthesisUtterance(chunkText);
+}
+utterance.lang = 'vi-VN';
+utterance.rate = 1.0; 
+utterance.pitch = 1.0;
+utterance.volume = 1.0;
+361:        const viVoice = getFixedVietnameseVoice();
+if (currentChunk >= chunks.length || currentState !== 'SPEAKING') {
+363:        if (viVoice) {
+}
+utterance.voice = viVoice;
+utterance.onend = () => {
+currentChunk++;
+playNextChunk();
+};
+utterance.onerror = (e) => {
+console.warn("TTS Error", e);
+currentChunk++;
+playNextChunk();
+};
+synth.speak(utterance);
+} else {
+console.warn("Không tìm được giọng Web Speech vi-VN. Kích hoạt Google Translate TTS API dự phòng.");
+378:           const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q=${encodeURIComponent(chunkText)}`;
+};
+380:           // Bắt buộc phải tái sử dụng global audio player đã được unlock bằng User Gesture trên Safari/iOS
+console.warn("TTS Error", e);
+let audio = window.__ttsAudioPlayer || new Audio();
+audio.src = url;
+384:           currentAudio = audio;
+playNextChunk();
+audio.onended = () => {
+currentChunk++;
+playNextChunk();
+};
+audio.onerror = () => {
+console.error("Lỗi mạng khi tải Google TTS API");
+currentChunk++;
+playNextChunk();
+};
+audio.play().catch(e => {
+console.error("Audio blocked by browser:", e);
+currentChunk++;
+playNextChunk();
+});
+}
+};
+402:      playNextChunk();
+audio.onended = () => {
+}
+405:    // ==========================================
+};
+// AI SCENARIO STATE & NLP LOGIC (Đại hội XIV)
+// ==========================================
+const defaultScenarioState = {
+currentDocument: "van-kien-dai-hoi-xiv",
+currentTopic: "nang-cao-nang-luc-lanh-dao-suc-chien-dau-cua-dang",
+currentSection: null,
+lastIntent: null,
+lastQuestion: null,
+lastAnswer: null,
+lastSourceChunks: [],
+lastQuote: null,
+lastAnswerMode: null,
+scenarioStep: 0,
+awaitingFollowUp: false,
+conversationMode: "presentation-plus"
+};
+423:    function getScenarioState() {
+// AI SCENARIO STATE & NLP LOGIC (Đại hội XIV)
+try {
+const stored = sessionStorage.getItem("daiHoiXIVAssistantState") || sessionStorage.getItem("aiScenarioState");
+return stored ? JSON.parse(stored) : { ...defaultScenarioState };
+} catch(e) { return { ...defaultScenarioState }; }
+}
+430:    function saveScenarioState(state) {
+lastQuestion: null,
+try {
+sessionStorage.setItem("daiHoiXIVAssistantState", JSON.stringify(state));
+} catch(e) {}
+}
+436:    const ANSWER_01_TEXT = "Nghị quyết Đại hội đại biểu toàn quốc lần thứ XIV của Đảng khẳng định: “Tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng trong sạch, vững mạnh toàn diện; nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng. Tăng cường xây dựng, chỉnh đốn, tự đổi mới để Đảng ta thật sự là đạo đức, là văn minh”.";
+awaitingFollowUp: false,
+438:    const ANSWER_02_TEXT = "Có thể khái quát việc nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng thành năm nội dung cơ bản sau đây:<br><br>Thứ nhất, tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng và hệ thống chính trị trong sạch, vững mạnh toàn diện; nâng cao chất lượng xây dựng Đảng về chính trị, tư tưởng, đạo đức và tổ chức.<br><br>Thứ hai, xây dựng đội ngũ cán bộ, nhất là cán bộ lãnh đạo, quản lý và người đứng đầu các cấp, có đủ phẩm chất, năng lực, uy tín, ngang tầm nhiệm vụ.<br><br>Thứ ba, đổi mới đồng bộ phương thức lãnh đạo; nâng cao năng lực lãnh đạo, năng lực cầm quyền và hiệu quả tổ chức thực hiện các chủ trương, nghị quyết của Đảng.<br><br>Thứ tư, tăng cường kiểm soát quyền lực; kiên quyết, kiên trì phòng, chống tham nhũng, lãng phí, tiêu cực; ngăn chặn, đẩy lùi suy thoái về tư tưởng chính trị, đạo đức, lối sống và những biểu hiện “tự diễn biến”, “tự chuyển hóa” trong nội bộ.<br><br>Thứ năm, tăng cường bảo vệ nền tảng tư tưởng của Đảng; chủ động đấu tranh phản bác các quan điểm sai trái, thù địch, góp phần củng cố niềm tin của Nhân dân đối với Đảng, Nhà nước và chế độ xã hội chủ nghĩa.<br><br>Đó là những nội dung có quan hệ chặt chẽ, thống nhất, góp phần xây dựng Đảng thật sự trong sạch, vững mạnh, nâng cao hiệu lực, hiệu quả lãnh đạo, cầm quyền trong kỷ nguyên phát triển mới.";
+};
+440:    const FALLBACK_TEXT = "Báo cáo đồng chí, hiện tại kho tri thức chưa ghi nhận dữ liệu trùng khớp hoàn toàn cho câu hỏi này. Xin đồng chí vui lòng cung cấp thêm từ khóa hoặc diễn đạt lại câu hỏi để tôi được hỗ trợ chính xác hơn.";
+function saveScenarioState(state) {
+442:    function normalizeText(text) {
+const stored = sessionStorage.getItem("daiHoiXIVAssistantState") || sessionStorage.getItem("aiScenarioState");
+let t = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+t = t.replace(/đ/g, "d");
+t = t.replace(/\b14\b/g, "xiv"); 
+t = t.replace(/[?,.!]/g, ' ').replace(/\s+/g, ' ');
+t = t.replace(/\b(a|vay thi|xin|giup chung toi|cho toi hoi|ua|nhe|ha)\b/gi, ' ');
+t = t.replace(/dai hoi muoi bon|dai hoi thu muoi bon|dai hoi lan thu muoi bon/g, 'dai hoi xiv');
+t = t.replace(/dang cong san viet nam/g, 'dang');
+t = t.replace(/nam noi dung/g, '5 noi dung');
+t = t.replace(/tom tat|neu nhung diem chinh|cho biet noi dung co ban/g, 'khai quat');
+return t.trim().replace(/\s+/g, ' ');
+}
+455:    function scoreIntent(normText, intentType, state) {
+}
+let score = 0;
+if (intentType === 'QUOTE_PARTY_LEADERSHIP') {
+const kwCore = ['trich dan', 'doan trich', 'noi gi', 'neu the nao', 'doc doan', 'cho biet doan trich', 'de cap the nao'];
+const kwTopic = ['xay dung dang', 'chinh don dang', 'nang luc lanh dao', 'nang luc cam quyen', 'suc chien dau', 'dao duc la van minh'];
+461:        let hasCore = kwCore.some(k => normText.includes(k.replace(/ /g, ''))); 
+t = t.replace(/đ/g, "d");
+hasCore = hasCore || kwCore.some(k => normText.includes(k));
+let hasTopic = kwTopic.some(k => normText.includes(k));
+465:        let semanticSim = (hasCore ? 0.5 : 0) + (hasTopic ? 0.5 : 0);
+t = t.replace(/dai hoi muoi bon|dai hoi thu muoi bon|dai hoi lan thu muoi bon/g, 'dai hoi xiv');
+let kwCov = (hasTopic && hasCore) ? 1.0 : (hasTopic || hasCore ? 0.5 : 0);
+let stepMatch = (state.scenarioStep === 0) ? 1.0 : 0.0;
+469:        score = (semanticSim * 0.45) + (kwCov * 0.25) + (stepMatch * 0.10);
+return t.trim().replace(/\s+/g, ' ');
+} 
+else if (intentType === 'SUMMARIZE_PARTY_LEADERSHIP') {
+const kwCore = ['khai quat', 'noi dung co ban', '5 noi dung', 'cac diem chinh', 'tom tat', 'nhiem vu chu yeu', 'phuong dian nao'];
+const kwFollowUp = ['vay', 'noi dung do', 'van de nay', 'cu persecution', 'cu the', 'gom nhung gi', 'van de vua neu'];
+475:        let hasCore = kwCore.some(k => normText.includes(k));
+const kwCore = ['trich dan', 'doan trich', 'noi gi', 'neu the nao', 'doc doan', 'cho biet doan trich', 'de cap the nao'];
+let hasFollowUp = kwFollowUp.some(k => normText.includes(k));
+478:        let semanticSim = hasCore ? 1.0 : (hasFollowUp && state.awaitingFollowUp ? 1.0 : 0);
+let content = item.content || "";
+let kwCov = hasCore ? 1.0 : 0;
+let ctxCont = (state.scenarioStep === 1) ? 1.0 : 0;
+let stepMatch = (state.scenarioStep === 1) ? 1.0 : 0;
+483:        score = (semanticSim * 0.45) + (kwCov * 0.25) + (ctxCont * 0.20) + (stepMatch * 0.10);
+let kwCov = (hasTopic && hasCore) ? 1.0 : (hasTopic || hasCore ? 0.5 : 0);
+}
+return score;
+}
+488:    function formatCANDReporterResponse(item, query) {
+else if (intentType === 'SUMMARIZE_PARTY_LEADERSHIP') {
+let topicName = item.topic || "Văn kiện Đại hội XIV";
+let content = item.content || "";
+492:      // If the content already has a formal greeting or is structured, return it directly
+493:       score = (semanticSim * 0.45) + (kwCov * 0.25) + (ctxCont * 0.20) + (stepMatch * 0.10);
+let hasGreeting = content.includes("Báo cáo đồng chí") || content.includes("Xin trân trọng") || content.includes("Dạ vâng") || content.includes("Kính thưa");
+if (hasGreeting) {
+return content;
+}
+498:      let normQuery = normalizeText(query);
+let stepMatch = (state.scenarioStep === 1) ? 1.0 : 0;
+let isQuoteRequest = normQuery.includes("trich") || normQuery.includes("nguyen van") || normQuery.includes("doc doan") || normQuery.includes("viet nhu the nao");
+501:      let intro = "";
+}
+if (isQuoteRequest) {
+intro = `Báo cáo đồng chí, bám sát văn bản chính thống và các văn kiện chỉ đạo, tôi xin trích dẫn nguyên văn tinh thần chỉ đạo về <b>${topicName}</b> như sau:<br><br>`;
+} else {
+const intros = [
+`Báo cáo đồng chí, liên quan đến nội dung quán triệt chỉ đạo về <b>${topicName}</b>, tôi xin được khái quát và trình bày theo đúng tôn chỉ xây dựng lực lượng Công an nhân dân cách mạng, chính quy, tinh nhuệ, hiện đại như sau:<br><br>`,
+`Báo cáo đồng chí, về tinh thần cốt lõi của <b>${topicName}</b> nhằm đáp ứng yêu cầu phát triển đất nước trong kỷ nguyên mới, tôi xin tóm lược các định hướng và nội dung trọng tâm như sau:<br><br>`,
+`Báo cáo đồng chí, triển khai thực hiện thắng lợi các chủ trương của Đại hội XIV đối với chuyên đề <b>${topicName}</b>, hệ thống tri thức ghi nhận định hướng chiến lược như sau:<br><br>`
+];
+let index = content.length % intros.length;
+intro = intros[index];
+}
+514:      let outro = "";
+515:      let normQuery = normalizeText(query);
+if (!isQuoteRequest) {
+const outros = [
+`<br><br>Định hướng nêu trên là kim chỉ nam quan trọng giúp lực lượng Công an nhân dân nói chung và cán bộ, giảng viên, học viên Trường Đại học Cảnh sát nhân dân nói riêng nhận thức sâu sắc, ra sức học tập và quyết tâm chuyển hóa nghị quyết thành hành động thực tiễn.`,
+`<br><br>Đây là định hướng chính trị quan trọng, làm cơ sở lý luận và thực tiễn để cán bộ, chiến sĩ, đảng viên CAND vận dụng sáng tạo, góp phần xây dựng lực lượng chính quy, tinh nhuệ, hiện đại, bảo vệ vững chắc Tổ quốc trong tình hình mới.`,
+`<br><br>Nội dung chỉ đạo này là yêu cầu thiết thực để cán bộ, đảng viên nghiên cứu học tập, nâng cao bản lĩnh chính trị thép và chuyên môn nghiệp vụ tinh thông nhằm hoàn thành xuất sắc nhiệm vụ chính trị được giao.`
+];
+let indexOut = (content.length + query.length) % outros.length;
+outro = outros[indexOut];
+}
+525:      return intro + content + outro;
+return intro + content + outro;
+}
+528:        function handleBlindSpotQuery(transcript, queryNorm, storeSnapshot) {
+function handleBlindSpotQuery(transcript, queryNorm, storeSnapshot) {
+// Check if it's a consecutive query first
+const lastAnalyzedText = window.conversationContext.lastAnalyzedText;
+const isConsecutive = !((queryNorm.includes('tu phan tich') || queryNorm.includes('tu boc tach') || queryNorm.includes('phan tich diem mu phan nay') || queryNorm.includes('phan tich lap luan')) && !lastAnalyzedText) && !!lastAnalyzedText;
+533:       // Let's identify the specific action if consecutive
+if (mmContainer) { mmContainer.style.display = 'none'; mmContainer.style.opacity = '0'; mmContainer.innerHTML = ''; }
+if (isConsecutive) {
+const claims = window.blindSpotReasoningEngine.extractClaims(lastAnalyzedText);
+537:         // 1. "Nếu loại bỏ cảm xúc?"
+];
+const hasLoaiBo = queryNorm.includes('loai bo') || queryNorm.includes('luoc bo') || queryNorm.includes('bo');
+const hasCamXuc = queryNorm.includes('cam xuc');
+if ((hasLoaiBo && hasCamXuc) || queryNorm.includes('cam xuc thi sao')) {
+const adversarial = window.blindSpotReasoningEngine.runAdversarialTests(claims);
+const textWithoutEmotion = lastAnalyzedText
+.split(/[.!?\n]+/)
+.map(s => s.trim())
+.filter(s => {
+const lower = s.toLowerCase();
+return !(lower.includes('phân nộ') || lower.includes('kinh hoang') || lower.includes('soc') || lower.includes('khong the tin noi') || lower.includes('hay chia se ngay'));
+})
+.join('. ');
+551:           return `
+552:         // --- KHỞI CHẠY MÔ HÌNH TRUY XUẤT RÀNG BUỘC MÀN HÌNH (CONSTRAINED RAG SEARCH) ---
+<div class="blind-spot-report">
+<h4 style="color: #00f2fe; margin-top:0;"><i class="fas fa-filter"></i> Phân tích sau khi lược bỏ yếu tố cảm xúc</h4>
+<p><strong>Khảo sát đối nghịch:</strong> ${adversarial.stripEmotion}</p>
+<div style="background: rgba(255,255,255,0.04); padding: 10px; border-radius: 8px; border-left: 3px solid #00f2fe; margin-bottom: 12px; font-size: 0.85rem;">
+<strong>Nội dung cốt lõi sau khi lược bỏ từ ngữ kích thích cảm xúc:</strong><br>
+"${textWithoutEmotion || 'Chưa đủ căn cứ (Không có dữ kiện kiểm chứng thực tế).'}"
+</div>
+<p style="font-size: 0.85rem; line-height: 1.5; margin-bottom:0;">
+Khi loại bỏ các tính từ mạnh và lời kêu gọi giật gân, độ tin cậy của kết luận chỉ còn dựa vào dữ kiện thực tế: <em>"${claims.verifiable[0] || 'Chưa đủ căn cứ.'}"</em>. Nếu dữ kiện này chưa được kiểm chứng độc lập, kết luận ban đầu trở nên cực kỳ lỏng lẻo và thiếu cơ sở.
+</p>
+</div>
+`;
+}
+566:         // 2. "Có cách giải thích nào khác?" / "Cách giải thích thay thế khác?"
+(rewritten.targetContextId.includes('goals') && normTopic.includes('mục tiêu')) ||
+const hasGiaiThich = queryNorm.includes('giai thich') || queryNorm.includes('gia thuyet') || queryNorm.includes('cach giai');
+const hasKhac = queryNorm.includes('khac') || queryNorm.includes('thay the');
+if (hasGiaiThich && hasKhac) {
+const alternatives = window.blindSpotReasoningEngine.generateAlternativeHypotheses(claims);
+return `
+<div class="blind-spot-report">
+<h4 style="color: #00f2fe; margin-top:0;"><i class="fas fa-balance-scale"></i> Các cách giải thích cạnh tranh (Giả thuyết thay thế)</h4>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;">
+${alternatives.map((alt, idx) => `
+<div style="background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+<strong style="color: #ffb300;">Cách giải thích ${idx === 0 ? 'gốc' : (idx === 1 ? 'A' : 'B')}: ${alt.title}</strong>
+<p style="margin: 4px 0; font-style: italic;">"${alt.content}"</p>
+<div style="font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 4px;">
+📌 <strong>Bằng chứng hiện có:</strong> ${alt.evidence}<br>
+🔍 <strong>Dữ liệu cần bổ sung:</strong> ${alt.missingData}
+</div>
+</div>
+`).join('')}
+</div>
+</div>
+`;
+}
+590:         // 3. "Còn điểm mù nào nữa?" / "Còn điểm mù nào khác?"
+state.lastIntent = 'SUMMARIZE_PARTY_LEADERSHIP';
+const hasCon = queryNorm.includes('con') || queryNorm.includes('them');
+const hasDiemMu = queryNorm.includes('diem mu') || queryNorm.includes('nguy bien') || queryNorm.includes('loi lap luan');
+if (hasCon && hasDiemMu) {
+const blindSpots = window.blindSpotReasoningEngine.detectBlindSpots(lastAnalyzedText, claims);
+const extraSpots = blindSpots.slice(2);
+if (extraSpots.length === 0) {
+return `
+<div class="blind-spot-report">
+<h4 style="color: #ffb300; margin-top:0;"><i class="fas fa-exclamation-triangle"></i> Các điểm mù đã quét</h4>
+<p>Hệ thống đã hiển thị toàn bộ các điểm mù chính được phát hiện trong nguồn tin. Trọng tâm cốt lõi bao gồm:</p>
+<ul style="padding-left: 20px; margin: 0; font-size: 0.85rem; line-height: 1.6;">
+${blindSpots.map(spot => `<li><strong style="color:#ff5e62;">${spot.title}</strong>: ${spot.desc}</li>`).join('')}
+</ul>
+</div>
+`;
+}
+return `
+<div class="blind-spot-report">
+<h4 style="color: #ff5e62; margin-top:0;"><i class="fas fa-exclamation-circle"></i> Điểm mù bổ sung cần lưu ý</h4>
+<ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 10px; margin:0;">
+${extraSpots.map((spot, idx) => `
+<li style="background: rgba(255, 94, 98, 0.04); border: 1px solid rgba(255, 94, 98, 0.15); padding: 10px; border-radius: 8px;">
+<strong style="color: #ff5e62;">Bổ sung ${idx+1}: ${spot.title}</strong>
+<p style="margin: 4px 0 0 0; font-size: 0.85rem; color: rgba(255,255,255,0.8);">${spot.desc}</p>
+</li>
+`).join('')}
+</ul>
+<p style="font-size: 0.85rem; margin-top: 10px; margin-bottom:0;">
+Đặc biệt lưu ý bối cảnh còn thiếu có thể thay đổi hoàn toàn ý nghĩa của dữ liệu hiển thị.
+</p>
+</div>
+`;
+}
+625:         // 4. "Tôi đang bỏ sót điều gì?" / "Bỏ sót điều gì?"
+if (item.exactResponse) {
+if (queryNorm.includes('bo sot') || queryNorm.includes('bo qua') || queryNorm.includes('thieu')) {
+const alternatives = window.blindSpotReasoningEngine.generateAlternativeHypotheses(claims);
+const missingDataList = alternatives.map(alt => alt.missingData).filter(Boolean);
+return `
+<div class="blind-spot-report">
+<h4 style="color: #ffb300; margin-top:0;"><i class="fas fa-ghost"></i> Dữ kiện và bối cảnh bị bỏ sót</h4>
+<p>Dựa trên cấu trúc lập luận hiện tại, đồng chí có thể đang bỏ sót các yếu tố kiểm chứng cốt lõi sau:</p>
+<ul style="padding-left: 20px; font-size: 0.85rem; line-height: 1.6; margin:0;">
+${missingDataList.map((data, idx) => `<li><strong style="color:#00f2fe;">Yếu tố ${idx+1}:</strong> ${data}</li>`).join('')}
+<li><strong>Ý kiến đối lập:</strong> Phản hồi chính thức từ các bên liên quan trực tiếp đến vấn đề được đề cập.</li>
+<li><strong>Baseline (Mốc so sánh nền):</strong> Số liệu trung bình của các năm trước hoặc các đơn vị tương đương để đối chứng.</li>
+</ul>
+<p style="font-size: 0.85rem; font-style: italic; color: rgba(255,255,255,0.6); margin-top: 8px; margin-bottom:0;">
+💡 Đề xuất: Hãy chủ động tìm kiếm các thông tin bổ sung trên trước khi đưa ra nhận định cuối cùng.
+</p>
+</div>
+`;
+}
+645:         // 5. "Điểm nào nghiêm trọng nhất?" / "Nghiêm trọng nhất?"
+if (normContent.includes(w)) kwMatch += 1.0;
+if (queryNorm.includes('nghiem trong') || queryNorm.includes('te nhat') || queryNorm.includes('xau nhat') || queryNorm.includes('lon nhat')) {
+const blindSpots = window.blindSpotReasoningEngine.detectBlindSpots(lastAnalyzedText, claims);
+const severeSpot = blindSpots[0] || { title: "Thiếu dữ kiện chứng minh", desc: "Không có số liệu hoặc tài liệu kiểm chứng." };
+return `
+<div class="blind-spot-report">
+<h4 style="color: #ff5e62; margin-top:0;"><i class="fas fa-radiation"></i> Điểm logic nghiêm trọng nhất</h4>
+<div style="background: rgba(255, 94, 98, 0.06); border: 2px solid #ff5e62; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+<strong style="color: #ff5e62; font-size: 0.95rem;">${severeSpot.title}</strong>
+<p style="margin: 6px 0 0 0; font-size: 0.88rem; color: #fff;">${severeSpot.desc}</p>
+</div>
+<p style="font-size: 0.85rem; line-height: 1.5; margin-bottom:0;">
+Đây là lỗi lập luận cốt lõi vì nó trực tiếp dẫn dắt tư duy của người đọc đi đến một kết luận mang tính định hướng cảm xúc hoặc quy chụp động cơ mà hoàn toàn bỏ qua các quy luật nguyên nhân - kết quả logic thông thường.
+</p>
+</div>
+`;
+}
+}
+664:       // If not consecutive, or if we have a new block of text to analyze, determine the text to analyze
+665:           if (searchResults.length > 0 && searchResults[0].score >= 0.8) {
+let contextText = "";
+if (storeSnapshot.interaction.selectedText && storeSnapshot.interaction.selectedText.trim().length > 10) {
+contextText = storeSnapshot.interaction.selectedText.trim();
+} else {
+const contextEl = analyzeScreenContext(transcript);
+if (contextEl) {
+contextText = contextEl.innerText || contextEl.textContent || "";
+}
+if (!contextText || contextText.trim().length < 20) {
+// Try to find any active content on current page
+const detailPage = document.getElementById('page-detail');
+if (detailPage && !detailPage.classList.contains('hidden')) {
+contextText = detailPage.innerText || detailPage.textContent || "";
+} else {
+const homeContent = document.getElementById('home-dynamic-content');
+if (homeContent) {
+contextText = homeContent.innerText || homeContent.textContent || "";
+}
+}
+}
+}
+687:       // Clean the text from any AI Copilot UI elements text if present
+688:         // 2.6. Nếu câu hỏi có yêu cầu tóm tắt ngắn hoặc rút gọn, chỉnh sửa câu trả lời trước khi nói/hiển thị
+if (contextText) {
+contextText = contextText.replace(/Hỏi Trợ lý AI[\s\S]*/gi, '').trim();
+}
+692:       if (!contextText || contextText.length < 10) {
+finalAnswerText = sentences.slice(0, count).join('. ') + '.';
+return `
+<div class="blind-spot-report" style="color: #ff5e62;">
+<h4 style="margin-top:0;">⚠️ Không tìm thấy nội dung</h4>
+<p style="margin-bottom:0;">Tôi chưa tìm thấy đoạn văn bản hoặc nội dung nào hiển thị trên màn hình đủ dài để phân tích điểm mù lập luận. Vui lòng bôi chọn văn bản hoặc nhấp chọn một nội dung cụ thể.</p>
+</div>
+`;
+}
+701:       // Determine support level
+window.lastFinalAnswerText = finalAnswerText;
+let supportLevel = 'full';
+if (queryNorm.includes('tu phan tich') || queryNorm.includes('tu boc tach') || queryNorm.includes('tu kiem chung') || queryNorm.includes('che do tu')) {
+supportLevel = 'self';
+} else if (queryNorm.includes('cau hoi thoi') || queryNorm.includes('chi goi y') || queryNorm.includes('chi dat cau hoi') || queryNorm.includes('goi y bang cau hoi') || queryNorm.includes('cau hoi tu kiem chung')) {
+supportLevel = 'questions';
+}
+709:       // Store in memory
+if (window.lastCitationText) {
+window.conversationContext.lastAnalyzedText = contextText;
+712:       // Run analysis
+typeWriterEffect(renderedHTML, 'apple-ai-text', 12);
+return window.blindSpotReasoningEngine.analyze(contextText, supportLevel);
+}
+716: function playResponse(transcript = '') {
+if (window.isMindmapIntent && playVideoAvatar('bản đồ tri thức', finalAnswerText, null)) {
+if (currentState === 'IDLE') return;
+setUIState('PROCESSING');
+720:       setTimeout(() => {
+}
+if (currentState === 'IDLE') return;
+723:         let finalAnswerText = "";
+if (rewritten.targetContextId) {
+window.isMindmapIntent = false;
+window.lastCitationText = null;
+const mmContainer = document.getElementById('apple-ai-mindmap');
+if (mmContainer) { mmContainer.style.display = 'none'; mmContainer.style.opacity = '0'; mmContainer.innerHTML = ''; }
+const topSec = document.querySelector('.ai-top-section');
+if (topSec) topSec.classList.remove('mindmap-active');
+731:         // 1. Tạo snapshot bất biến của Store
+if (currentState !== 'IDLE') return;
+const storeSnapshot = window.screenContextStore.getState();
+734:         // 2. Giải quyết tham chiếu và viết lại câu hỏi thô
+if (!window.__audioUnlocked) {
+const resolvedRef = window.referenceResolver.resolve(transcript, storeSnapshot, window.conversationContext);
+const rewritten = window.contextQueryRewriter.rewrite(transcript, resolvedRef, storeSnapshot, window.conversationContext);
+738:         const normText = normalizeText(transcript);
+window.__ttsAudioPlayer = new Audio("data:audio/mp3;base64,//OExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+let state = getScenarioState();
+741:         const hasKnowledgeBase = typeof VANKIEN_DB !== 'undefined';
+if (normText.includes('ban do tri thuc') || normText.includes('so do')) {
+if (!hasKnowledgeBase) {
+console.warn("Không tìm thấy nguồn tri thức “VĂN KIỆN ĐẠI HỘI XIV”. Trợ lý đang hoạt động ở chế độ kịch bản có sẵn.");
+}
+746:         // --- KHỞI CHẠY MÔ HÌNH TRUY XUẤT RÀNG BUỘC MÀN HÌNH (CONSTRAINED RAG SEARCH) ---
+747:  
+let matchedPriority = false;
+749:         // --- CHẠY BLIND-SPOT REASONING ENGINE (CRITICAL THINKING CHECK) ---
+setUIState('LISTENING');
+const criticalKeywords = [
+'diem mu', 'nguy bien', 'bay lap luan', 'bay tu duy', 'phan tich lap luan',
+'lap luan nay', 'critical thinking', 'blind spot', 'tim diem mu', 'phat hien diem mu',
+'cach giai thich khac', 'giai thich thay the', 'loai bo cam xuc', 'cam xuc thi sao',
+'loai bo yeu to cam xuc', 'tach du kien', 'tach gia dinh', 'con diem mu nao',
+'con diem mu nao khac', 'giup toi phan tich phan nay', 'phan tich diem mu', 'loi lap luan',
+'con diem mu nao nua', 'diem nao nghiem trong nhat', 'toi dang bo sot', 'bo sot dieu gi',
+'co cach giai thich nao khac', 'cong thuc phan xa', 'dung tach truy doi ket',
+'dung - tach - truy - doi - ket', 'tu phan tich', 'tu boc tach', 'tu kiem chung'
+];
+761:         const queryNorm = window.referenceResolver.normalize(transcript);
+const isHigh = pt.importance === 'high';
+const isCriticalQuery = criticalKeywords.some(kw => queryNorm.includes(kw));
+764:         if (isCriticalQuery && window.blindSpotReasoningEngine) {
+let renderedHTML = finalAnswerText;
+finalAnswerText = handleBlindSpotQuery(transcript, queryNorm, storeSnapshot);
+matchedPriority = true;
+}
+769:         // Trích xuất từ khóa tìm kiếm
+}
+const searchWords = normalizeText(rewritten.query).split(' ').filter(w => w.length > 2);
+772:         // 2.1. Thử tìm theo contextId cụ thể (nếu resolvedRef.contextId được xác định)
+if (window.isMindmapIntent && playVideoAvatar('bản đồ tri thức', finalAnswerText, null)) {
+if (rewritten.targetContextId) {
+const matchedDbItem = VANKIEN_DB.find(item => {
+const normTopic = normalizeText(item.topic);
+const normContent = normalizeText(item.content);
+const contextTextNorm = normalizeText(rewritten.contextText);
+779:             return (contextTextNorm && (normContent.includes(contextTextNorm) || contextTextNorm.includes(normContent))) ||
+}
+(rewritten.targetContextId.includes('goals') && normTopic.includes('mục tiêu')) ||
+(rewritten.targetContextId.includes('core-ideas') && normTopic.includes('cốt lõi')) ||
+(rewritten.targetContextId.includes('tasks') && normTopic.includes('nhiệm vụ'));
+});
+785:           if (matchedDbItem) {
+window.__audioUnlocked = true;
+matchedPriority = true;
+finalAnswerText = formatCANDReporterResponse(matchedDbItem, transcript);
+if (matchedDbItem.source) window.lastCitationText = "Nguồn: " + matchedDbItem.source;
+window.screenActionController.execute([
+{ type: 'highlight_context', contextId: rewritten.targetContextId }
+]);
+}
+}
+795:         // 2.2. Chào hỏi / Kịch bản tĩnh được cấu hình sẵn
+}
+if (!matchedPriority) {
+let scoreQuote = scoreIntent(normText, 'QUOTE_PARTY_LEADERSHIP', state);
+let scoreSumm = scoreIntent(normText, 'SUMMARIZE_PARTY_LEADERSHIP', state);
+800:           if (scoreQuote >= 0.55 || scoreSumm >= 0.55) {
+801:      if (recognition) {
+matchedPriority = true;
+if (scoreQuote >= 0.55 && scoreSumm >= 0.55) {
+finalAnswerText = ANSWER_01_TEXT + "<br><br>Và sau đây, có thể khái quát việc nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng thành năm nội dung cơ bản:<br><br>" + ANSWER_02_TEXT.replace("Dạ vâng. Có thể khái quát việc nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng thành năm nội dung cơ bản sau đây:<br><br>", "");
+state.lastIntent = 'SUMMARIZE_PARTY_LEADERSHIP';
+state.lastAnswerId = 'ANSWER_02';
+state.scenarioStep = 2;
+state.awaitingFollowUp = false;
+} else if (scoreQuote >= 0.55 && scoreQuote >= scoreSumm) {
+finalAnswerText = ANSWER_01_TEXT;
+state.lastIntent = 'QUOTE_PARTY_LEADERSHIP';
+state.lastAnswerId = 'ANSWER_01';
+state.scenarioStep = 1;
+state.awaitingFollowUp = true;
+} else if (scoreSumm >= 0.55) {
+finalAnswerText = ANSWER_02_TEXT;
+state.lastIntent = 'SUMMARIZE_PARTY_LEADERSHIP';
+state.lastAnswerId = 'ANSWER_02';
+state.scenarioStep = 2;
+state.awaitingFollowUp = false;
+}
+}
+}
+824:         // 2.3. Check for CSND responsibility intent
+function renderEvidencePanel(sources) {
+if (!matchedPriority && state.conversationMode !== "scripted-presentation" && 
+(normText.includes("truong") || normText.includes("csnd") || normText.includes("dai hoc canh sat") || normText.includes("lien he") || normText.includes("trach nhiem")) &&
+(state.lastAnswerId === "ANSWER_01" || state.lastAnswerId === "ANSWER_02" || (state.currentTopic && state.currentTopic.includes("nang-cao-nang-luc-lanh-dao")))) {
+finalAnswerText = "Từ định hướng nêu trên, đối với cán bộ, đảng viên Trường Đại học CSND, có thể xác định một số trách nhiệm trọng tâm sau đây:<br><br><b>1. Quán triệt và nêu gương</b>: Cán bộ, đảng viên Nhà trường, đặc biệt là người đứng đầu, gương mẫu thực hiện việc tự soi, tự sửa, nâng cao tính tiên phong, gương mẫu.<br><br><b>2. Đổi mới giáo dục, đào tạo</b>: Đưa các quan điểm chỉ đạo của Đại hội XIV về xây dựng Đảng vào giảng dạy chính xác, sinh động, kịp thời chuyển hóa nghị quyết thành nhận thức cho học viên.<br><br><b>3. Nâng cao chất lượng nghiên cứu khoa học</b>: Tập trung tổng kết thực tiễn, nghiên cứu làm sáng tỏ các luận điểm mới về xây dựng Đảng và bảo vệ nền tảng tư tưởng của Đảng.<br><br><b>4. Đẩy mạnh chuyển đổi số, đổi mới sáng tạo</b>: Tiên phong ứng dụng trí tuệ nhân tạo và công nghệ số vào cải cách phương pháp giảng dạy lý luận chính trị và công tác quản lý giáo dục.<br><br><b>5. Gắn đào tạo với xây dựng lực lượng và thực tiễn bảo đảm an ninh, trật tự</b>: Đào tạo đội ngũ sĩ quan Cảnh sát nhân dân có bản lĩnh chính trị thép, tinh thông nghiệp vụ, trung thành tuyệt đối với Đảng, vì nước quên thân, vì dân phục vụ.";
+state.lastIntent = 'UNIVERSITY_APPLICATION';
+state.lastAnswerMode = 'official-document-assistant';
+matchedPriority = true;
+}
+834:         // 2.4. Tra cứu nâng cao (RAG) ràng buộc bởi Nghị quyết đang xem (rewritten.targetResolutionId)
+});
+if (!matchedPriority && hasKnowledgeBase) {
+let searchResults = [];
+const targetResIdStr = rewritten.targetResolutionId ? String(rewritten.targetResolutionId) : null;
+839:           VANKIEN_DB.forEach(item => {
+html += `
+let baseScore = 0;
+const normTopic = normalizeText(item.topic);
+const normContent = normalizeText(item.content);
+844:             let matchesResolutionConstraint = false;
+}
+if (targetResIdStr) {
+if (normTopic.includes(`nghị quyết ${targetResIdStr}`) || 
+normTopic.includes(`nq ${targetResIdStr}`) || 
+(item.keywords && item.keywords.includes(targetResIdStr))) {
+matchesResolutionConstraint = true;
+}
+} else {
+matchesResolutionConstraint = true;
+}
+855:             let kwMatch = 0;
+window.__globalMicStream.getTracks().forEach(track => track.stop());
+if (searchWords.length > 0) {
+searchWords.forEach(w => {
+if (normTopic.includes(w)) kwMatch += 2.0;
+if (normContent.includes(w)) kwMatch += 1.0;
+});
+baseScore += (kwMatch / searchWords.length);
+}
+864:             if (matchesResolutionConstraint && targetResIdStr) {
+865:          recognition.onerror = (event) => {
+baseScore += 1.5;
+}
+868:             if (resolvedRef.intent === 'COMPARE' && !matchesResolutionConstraint) {
+869:            if (window.__globalMicStream) {
+baseScore += 0.5; 
+}
+872:             if (baseScore > 0) {
+}
+searchResults.push({ item, score: baseScore });
+}
+});
+877:           searchResults.sort((a, b) => b.score - a.score);
+} else if (event.error === 'network') {
+879:           if (searchResults.length > 0 && searchResults[0].score >= 0.8) {
+} else {
+const bestMatch = searchResults[0];
+matchedPriority = true;
+finalAnswerText = formatCANDReporterResponse(bestMatch.item, transcript);
+state.lastIntent = 'SUMMARIZE_CONTENT';
+state.currentTopic = bestMatch.item.topic;
+state.lastAnswerMode = 'official-document-assistant';
+if (bestMatch.item.source) {
+window.lastCitationText = "Nguồn: " + bestMatch.item.source;
+}
+}
+}
+892:         // 2.5. Fallback hoặc các câu hỏi kịch bản
+vis.classList.remove('visualizer-anim');
+if (!matchedPriority) {
+if (normText.includes('ban do tri thuc') || normText.includes('so do')) {
+finalAnswerText = "Báo cáo đồng chí. Hệ thống đang trích xuất Bản đồ Tri thức kết nối Nghị quyết 71 với công tác đào tạo tại Đại học Cảnh sát Nhân dân.\n\nTừ cốt lõi Đổi mới giáo dục của Nghị quyết 71.\n\nNhà trường đẩy mạnh phát triển kỹ năng số cho học viên.\n\nNhằm tạo ra lực lượng Cảnh sát chính quy tinh nhuệ.\n\nĐáp ứng xuất sắc yêu cầu tác chiến an ninh mạng trong thời kỳ mới.";
+window.isMindmapIntent = true;
+} else {
+finalAnswerText = "Trong nguồn Văn kiện Đại hội XIV hiện được tích hợp, tôi chưa tìm thấy nội dung đủ rõ để trả lời chính xác câu hỏi này. Xin đồng chí cung cấp thêm từ khóa hoặc xác định cụ thể nội dung cần trao đổi.";
+}
+}
+902:         // 2.6. Nếu câu hỏi có yêu cầu tóm tắt ngắn hoặc rút gọn, chỉnh sửa câu trả lời trước khi nói/hiển thị
+state.lastIntent = null;
+if (resolvedRef.intent === 'SHORTEN') {
+const sentences = finalAnswerText.replace(/<[^>]*>?/gm, '').split(/[.!?]\s+/).filter(Boolean);
+const count = resolvedRef.requestedLength || 3;
+finalAnswerText = sentences.slice(0, count).join('. ') + '.';
+}
+909:         // 3. Ghi nhận lượt hội thoại vào bộ nhớ nhiều lượt
+state.awaitingFollowUp = false;
+window.conversationContext.addTurn(transcript, finalAnswerText, storeSnapshot);
+912:         state.lastQuestion = transcript;
+}
+state.lastAnswer = finalAnswerText;
+saveScenarioState(state);
+window.lastFinalAnswerText = finalAnswerText;
+917:         setUIState('SPEAKING');
+918:    function resetScript() {
+919:         // Hiển thị kết quả ra chat overlay
+let state = getScenarioState();
+const textEl = document.getElementById('apple-ai-text');
+if (textEl) {
+let renderedHTML = finalAnswerText;
+if (window.lastCitationText) {
+renderedHTML += `<div style="margin-top: 15px; font-size: 0.75rem; color: rgba(255,255,255,0.4); border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 5px; text-align: right;">${window.lastCitationText}</div>`;
+}
+typeWriterEffect(renderedHTML, 'apple-ai-text', 12);
+}
+929:         // Nói
+930:    function clearSession() {
+if (window.isMindmapIntent && playVideoAvatar('bản đồ tri thức', finalAnswerText, null)) {
+// handled by video avatar
+} else {
+let textToSpeak = finalAnswerText;
+if (finalAnswerText.includes('blind-spot-report')) {
+const queryNorm = window.referenceResolver.normalize(transcript);
+if (queryNorm.includes('loai bo cam xuc') || queryNorm.includes('cam xuc thi sao')) {
+textToSpeak = "Báo cáo đồng chí, đây là kết quả phân tích lập luận sau khi lược bỏ hoàn toàn các yếu tố cảm xúc.";
+} else if (queryNorm.includes('cach giai thich khac') || queryNorm.includes('giai thich thay the') || queryNorm.includes('gia thuyet thay the')) {
+textToSpeak = "Báo cáo đồng chí, tôi đã hiển thị các cách giải thích cạnh tranh và giả thuyết thay thế trên màn hình.";
+} else if (queryNorm.includes('con diem mu nao') || queryNorm.includes('con diem mu nao khac') || queryNorm.includes('con diem mu nao nua')) {
+textToSpeak = "Báo cáo đồng chí, đây là các điểm mù lập luận bổ sung cần lưu ý.";
+} else if (queryNorm.includes('bo sot') || queryNorm.includes('toi dang bo sot')) {
+textToSpeak = "Báo cáo đồng chí, đây là các dữ kiện và bối cảnh có thể đang bị bỏ sót mà tôi đã tổng hợp.";
+} else if (queryNorm.includes('nghiem trong nhat')) {
+textToSpeak = "Báo cáo đồng chí, tôi đã phân tích và chỉ ra lỗi logic nghiêm trọng nhất trên màn hình.";
+} else {
+textToSpeak = "Báo cáo đồng chí, tôi đã bóc tách lập luận và phân tích các điểm mù tư duy trong văn bản này. Bản đồ lập luận cùng các giả thuyết thay thế đã được hiển thị trên màn hình để đồng chí tiện theo dõi.";
+}
+} else if (finalAnswerText.includes('blind-spot-questions-only')) {
+textToSpeak = "Báo cáo đồng chí, tôi đã chuẩn bị các câu hỏi tự kiểm chứng phản biện cho nội dung này. Mời đồng chí tham khảo các câu hỏi trên màn hình.";
+} else if (finalAnswerText.includes('blind-spot-self-analysis')) {
+textToSpeak = "Báo cáo đồng chí, mời đồng chí tự điền phân tích lập luận của mình theo biểu mẫu trên màn hình. Tôi sẽ phản hồi và đối chiếu cùng đồng chí.";
+}
+speakDynamicText(textToSpeak);
+}
+957:         // Thực thi các hành động điều khiển màn hình tương ứng
+gap: 6px;
+if (rewritten.targetContextId) {
+window.screenActionController.execute([
+{ type: 'highlight_context', contextId: rewritten.targetContextId }
+]);
+}
+964:       }, 50); 
+background: rgba(255, 255, 255, 0.15);
+}function startInteraction() {
+if (currentState !== 'IDLE') return;
+968:      // iOS/Mobile Audio Unlock workaround
+display: none;
+if (!window.__audioUnlocked) {
+window.__audioUnlocked = true;
+try {
+// Khởi tạo một global audio player duy nhất để tái sử dụng (Bắt buộc cho Safari/iOS)
+window.__ttsAudioPlayer = new Audio("data:audio/mp3;base64,//OExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+window.__ttsAudioPlayer.play().catch(()=>{});
+976:              const unlockSpeech = new SpeechSynthesisUtterance('');
+padding: 4px 0;
+unlockSpeech.volume = 0;
+window.speechSynthesis.speak(unlockSpeech);
+} catch (e) {}
+}
+982:  
+.context-chip-dropdown.active {
+// Luôn hiển thị giao diện và bật LISTENING
+setUIState('LISTENING');
+986:      if (recognition) {
+padding: 8px 12px;
+try {
+let micErrorOccurred = false;
+990:          // Khắc phục UX cấp quyền Micro: Nhắc nhở người dùng chọn "Cho phép" giống ứng dụng di động
+font-size: 0.75rem;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+const textEl = document.getElementById('apple-ai-text');
+let isMicReady = false;
+995:              // Nếu sau 300ms mà chưa có kết quả (tức là trình duyệt đang hiện Popup hỏi quyền),
+}
+// thì hiển thị dòng chữ hướng dẫn người dùng bấm nút "Cho phép"
+const promptTimer = setTimeout(() => {
+if (!isMicReady && textEl) {
+textEl.innerHTML = '<span style="color: rgba(255,255,255,0.9); font-size: 1.1rem; animation: ai-fab-pulse 2s infinite;">Đang chờ cấp quyền... Vui lòng chọn <b>"Cho phép" (Allow)</b> trên thông báo của trình duyệt!</span>';
+}
+}, 300);
+1003:              navigator.mediaDevices.getUserMedia({ audio: true })
+width: 100%;
+.then(function(stream) {
+isMicReady = true;
+clearTimeout(promptTimer);
+if (textEl) textEl.innerHTML = ''; // Xóa chữ chờ cấp quyền
+1009:                  // LƯU Ý QUAN TRỌNG: KHÔNG ĐƯỢC ĐÓNG STREAM NGAY LẬP TỨC!
+border-radius: 14px;
+window.__globalMicStream = stream; // Giữ kết nối phần cứng mở
+try { recognition.start(); } catch(e) { console.warn(e); }
+})
+.catch(function(err) {
+isMicReady = true;
+clearTimeout(promptTimer);
+console.error("Lỗi xin quyền Micro:", err);
+micErrorOccurred = true;
+if (textEl) textEl.innerHTML = '<span style="color: #ff5e62">Truy cập Micro bị từ chối. Vui lòng gõ phím hoặc mở khóa trong cài đặt trình duyệt!</span>';
+});
+} else {
+try { recognition.start(); } catch(e) { console.warn(e); }
+}
+1024:          let finalTranscript = '';
+styleSheet.innerText = styles;
+recognition.onresult = (event) => {
+let tempTranscript = '';
+for (let i = event.resultIndex; i < event.results.length; ++i) {
+tempTranscript += event.results[i][0].transcript;
+}
+finalTranscript = tempTranscript;
+const textEl = document.getElementById('apple-ai-text');
+if (textEl) {
+textEl.innerHTML = `<em>"${finalTranscript}"</em>`;
+}
+};
+1037:          recognition.onend = () => {
+<video id="ai-avatar-video" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;" muted playsinline></video>
+// Giải phóng phần cứng sau khi nghe xong
+if (window.__globalMicStream) {
+window.__globalMicStream.getTracks().forEach(track => track.stop());
+window.__globalMicStream = null;
+}
+1044:            if (currentState !== 'LISTENING' || micErrorOccurred) return;
+if (closeBtn) closeBtn.addEventListener('click', stopAI);
+1046:            setUIState('PROCESSING');
+<span class="context-chip-icon">🔍</span>
+playResponse(finalTranscript);
+};
+1050:          recognition.onerror = (event) => {
+<div class="dropdown-item" data-level="section">Toàn bộ mục</div>
+console.error("Mic Error:", event.error);
+micErrorOccurred = true;
+1054:            if (window.__globalMicStream) {
+1055:             <div id="apple-ai-text" class="apple-ai-text" style="min-height:3em; width:100%;"></div>
+window.__globalMicStream.getTracks().forEach(track => track.stop());
+window.__globalMicStream = null;
+}
+1059:            const textEl = document.getElementById('apple-ai-text');
+<div id="apple-ai-suggestions" class="apple-ai-suggestions"></div>
+if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+if (textEl) textEl.innerHTML = '<span style="color: #ff5e62">Bị chặn bởi trình duyệt. Vui lòng gõ phím!</span>';
+} else if (event.error === 'network') {
+if (textEl) textEl.innerHTML = '<span style="color: #ff5e62">Lỗi máy chủ Google Voice. Vui lòng gõ phím!</span>';
+} else {
+if (textEl) textEl.innerHTML = '<span style="color: #ff5e62">Mất kết nối Micro. Vui lòng gõ phím!</span>';
+}
+// Giữ nguyên trạng thái LISTENING để người dùng có thể Gõ Phím
+};
+} catch (err) {
+const textEl = document.getElementById('apple-ai-text');
+if (textEl) textEl.innerHTML = '<span style="color: #ff5e62">Micro không khả dụng. Vui lòng nhập câu hỏi vào ô bên dưới!</span>';
+}
+} else {
+const textEl = document.getElementById('apple-ai-text');
+if (textEl) textEl.innerHTML = '<span style="color: #ff5e62">Trình duyệt không hỗ trợ Mic. Vui lòng nhập câu hỏi vào ô bên dưới!</span>';
+}
+}
+1079:    function stopAI() {
+1080:    function init() {
+if (recognition) {
+try { recognition.stop(); } catch(e){}
+}
+if (simulatedProcessingTimer) clearTimeout(simulatedProcessingTimer);
+if (typeWriterInterval) clearInterval(typeWriterInterval);
+if (currentAudio) {
+currentAudio.pause();
+currentAudio.currentTime = 0;
+}
+synth.cancel();
+setUIState('IDLE');
+}
+1093:    function interruptSpeaking() {
+startInteraction();
+if (typeWriterInterval) {
+clearInterval(typeWriterInterval);
+typeWriterInterval = null;
+}
+// Hiển thị ngay toàn bộ văn bản câu trả lời
+const textEl = document.getElementById('apple-ai-text');
+if (textEl && window.lastFinalAnswerText) {
+let renderedHTML = window.lastFinalAnswerText;
+if (window.lastCitationText) {
+renderedHTML += `<div style="margin-top: 15px; font-size: 0.75rem; color: rgba(255,255,255,0.4); border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 5px; text-align: right;">${window.lastCitationText}</div>`;
+}
+textEl.innerHTML = renderedHTML;
+}
+if (currentAudio) {
+currentAudio.pause();
+currentAudio.currentTime = 0;
+currentAudio = null;
+}
+synth.cancel();
+1114:       // Dừng video avatar và đưa về ảnh tĩnh
+const topSec = document.querySelector('.ai-top-section');
+const videoEl = document.getElementById('ai-avatar-video');
+const imgEl = document.getElementById('ai-avatar-img');
+if (videoEl && imgEl) {
+videoEl.style.display = 'none';
+imgEl.style.display = 'block';
+try { videoEl.pause(); } catch(e) {}
+}
+1123:       // Tắt visualizer
+<path class="mm-line" id="mm-line-4" d="M 300,175 L 450,270" />
+const vis = document.getElementById('ai-audio-visualizer');
+if (vis) {
+vis.style.opacity = '0';
+vis.classList.remove('visualizer-anim');
+}
+1130:       // Trả lại trạng thái lắng nghe và giữ lại văn bản câu trả lời
+<g class="mm-node" id="mm-node-1" transform="translate(150,80)">
+setUIState('LISTENING', true);
+}
+1134:    function resetConversation() {
+<g class="mm-node" id="mm-node-2" transform="translate(450,80)">
+let state = getScenarioState();
+state.currentTopic = "nang-cao-nang-luc-lanh-dao-suc-chien-dau-cua-dang";
+state.lastIntent = null;
+state.lastQuestion = null;
+state.lastAnswer = null;
+state.lastSourceChunks = [];
+state.lastQuote = null;
+state.lastAnswerMode = null;
+state.scenarioStep = 0;
+state.awaitingFollowUp = false;
+saveScenarioState(state);
+1147:      const textEl = document.getElementById('apple-ai-text');
+`;
+if (textEl) {
+textEl.innerHTML = '<span style="color: rgba(255,255,255,0.7); font-size: 0.95rem;">Đã đặt lại hội thoại (Giữ nguyên chế độ hoạt động).</span>';
+}
+}
+1153:    function resetScript() {
+}, 100);
+let state = getScenarioState();
+state.scenarioStep = 0;
+state.awaitingFollowUp = false;
+saveScenarioState(state);
+1159:      const textEl = document.getElementById('apple-ai-text');
+1160:            // Pop node
+if (textEl) {
+textEl.innerHTML = '<span style="color: rgba(255,255,255,0.7); font-size: 0.95rem;">Đã đặt lại kịch bản trình diễn về bước đầu tiên.</span>';
+}
+}
+1165:    function clearSession() {
+}, 500); // delay node activation slightly after line starts drawing
+sessionStorage.removeItem("daiHoiXIVAssistantState");
+sessionStorage.removeItem("aiScenarioState");
+1169:      const textEl = document.getElementById('apple-ai-text');
+1170:   function renderAndSpeakStructuredResponse(struct, query) {
+if (textEl) {
+textEl.innerHTML = '<span style="color: rgba(255,255,255,0.7); font-size: 0.95rem;">Đã xóa toàn bộ ngữ cảnh phiên làm việc.</span>';
+}
+}
+1175:    function initUI() {
+if (textEl) {
+if (document.getElementById('apple-ai-overlay')) return;
+1178:       // Chèn CSS động cho các phần tử Context Chip và Suggestion Chips
+1179:     // 2. Render Right Column (Evidence map)
+const styles = `
+.apple-ai-context-chip {
+align-self: center;
+margin: 8px 0;
+padding: 6px 12px;
+background: rgba(255, 255, 255, 0.08);
+border: 1px solid rgba(255, 255, 255, 0.12);
+border-radius: 16px;
+font-size: 0.8rem;
+color: rgba(255, 255, 255, 0.85);
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 6px;
+position: relative;
+transition: all 0.2s ease;
+backdrop-filter: blur(8px);
+user-select: none;
+}
+.apple-ai-context-chip:hover {
+background: rgba(255, 255, 255, 0.15);
+border-color: rgba(255, 255, 255, 0.2);
+}
+.context-chip-dropdown {
+display: none;
+position: absolute;
+bottom: 100%;
+left: 50%;
+transform: translateX(-50%) translateY(-8px);
+background: rgba(15, 15, 15, 0.95);
+border: 1px solid rgba(255, 255, 255, 0.15);
+border-radius: 8px;
+padding: 4px 0;
+z-index: 100;
+min-width: 140px;
+box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+backdrop-filter: blur(10px);
+}
+.context-chip-dropdown.active {
+display: block;
+}
+.dropdown-item {
+padding: 8px 12px;
+color: rgba(255, 255, 255, 0.9);
+text-align: left;
+cursor: pointer;
+font-size: 0.75rem;
+transition: background 0.2s;
+}
+.dropdown-item:hover {
+background: rgba(255, 255, 255, 0.1);
+}
+1232:         .apple-ai-suggestions {
+// MISSING LINE 1232
+display: flex;
+justify-content: center;
+gap: 8px;
+flex-wrap: wrap;
+margin: 10px 0;
+width: 100%;
+}
+.suggestion-chip {
+padding: 6px 12px;
+background: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 14px;
+font-size: 0.75rem;
+color: rgba(255, 255, 255, 0.75);
+cursor: pointer;
+transition: all 0.2s ease;
+font-family: inherit;
+}
+.suggestion-chip:hover {
+background: rgba(255, 255, 255, 0.12);
+border-color: rgba(255, 255, 255, 0.2);
+color: #fff;
+transform: translateY(-1px);
+}
+`;
+const styleSheet = document.createElement("style");
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);
+1262:       const overlayHTML = `
+"Khái quát tinh thần 9 nghị quyết",
+<div id="apple-ai-overlay" class="apple-ai-overlay" style="display:none;">
+<div class="apple-edge-glow"></div>
+<div class="apple-ai-content">
+<button id="apple-ai-stop-btn" class="apple-ai-stop-btn" style="display:none;" title="Dừng đọc câu trả lời">⏹ Dừng</button>
+<div class="ai-avatar-section">
+<div class="ai-avatar-wrapper">
+<img id="ai-avatar-img" src="./images/csnd_avatar.png" alt="Trợ lý AI"
+style="width:100%;height:100%;object-fit:cover;border-radius:50%;"
+onerror="this.src='';this.style.display='none'" />
+<video id="ai-avatar-video" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;" muted playsinline></video>
+</div>
+<div id="ai-audio-visualizer" class="ai-audio-visualizer" style="opacity:0;">
+<span></span><span></span><span></span><span></span><span></span>
+</div>
+</div>
+1279:             <!-- Context Chip -->
+if (parts.length >= 2 && parts[1] === 'core-ideas') {
+<div id="apple-ai-context-chip" class="apple-ai-context-chip" style="display:none;">
+<span class="context-chip-icon">🔍</span>
+<span id="context-chip-text">Đang nhận diện: Sơ đồ 9 Nghị quyết</span>
+<div id="context-chip-dropdown" class="context-chip-dropdown">
+<div class="dropdown-item" data-level="item">Ý đang hiển thị</div>
+<div class="dropdown-item" data-level="section">Toàn bộ mục</div>
+<div class="dropdown-item" data-level="resolution">Toàn bộ nghị quyết</div>
+</div>
+</div>
+1290:             <div id="apple-ai-text" class="apple-ai-text" style="min-height:3em; width:100%;"></div>
+1291:       const uniqueSuggestions = Array.from(new Set(suggestions)).slice(0, 4);
+<div id="apple-ai-mindmap" style="display:none;opacity:0;width:100%;height:280px;"></div>
+1293:             <!-- Suggestion Chips -->
+// MISSING LINE 1293
+<div id="apple-ai-suggestions" class="apple-ai-suggestions"></div>
+1296:             <input id="apple-ai-input" class="apple-ai-input" type="text"
+chip.innerText = text;
+placeholder="⌨️ Nhập câu hỏi và nhấn Enter (hoặc nói bằng Ctrl+Space)..."
+style="display:none;" />
+<div class="apple-ai-hint" style="margin-top:12px; font-size:0.8rem; color:rgba(255,255,255,0.4); text-align:center;">
+Ctrl+Space • Hỏi bằng giọng nói &nbsp;|&nbsp; Esc • Đóng &nbsp;|&nbsp; Enter • Gửi câu hỏi
+</div>
+<div class="apple-ai-admin-actions" style="margin-top:15px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+<button id="ai-btn-reset-conv" class="ai-admin-btn" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.85); padding:5px 12px; border-radius:14px; font-size:0.75rem; font-family:inherit; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">Đặt lại hội thoại</button>
+<button id="ai-btn-reset-script" class="ai-admin-btn" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.85); padding:5px 12px; border-radius:14px; font-size:0.75rem; font-family:inherit; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">Đặt lại kịch bản</button>
+<button id="ai-btn-clear-session" class="ai-admin-btn" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.85); padding:5px 12px; border-radius:14px; font-size:0.75rem; font-family:inherit; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">Xóa ngữ cảnh phiên</button>
+</div>
+<div id="ai-admin-warning" style="display:none; margin-top:8px; font-size:0.72rem; color:#ffb300; text-align:center; padding: 4px 8px; border-radius: 8px; background: rgba(255, 179, 0, 0.08); border: 1px solid rgba(255,179,0,0.15); line-height: 1.3;"></div>
+</div>
+<button class="apple-ai-close-btn" id="apple-ai-close" aria-label="Đóng trợ lý AI">✕</button>
+</div>
+`;
+document.body.insertAdjacentHTML('beforeend', overlayHTML);
+1314:       // Show warning if database is missing
+setTimeout(() => container.style.opacity = '1', 50);
+const hasKnowledgeBase = typeof VANKIEN_DB !== 'undefined';
+if (!hasKnowledgeBase) {
+const warningEl = document.getElementById('ai-admin-warning');
+if (warningEl) {
+warningEl.innerText = "Không tìm thấy nguồn tri thức “VĂN KIỆN ĐẠI HỘI XIV”. Trợ lý đang hoạt động ở chế độ kịch bản có sẵn.";
+warningEl.style.display = 'block';
+}
+}
+1324:       // Wire up stop speaking button
+// MISSING LINE 1324
+const stopSpeakingBtn = document.getElementById('apple-ai-stop-btn');
+if (stopSpeakingBtn) stopSpeakingBtn.addEventListener('click', interruptSpeaking);
+1328:       // Wire up close button
+// MISSING LINE 1328
+const closeBtn = document.getElementById('apple-ai-close');
+if (closeBtn) closeBtn.addEventListener('click', stopAI);
+1332:       // Wire up admin buttons
+// MISSING LINE 1332
+const btnResetConv = document.getElementById('ai-btn-reset-conv');
+if (btnResetConv) btnResetConv.addEventListener('click', resetConversation);
+1336:       const btnResetScript = document.getElementById('ai-btn-reset-script');
+// MISSING LINE 1336
+if (btnResetScript) btnResetScript.addEventListener('click', resetScript);
+1339:       const btnClearSession = document.getElementById('ai-btn-clear-session');
+// MISSING LINE 1339
+if (btnClearSession) btnClearSession.addEventListener('click', clearSession);
+1342:       // Wire up text input
+// MISSING LINE 1342
+const inputEl = document.getElementById('apple-ai-input');
+if (inputEl) {
+inputEl.addEventListener('keydown', (e) => {
+if (e.key === 'Enter') {
+const query = inputEl.value.trim();
+if (query) {
+inputEl.value = '';
+setUIState('PROCESSING');
+setTimeout(() => playResponse(query), 50);
+}
+}
+if (e.key === 'Escape') stopAI();
+});
+}
+1358:       // Wire up FAB button
+const textEl = document.getElementById('apple-ai-text');
+const btn = document.getElementById('ai-copilot-btn');
+if (btn) {
+btn.removeAttribute('onclick');
+btn.addEventListener('click', startInteraction);
+}
+1365:       // Wire up Context Chip Dropdown events
+// MISSING LINE 1365
+const chipEl = document.getElementById('apple-ai-context-chip');
+const dropdownEl = document.getElementById('context-chip-dropdown');
+if (chipEl && dropdownEl) {
+chipEl.addEventListener('click', (e) => {
+e.stopPropagation();
+dropdownEl.classList.toggle('active');
+});
+1374:         document.addEventListener('click', () => {
+<div class="ai-mobile-tabs">
+dropdownEl.classList.remove('active');
+});
+1378:         dropdownEl.querySelectorAll('.dropdown-item').forEach(item => {
+1379:           <div class="ai-split-container">
+item.addEventListener('click', (e) => {
+e.stopPropagation();
+dropdownEl.classList.remove('active');
+const level = item.getAttribute('data-level');
+const snapshot = window.screenContextStore.getState();
+1385:             // Xử lý thay đổi phạm vi nhận diện
+onerror="this.src='';this.style.display='none'" />
+let promptText = "";
+if (level === 'resolution' && snapshot.page.resolutionId) {
+promptText = `Đang tập trung nhận diện: Toàn bộ Nghị quyết ${snapshot.page.resolutionId}`;
+} else if (level === 'section') {
+let primaryId = snapshot.viewport.primaryContextId;
+let targetSection = null;
+if (primaryId) {
+const el = document.querySelector(`[data-context-id="${primaryId}"]`);
+if (el) targetSection = el.getAttribute('data-section-id');
+}
+promptText = `Đang tập trung nhận diện: Mục ${targetSection || 'hiện tại'}`;
+} else {
+promptText = `Đang tập trung nhận diện: Ý hiển thị gần tâm màn hình`;
+}
+1401:             const textEl = document.getElementById('context-chip-text');
+</select>
+if (textEl) textEl.innerText = promptText;
+});
+});
+}
+}function init() {
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', setup);
+} else {
+setup();
+}
+1413:       function setup() {
+// MISSING LINE 1413
+initUI();
+1416:         document.addEventListener('keydown', (e) => {
+<span class="ai-source-icon">🗺️</span> BẢN ĐỒ CĂN CỨ VĂN KIỆN
+if (e.ctrlKey && e.code === 'Space') {
+e.preventDefault();
+startInteraction();
+}
+if (e.code === 'Escape') {
+stopAI();
+}
+});
+1426:         // Init voices for dynamic text fallback
+// MISSING LINE 1426
+if (speechSynthesis.onvoiceschanged !== undefined) {
+speechSynthesis.onvoiceschanged = () => synth.getVoices();
+}
+1431:         // Đăng ký store listener để đồng bộ hóa Context Chip và Suggestion Chips
+</div>
+if (window.screenContextStore) {
+window.screenContextStore.subscribe((state) => {
+updateContextChipUI(state);
+updateSuggestionChipsUI(state);
+});
+}
+}
+}
+1441:     function updateContextChipUI(state) {
+`;
+const chipEl = document.getElementById('apple-ai-context-chip');
+const textEl = document.getElementById('context-chip-text');
+if (!chipEl || !textEl) return;
+1446:       if (state.page.type === 'home') {
+const warningEl = document.getElementById('ai-admin-warning');
+textEl.innerText = "Đang nhận diện: Sơ đồ 9 Nghị quyết";
+chipEl.style.display = 'flex';
+} else if (state.page.resolutionId) {
+const resId = state.page.resolutionId;
+let text = `Nghị quyết ${resId}`;
+1453:         const primaryId = state.viewport.primaryContextId;
+// MISSING LINE 1453
+if (primaryId) {
+const parts = primaryId.split('.');
+if (parts.length >= 2) {
+const secId = parts[1];
+const secFriendly = {
+'intro': 'Mở đầu',
+'context': 'Bối cảnh',
+'core-ideas': 'Tinh thần cốt lõi',
+'general-goals': 'Mục tiêu tổng quát',
+'goals-2030': 'Mục tiêu 2030',
+'vision-2045': 'Tầm nhìn 2045',
+'tasks': 'Nhiệm vụ giải pháp',
+'new-points': 'Điểm mới đột phá',
+'responsibilities': 'Trách nhiệm CAND',
+'quotes': 'Phát biểu nổi bật',
+'gallery': 'Thư viện ảnh',
+'image': 'Hình ảnh'
+}[secId] || secId;
+1473:             text += ` › ${secFriendly}`;
+// MISSING LINE 1473
+1475:             if (parts.length >= 3) {
+if (ttsPlayPause) {
+text += ` › Ý số ${parts[2]}`;
+}
+}
+}
+1481:         textEl.innerText = `Đang nhận diện: ${text}`;
+}
+chipEl.style.display = 'flex';
+} else {
+chipEl.style.display = 'none';
+}
+}
+1488:         function updateSuggestionChipsUI(state) {
+stopTTS();
+const container = document.getElementById('apple-ai-suggestions');
+if (!container) return;
+1492:       container.innerHTML = '';
+// MISSING LINE 1492
+1494:       let suggestions = [];
+ttsSpeed.addEventListener('change', () => {
+if (state.page.type === 'home') {
+suggestions = [
+"Khái quát tinh thần 9 nghị quyết",
+"Nghị quyết nào nói về chuyển đổi số?",
+"Trách nhiệm chung của CAND là gì?",
+"Phân tích điểm mù nghị quyết này",
+"Điểm nổi bật nhất của Đại hội XIV"
+];
+} else if (state.page.resolutionId) {
+suggestions = [
+"Tóm tắt phần này",
+"Điểm mới là gì?",
+"Căn cứ ở đâu?",
+"Phân tích điểm mù phần này",
+"Cách giải thích thay thế khác?",
+"Liên hệ CAND"
+];
+1513:         const primaryId = state.viewport.primaryContextId;
+1514:       ttsModeFull.addEventListener('click', () => {
+if (primaryId) {
+const parts = primaryId.split('.');
+if (parts.length >= 2 && parts[1] === 'core-ideas') {
+suggestions[0] = "Giải thích ý vừa rồi";
+suggestions[1] = "Làm rõ ý thứ hai";
+}
+}
+1522:         const activeImg = window.visualContextAdapter.getActiveImageContext();
+}
+if (activeImg || state.visual.activeImageContextId) {
+suggestions.push("Giải thích hình ảnh này");
+}
+}
+1528:       if (state.interaction.selectedText && state.interaction.selectedText.trim().length > 10) {
+if (e.key === 'Enter') {
+suggestions.unshift("Phân tích điểm mù phần bôi chọn", "Tách dữ kiện & giả định");
+}
+1532:       const uniqueSuggestions = Array.from(new Set(suggestions)).slice(0, 6);
+// Reset mobile tab to left
+1534:       uniqueSuggestions.forEach(text => {
+setUIState('PROCESSING');
+const chip = document.createElement('button');
+chip.className = 'suggestion-chip';
+chip.innerText = text;
+chip.addEventListener('click', (e) => {
+e.stopPropagation();
+const inputEl = document.getElementById('apple-ai-input');
+if (inputEl) {
+inputEl.value = text;
+setUIState('PROCESSING');
+setTimeout(() => playResponse(text), 50);
+}
+});
+container.appendChild(chip);
+});
+}function drawMindmapStep(step) {
+const container = document.getElementById('apple-ai-mindmap');
+if (!container) return;
+1553:        if (step === 0) {
+// MISSING LINE 1553
+container.style.display = 'block';
+setTimeout(() => container.style.opacity = '1', 50);
+const topSec = document.querySelector('.ai-top-section');
+if (topSec) topSec.classList.add('mindmap-active');
+// Initialize SVG
+container.innerHTML = `
+<svg width="100%" height="100%" viewBox="0 0 600 350">
+<!-- Lines -->
+<path class="mm-line" id="mm-line-1" d="M 300,175 L 150,80" />
+<path class="mm-line" id="mm-line-2" d="M 300,175 L 450,80" />
+<path class="mm-line" id="mm-line-3" d="M 300,175 L 150,270" />
+<path class="mm-line" id="mm-line-4" d="M 300,175 L 450,270" />
+1567:                  <!-- Nodes -->
+// MISSING LINE 1567
+<g class="mm-node mm-center-node" id="mm-node-0" transform="translate(300,175)">
+<circle r="0" cx="0" cy="0" />
+<text x="0" y="5" text-anchor="middle">NQ 71</text>
+</g>
+<g class="mm-node" id="mm-node-1" transform="translate(150,80)">
+<circle r="0" cx="0" cy="0" />
+<text x="0" y="5" text-anchor="middle">Đổi mới Giáo dục</text>
+</g>
+<g class="mm-node" id="mm-node-2" transform="translate(450,80)">
+<circle r="0" cx="0" cy="0" />
+<text x="0" y="5" text-anchor="middle">Kỹ năng Số</text>
+</g>
+<g class="mm-node" id="mm-node-3" transform="translate(150,270)">
+<circle r="0" cx="0" cy="0" />
+<text x="0" y="5" text-anchor="middle">Lực lượng Tinh nhuệ</text>
+</g>
+<g class="mm-node" id="mm-node-4" transform="translate(450,270)">
+<circle r="0" cx="0" cy="0" />
+<text x="0" y="5" text-anchor="middle">An ninh Mạng</text>
+</g>
+</svg>
+`;
+1591:            setTimeout(() => {
+// MISSING LINE 1591
+const node0 = document.querySelector('#mm-node-0 circle');
+if(node0) node0.setAttribute('r', '50');
+document.getElementById('mm-node-0').classList.add('active');
+}, 100);
+}
+else if (step >= 1 && step <= 4) {
+// Draw line
+const line = document.getElementById('mm-line-' + step);
+if (line) line.classList.add('drawn');
+1602:            // Pop node
+<g class="mm-node" id="mm-node-3" transform="translate(150,270)">
+setTimeout(() => {
+const nodeCircle = document.querySelector('#mm-node-' + step + ' circle');
+if (nodeCircle) nodeCircle.setAttribute('r', '40');
+document.getElementById('mm-node-' + step).classList.add('active');
+}, 500); // delay node activation slightly after line starts drawing
+}
+}
+1611:    return { init, startInteraction, stopAI, drawMindmapStep, resetConversation, resetScript, clearSession };
+`;
+})();
+1614:  AICopilot.init();
+const node0 = document.querySelector('#mm-node-0 circle');
+1616: 
+document.getElementById('mm-node-0').classList.add('active');
+}, 100);
+}
+else if (step >= 1 && step <= 4) {
+const line = document.getElementById('mm-line-' + step);
+if (line) line.classList.add('drawn');
+setTimeout(() => {
+const nodeCircle = document.querySelector('#mm-node-' + step + ' circle');
+if (nodeCircle) nodeCircle.setAttribute('r', '40');
+document.getElementById('mm-node-' + step).classList.add('active');
+}, 500);
+}
+}
+1630:   // --- APPROVED HARDCODED SCENARIOS ---
+// MISSING LINE 1630
+const Q1_STRUCTURED = {
+answerType: "explanation",
+detectedTopic: "Đoạn trích Văn kiện Đại hội XIV về Xây dựng Đảng",
+detectedResolution: "Đại hội XIV",
+directAnswer: "Theo nội dung đồng chí cung cấp từ Văn kiện Đại hội đại biểu toàn quốc lần thứ XIV, Đảng ta khẳng định:",
+mainConclusion: "“Tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng trong sạch, vững mạnh toàn diện; nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng. Tăng cường xây dựng, chỉnh đốn, tự đổi mới để Đảng ta thật sự là đạo đức, là văn minh”.",
+keyTerms: ["Xây dựng, chỉnh đốn Đảng", "Trong sạch, vững mạnh", "Năng lực lãnh đạo, cầm quyền", "Đạo đức, văn minh"],
+keyPoints: [
+{
+id: "q1-p1",
+title: "Mục tiêu then chốt",
+summary: "Đẩy mạnh xây dựng, chỉnh đốn Đảng toàn diện",
+details: "Tập trung xây dựng Đảng trong sạch, vững mạnh về cả chính trị, tư tưởng, đạo đức, tổ chức và cán bộ.",
+evidenceIds: ["q1-src1"],
+importance: "high"
+},
+{
+id: "q1-p2",
+title: "Năng lực cốt lõi",
+summary: "Nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu",
+details: "Giữ vững vai trò lãnh đạo tuyệt đối, trực tiếp về mọi mặt của Đảng đối với Nhà nước, xã hội và lực lượng vũ trang.",
+evidenceIds: ["q1-src1"],
+importance: "high"
+},
+{
+id: "q1-p3",
+title: "Bản chất tự đổi mới",
+summary: "Tăng cường tự đổi mới để Đảng thật sự là đạo đức, là văn minh",
+details: "Tự đổi mới, tự chỉnh đốn là quy luật tồn tại và phát triển của Đảng, đảm bảo Đảng luôn ngang tầm nhiệm vụ.",
+evidenceIds: ["q1-src1"],
+importance: "high"
+}
+],
+visualization: {
+type: "cards",
+data: {}
+},
+officialQuotes: [
+{
+text: "Tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng trong sạch, vững mạnh toàn diện; nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng. Tăng cường xây dựng, chỉnh đốn, tự đổi mới để Đảng ta thật sự là đạo đức, là văn minh",
+sourceId: "q1-src1",
+location: "Văn kiện Đại hội XIV, tập II, tr. 383"
+}
+],
+misconceptions: [
+"Xây dựng Đảng không chỉ là công tác cán bộ hay tổ chức, mà là sự hoàn thiện toàn diện về tư tưởng, chính trị và đạo đức."
+],
+practicalApplication: [
+"Đối với học viên Trường Đại học Cảnh sát nhân dân, việc học tập xây dựng Đảng là nền tảng để xây dựng bản lĩnh chính trị thép, trung thành tuyệt đối với Đảng, Tổ quốc và Nhân dân."
+],
+memoryPoints: [
+"Trọng tâm: Xây dựng chỉnh đốn Đảng",
+"Bản chất: Tự đổi mới để đạo đức, văn minh",
+"Nguồn: Văn kiện tập II, trang 383"
+],
+followUpQuestions: [
+"Khái quát 5 nội dung cơ bản để nâng cao năng lực lãnh đạo của Đảng?",
+"Liên hệ trách nhiệm của học viên Trường Đại học Cảnh sát nhân dân?",
+"Bản chất của 'Đảng ta thật sự là đạo đức, là văn minh' là gì?"
+],
+sources: [
+{
+id: "q1-src1",
+title: "Văn kiện Đại hội đại biểu toàn quốc lần thứ XIV - Tập II",
+sourceFile: "bao_cao_chinh_tri.pdf",
+page: "383",
+text: "Tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng trong sạch, vững mạnh toàn diện; nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng. Tăng cường xây dựng, chỉnh đốn, tự đổi mới để Đảng ta thật sự là đạo đức, là văn minh."
+}
+],
+confidence: "high"
+};
+1703:   const Q2_STRUCTURED = {
+sourceFile: "bao_cao_chinh_tri.pdf",
+answerType: "process",
+detectedTopic: "5 nội dung cơ bản nâng cao năng lực lãnh đạo",
+detectedResolution: "Đại hội XIV",
+directAnswer: "Có thể khái quát việc nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng thành năm nội dung cơ bản sau đây:",
+mainConclusion: "Nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu là nhiệm vụ then chốt, quyết định sự thành bại của sự nghiệp cách mạng trong kỷ nguyên mới.",
+keyTerms: ["Xây dựng hệ thống chính trị", "Đội ngũ cán bộ ngang tầm", "Phương thức lãnh đạo", "Kiểm soát quyền lực", "Bảo vệ nền tảng tư tưởng"],
+keyPoints: [
+{
+id: "q2-p1",
+title: "Thứ nhất",
+summary: "Tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng và hệ thống chính trị trong sạch, vững mạnh toàn diện",
+details: "Nâng cao chất lượng xây dựng Đảng về chính trị, tư tưởng, đạo đức và tổ chức.",
+evidenceIds: ["q2-src1"],
+importance: "high"
+},
+{
+id: "q2-p2",
+title: "Thứ hai",
+summary: "Xây dựng đội ngũ cán bộ, nhất là cán bộ lãnh đạo, quản lý và người đứng đầu các cấp",
+details: "Yêu cầu có đủ phẩm chất, năng lực, uy tín, ngang tầm nhiệm vụ.",
+evidenceIds: ["q2-src1"],
+importance: "high"
+},
+{
+id: "q2-p3",
+title: "Thứ ba",
+summary: "Đổi mới đồng bộ phương thức lãnh đạo",
+details: "Nâng cao năng lực lãnh đạo, năng lực cầm quyền và hiệu quả tổ chức thực hiện các chủ trương, nghị quyết của Đảng.",
+evidenceIds: ["q2-src1"],
+importance: "high"
+},
+{
+id: "q2-p4",
+title: "Thứ tư",
+summary: "Tăng cường kiểm soát quyền lực; kiên quyết, kiên trì phòng, chống tham nhũng, lãng phí, tiêu cực",
+details: "Ngăn chặn, đẩy lùi suy thoái về tư tưởng chính trị, đạo đức, lối sống và những biểu hiện “tự diễn biến”, “tự chuyển hóa” trong nội bộ.",
+evidenceIds: ["q2-src1"],
+importance: "high"
+},
+{
+id: "q2-p5",
+title: "Thứ năm",
+summary: "Tăng cường bảo vệ nền tảng tư tưởng của Đảng",
+details: "Chủ động đấu tranh phản bác các quan điểm sai trái, thù địch, góp phần củng cố niềm tin của Nhân dân đối với Đảng, Nhà nước và chế độ xã hội chủ nghĩa.",
+evidenceIds: ["q2-src1"],
+importance: "high"
+}
+{
+id: "q2-p5",
+title: "Thứ năm",
+summary: "Tăng cường bảo vệ nền tảng tư tưởng của Đảng",
+details: "Chủ động đấu tranh phản bác các quan điểm sai trái, thù địch, góp phần củng cố niềm tin của Nhân dân đối với Đảng, Nhà nước và chế độ xã hội chủ nghĩa.",
+evidenceIds: ["q2-src1"],
+importance: "high"
+}
+],
+visualization: {
+type: "cards",
+data: {}
+},
+officialQuotes: [],
+misconceptions: [
+"Nhầm lẫn rằng kiểm soát quyền lực làm giảm tính chủ động của lãnh đạo. Thực tế, kiểm soát quyền lực là điều kiện bảo vệ cán bộ dám nghĩ dám làm và tránh sai phạm."
+],
+practicalApplication: [
+"Học viên Trường Đại học Cảnh sát nhân dân cần ra sức học tập, nâng cao trình độ lý luận, giữ vững lập trường chính trị và tích cực đấu tranh phản bác thông tin xấu độc trên mạng xã hội."
+],
+memoryPoints: [
+"Xây dựng Đảng & Hệ thống chính trị",
+"Đội ngũ cán bộ chất lượng cao",
+"Đổi mới phương thức lãnh đạo",
+"Kiểm soát quyền lực & Phòng chống tiêu cực",
+"Bảo vệ nền tảng tư tưởng"
+],
+followUpQuestions: [
+"Liên hệ trách nhiệm cán bộ, đảng viên Trường Đại học Cảnh sát nhân dân?",
+"Ý nghĩa của việc xây dựng đội ngũ cán bộ ngang tầm nhiệm vụ?",
+"Các biện pháp bảo vệ nền tảng tư tưởng của Đảng hiện nay?"
+],
+sources: [
+{
+id: "q2-src1",
+title: "Đề cương Thông báo nhanh Đại hội XIV",
+sourceFile: "dh14_decuongTBN.pdf",
+page: "Đề cương",
+text: "Nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng thành năm nội dung cơ bản: xây dựng Đảng toàn diện, xây dựng đội ngũ cán bộ, đổi mới phương thức lãnh đạo, kiểm soát quyền lực, bảo vệ nền tảng tư tưởng của Đảng."
+}
+],
+confidence: "high"
+};
+1795:   return { init, startInteraction, stopAI, drawMindmapStep, resetConversation, resetScript, clearSession, handleCardClick, submitQuery, openInPage };
+// MISSING LINE 1795
+})();
+1798: AICopilot.init();
+// MISSING LINE 1798
+"""
+1801: with io.open("src/ai-copilot.v2.js", "w", encoding="utf-8") as f:
+// MISSING LINE 1801
+f.write(js_code)
+1804: print("ai-copilot.v2.js rewritten successfully!")
+// MISSING LINE 1804
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

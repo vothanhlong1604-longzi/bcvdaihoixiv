@@ -721,3 +721,8 @@ const CONGRESS_XIV_DATA = {
     { number: "5,2 tr.", label: "Đảng viên cả nước" }
   ]
 };
+
+
+// Expose variables explicitly on window scope
+window.RESOLUTIONS_DATA = RESOLUTIONS_DATA;
+window.CONGRESS_XIV_DATA = CONGRESS_XIV_DATA;

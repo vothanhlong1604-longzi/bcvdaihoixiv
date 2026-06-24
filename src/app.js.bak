@@ -455,12 +455,7 @@ const APP = (() => {
                  role="button" tabindex="0" 
                  aria-label="${res.number}: ${res.shortTitle}"
                  onclick="APP.navigateTo('#/nghi-quyet/${res.id}')"
-                 onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();APP.navigateTo('#/nghi-quyet/${res.id}');}"
-                 data-ai-context="true"
-                 data-context-id="home.mindmap.node.${res.id}"
-                 data-resolution-id="${res.id}"
-                 data-section-id="mindmap"
-                 data-section-type="mindmap-node">
+                 onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();APP.navigateTo('#/nghi-quyet/${res.id}');}">
               <div class="node-inner" style="background: radial-gradient(circle at 35% 35%, ${res.colorLight} 0%, ${res.color}22 100%); border-color: ${res.color}88; box-shadow: 0 0 15px ${res.colorGlow};">
                 <div class="node-number-big high-contrast-heading" style="color: ${getContrastColor(res.color)}; text-shadow: 0 2px 15px rgba(0,0,0,0.8), 0 0 5px ${res.color};">${res.number.replace('-NQ/TW', '')}</div>
                 <div class="node-title-small readable-text" style="font-weight: 700 !important; font-size: 0.95rem;">${res.shortTitle}</div>
@@ -512,12 +507,7 @@ const APP = (() => {
            style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)};"
            onclick="APP.navigateTo('#/nghi-quyet/${res.id}')"
            role="button" tabindex="0"
-           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();APP.navigateTo('#/nghi-quyet/${res.id}');}"
-           data-ai-context="true"
-           data-context-id="home.mindmap.card.${res.id}"
-           data-resolution-id="${res.id}"
-           data-section-id="mindmap"
-           data-section-type="mindmap-card">
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();APP.navigateTo('#/nghi-quyet/${res.id}');}">
         <div class="card-icon-wrap" style="background:${res.colorLight};color:${res.color};">
           ${res.icon}
         </div>
@@ -732,19 +722,6 @@ const APP = (() => {
       transitionPage(home, detail, true, updateDOM, morphNode);
     } else {
       transitionPage(detail, detail, true, updateDOM, morphNode); // switching between details
-    }
-
-    // Tự động kích hoạt Trợ lý AI tóm tắt khi click infographic
-    if (window._lastClickContext && window._lastClickContext.type === 'node') {
-      if (window.AICopilot) {
-        setTimeout(() => {
-          window.AICopilot.startInteraction();
-          window.AICopilot.setUIState('PROCESSING');
-          setTimeout(() => {
-            window.AICopilot.playResponse(`Tóm tắt Nghị quyết ${res.id}`);
-          }, 100);
-        }, 1200); // Đợi hiệu ứng chuyển trang hoàn tất
-      }
     }
 
     document.title = `${res.number}: ${res.shortTitle} | E-Magazine Đại hội XIV`;
@@ -967,6 +944,10 @@ function getContrastColor(hex) {
 }
 
 function buildDetailHTML(res, idx, prev, next) {
+    
+
+
+    
     // Refactored University Responsibilities Section
     const hasDate = res.date && res.date !== '2025' && res.date !== '2026';
 
@@ -974,18 +955,7 @@ function buildDetailHTML(res, idx, prev, next) {
     if (res.intro) {
       introHTML = `
         <div class="content-section reveal-on-scroll">
-          <div class="resolution-intro theme-on-red content-backplate" style="font-size:1.25rem; line-height:1.9; font-weight:500; border-left: 4px solid ${res.color}; padding-left: 20px; margin-bottom: 30px; background: var(--glass-bg); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.1);"
-               data-ai-context="true"
-               data-context-id="nq${res.id}.intro"
-               data-resolution-id="${res.id}"
-               data-section-id="intro"
-               data-section-type="intro"
-               data-item-index="0"
-               data-context-title="Giới thiệu"
-               data-context-summary="Nội dung giới thiệu Nghị quyết ${res.id}"
-               data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-               data-context-type="intro"
-               data-related-context="nq${res.id}.intro">
+          <div class="resolution-intro theme-on-red content-backplate" style="font-size:1.25rem; line-height:1.9; font-weight:500; border-left: 4px solid ${res.color}; padding-left: 20px; margin-bottom: 30px; background: var(--glass-bg); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.1);">
             ${res.intro}
           </div>
         </div>
@@ -997,18 +967,7 @@ function buildDetailHTML(res, idx, prev, next) {
     if (res.context) {
       contextHTML = `
         <div class="content-section reveal-on-scroll">
-          <div class="glass-context-box theme-on-red content-backplate" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)};"
-               data-ai-context="true"
-               data-context-id="nq${res.id}.context"
-               data-resolution-id="${res.id}"
-               data-section-id="context"
-               data-section-type="context"
-               data-item-index="0"
-               data-context-title="Bối cảnh ra đời"
-               data-context-summary="Bối cảnh ra đời của Nghị quyết ${res.id}"
-               data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-               data-context-type="context"
-               data-related-context="nq${res.id}.context">
+          <div class="glass-context-box theme-on-red content-backplate" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)};">
             <h2 class="glass-context-title">
               <span class="section-icon">📖</span>Bối cảnh ra đời
             </h2>
@@ -1029,18 +988,7 @@ function buildDetailHTML(res, idx, prev, next) {
           </h2>
           <div class="glass-summary-grid balanced-grid" data-count="${res.coreIdeas.length}">
             ${res.coreIdeas.map((idea, i) => `
-              <div class="glass-summary-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*50}ms;"
-                   data-ai-context="true"
-                   data-context-id="nq${res.id}.core-ideas.${i+1}"
-                   data-resolution-id="${res.id}"
-                   data-section-id="coreIdeas"
-                   data-section-type="core-ideas"
-                   data-item-index="${i}"
-                   data-context-title="Tinh thần cốt lõi"
-                   data-context-summary="${idea.replace(/"/g, '&quot;')}"
-                   data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                   data-context-type="core-idea"
-                   data-related-context="nq${res.id}.core-ideas.${i+1}">
+              <div class="glass-summary-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*50}ms;">
                 <div class="glass-summary-num">${i + 1}</div>
                 <div class="glass-summary-text">${idea}</div>
               </div>
@@ -1060,19 +1008,8 @@ function buildDetailHTML(res, idx, prev, next) {
           </h2>
           <div class="glass-pillar-grid balanced-grid" data-count="${res.generalGoals.length}">
             ${res.generalGoals.map((b, i) => `
-              <div class="glass-pillar-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*80}ms;"
-                   data-ai-context="true"
-                   data-context-id="nq${res.id}.general-goals.${i+1}"
-                   data-resolution-id="${res.id}"
-                   data-section-id="generalGoals"
-                   data-section-type="general-goals"
-                   data-item-index="${i}"
-                   data-context-title="${b.title.replace(/"/g, '&quot;')}"
-                   data-context-summary="${b.desc.replace(/"/g, '&quot;')}"
-                   data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                   data-context-type="general-goal"
-                   data-related-context="nq${res.id}.general-goals.${i+1}">
-                <div class="glass-pillar-icon" style="color: ${res.color};">${b.icon || '🎯'}</div>
+              <div class="glass-pillar-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*80}ms;">
+                <div class="glass-pillar-icon" style="color: ${res.color};">${b.icon || 'ðŸŽ¯'}</div>
                 <h3 class="glass-pillar-title">${b.title}</h3>
                 <p class="glass-pillar-desc">${b.desc}</p>
               </div>
@@ -1092,18 +1029,7 @@ function buildDetailHTML(res, idx, prev, next) {
           </h2>
           <div class="glass-pillar-grid balanced-grid" data-count="${res.infographicBlocks.length}">
             ${res.infographicBlocks.map((b, i) => `
-              <div class="glass-pillar-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*80}ms;"
-                   data-ai-context="true"
-                   data-context-id="nq${res.id}.infographic-blocks.${i+1}"
-                   data-resolution-id="${res.id}"
-                   data-section-id="infographicBlocks"
-                   data-section-type="infographic-blocks"
-                   data-item-index="${i}"
-                   data-context-title="${b.title.replace(/"/g, '&quot;')}"
-                   data-context-summary="${b.desc.replace(/"/g, '&quot;')}"
-                   data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                   data-context-type="infographic-block"
-                   data-related-context="nq${res.id}.infographic-blocks.${i+1}">
+              <div class="glass-pillar-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*80}ms;">
                 ${b.image ? `<img src="${b.image}" alt="${b.title}" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:var(--r-md); margin-bottom:1.5rem; border:1px solid rgba(0,0,0,0.05);">` : ''}
                 <h3 class="glass-pillar-title">${b.title}</h3>
                 <p class="glass-pillar-desc">${b.desc}</p>
@@ -1132,27 +1058,14 @@ function buildDetailHTML(res, idx, prev, next) {
             else if (g.value.includes('2%')) percentage = 25;
             let circumference = 2 * Math.PI * 45;
             let offset = circumference - (percentage / 100) * circumference;
-            const valLen = g.value.length;
-            const sizeClass = valLen > 8 ? 'text-long' : (valLen > 5 ? 'text-medium' : '');
             return `
-              <div class="glass-radial-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*50}ms;"
-                   data-ai-context="true"
-                   data-context-id="nq${res.id}.goals-2030.${i+1}"
-                   data-resolution-id="${res.id}"
-                   data-section-id="goals2030"
-                   data-section-type="goals-2030"
-                   data-item-index="${i}"
-                   data-context-title="${g.label.replace(/"/g, '&quot;')}"
-                   data-context-summary="${g.value} - ${g.description.replace(/"/g, '&quot;')}"
-                   data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                   data-context-type="stat"
-                   data-related-context="nq${res.id}.goals-2030.${i+1}">
+              <div class="glass-radial-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*50}ms;">
                 <div class="glass-radial-circle">
                   <svg viewBox="0 0 100 100">
                     <circle class="glass-radial-bg" cx="50" cy="50" r="45"></circle>
                     <circle class="glass-radial-progress" cx="50" cy="50" r="45" style="stroke-dasharray: ${circumference}; stroke-dashoffset: ${offset};"></circle>
                   </svg>
-                  <div class="glass-radial-value auto-counter ${sizeClass}" data-raw-text="${g.value}">${g.value}</div>
+                  <div class="glass-radial-value auto-counter" data-raw-text="${g.value}">${g.value}</div>
                 </div>
                 <div class="glass-radial-label">${g.label}</div>
                 <div class="glass-stat-desc" style="margin-top:0.5rem;">${g.description}</div>
@@ -1162,28 +1075,13 @@ function buildDetailHTML(res, idx, prev, next) {
         </div>`;
       } else {
         innerHTML = `<div class="glass-stat-grid balanced-grid" data-count="${res.goals2030.length}">
-          ${res.goals2030.map((g, i) => {
-            const valLen = g.value.length;
-            const sizeClass = valLen > 8 ? 'text-long' : (valLen > 5 ? 'text-medium' : '');
-            return `
-              <div class="glass-stat-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*60}ms;"
-                   data-ai-context="true"
-                   data-context-id="nq${res.id}.goals-2030.${i+1}"
-                   data-resolution-id="${res.id}"
-                   data-section-id="goals2030"
-                   data-section-type="goals-2030"
-                   data-item-index="${i}"
-                   data-context-title="${g.label.replace(/"/g, '&quot;')}"
-                   data-context-summary="${g.value} - ${g.description.replace(/"/g, '&quot;')}"
-                   data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                   data-context-type="stat"
-                   data-related-context="nq${res.id}.goals-2030.${i+1}">
-                <div class="glass-stat-value auto-counter ${sizeClass}" data-raw-text="${g.value}">${g.value}</div>
-                <div class="glass-stat-label">${g.label}</div>
-                <div class="glass-stat-desc">${g.description}</div>
-              </div>
-            `;
-          }).join('')}
+          ${res.goals2030.map((g, i) => `
+            <div class="glass-stat-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*60}ms;">
+              <div class="glass-stat-value auto-counter" data-raw-text="${g.value}">${g.value}</div>
+              <div class="glass-stat-label">${g.label}</div>
+              <div class="glass-stat-desc">${g.description}</div>
+            </div>
+          `).join('')}
         </div>`;
       }
       
@@ -1207,18 +1105,7 @@ function buildDetailHTML(res, idx, prev, next) {
           </h2>
           <div class="glass-timeline">
             ${res.vision2045.map((v, i) => `
-              <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*70}ms;"
-                   data-ai-context="true"
-                   data-context-id="nq${res.id}.vision-2045.${i+1}"
-                   data-resolution-id="${res.id}"
-                   data-section-id="vision2045"
-                   data-section-type="vision-2045"
-                   data-item-index="${i}"
-                   data-context-title="Tầm nhìn 2045"
-                   data-context-summary="${v.replace(/"/g, '&quot;')}"
-                   data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                   data-context-type="timeline"
-                   data-related-context="nq${res.id}.vision-2045.${i+1}">
+              <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*70}ms;">
                 <div class="glass-timeline-dot"></div>
                 <div class="glass-timeline-content">
                   <div class="glass-timeline-desc">${v}</div>
@@ -1243,18 +1130,7 @@ function buildDetailHTML(res, idx, prev, next) {
             ${tasksData.map((t, i) => {
               if (typeof t === 'string') {
                 return `
-                  <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${(i%5)*60}ms;"
-                       data-ai-context="true"
-                       data-context-id="nq${res.id}.tasks.${i+1}"
-                       data-resolution-id="${res.id}"
-                       data-section-id="tasks"
-                       data-section-type="tasks"
-                       data-item-index="${i}"
-                       data-context-title="Nhiệm vụ và giải pháp chủ yếu"
-                       data-context-summary="${t.replace(/"/g, '&quot;')}"
-                       data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                       data-context-type="timeline"
-                       data-related-context="nq${res.id}.tasks.${i+1}">
+                  <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${(i%5)*60}ms;">
                     <div class="glass-timeline-dot"></div>
                     <div class="glass-timeline-content">
                       <div class="glass-timeline-desc">${t}</div>
@@ -1263,18 +1139,7 @@ function buildDetailHTML(res, idx, prev, next) {
                 `;
               } else {
                 return `
-                  <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${(i%5)*60}ms;"
-                       data-ai-context="true"
-                       data-context-id="nq${res.id}.tasks.${i+1}"
-                       data-resolution-id="${res.id}"
-                       data-section-id="tasks"
-                       data-section-type="tasks"
-                       data-item-index="${i}"
-                       data-context-title="${t.title.replace(/"/g, '&quot;')}"
-                       data-context-summary="${t.description.replace(/"/g, '&quot;')}"
-                       data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                       data-context-type="timeline"
-                       data-related-context="nq${res.id}.tasks.${i+1}">
+                  <div class="glass-timeline-item reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${(i%5)*60}ms;">
                     <div class="glass-timeline-dot"></div>
                     <div class="glass-timeline-content">
                       <h3 class="glass-timeline-title">${t.title}</h3>
@@ -1300,18 +1165,7 @@ function buildDetailHTML(res, idx, prev, next) {
           </h2>
           <div class="action-grid">
             ${res.newPoints.map((point, i) => `
-              <div class="action-card readable-glass-card theme-on-red reveal-on-scroll reveal-delay-${i}" style="border-top-color: var(--accent-on-red);"
-                   data-ai-context="true"
-                   data-context-id="nq${res.id}.new-points.${i+1}"
-                   data-resolution-id="${res.id}"
-                   data-section-id="newPoints"
-                   data-section-type="new-points"
-                   data-item-index="${i}"
-                   data-context-title="Điểm mới đột phá"
-                   data-context-summary="${point.replace(/"/g, '&quot;')}"
-                   data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                   data-context-type="card"
-                   data-related-context="nq${res.id}.new-points.${i+1}">
+              <div class="action-card readable-glass-card theme-on-red" reveal-on-scroll reveal-delay-${i}" style="border-top-color: var(--accent-on-red);">
                 <div class="action-card-icon" style="background: rgba(255,231,163,0.15); color: var(--accent-on-red);"><i class="fas fa-star"></i></div>
                 <div class="action-card-text readable-text">${point}</div>
               </div>
@@ -1321,6 +1175,7 @@ function buildDetailHTML(res, idx, prev, next) {
       `;
     }
 
+    
     let responsibilityHTML = '';
     if (res.responsibilities && res.responsibilities.length === 5) {
       responsibilityHTML = `
@@ -1335,18 +1190,7 @@ function buildDetailHTML(res, idx, prev, next) {
           
           <div class="action-grid-5">
             ${res.responsibilities.map((resp, i) => `
-              <div class="action-card readable-glass-card content-backplate reveal-on-scroll reveal-delay-${i}" style="border-top-color: var(--accent-on-red);"
-                   data-ai-context="true"
-                   data-context-id="nq${res.id}.responsibilities.${i+1}"
-                   data-resolution-id="${res.id}"
-                   data-section-id="responsibilities"
-                   data-section-type="responsibilities"
-                   data-item-index="${i}"
-                   data-context-title="${resp.title.replace(/"/g, '&quot;')}"
-                   data-context-summary="${resp.content.replace(/"/g, '&quot;')}"
-                   data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                   data-context-type="card"
-                   data-related-context="nq${res.id}.responsibilities.${i+1}">
+              <div class="action-card readable-glass-card content-backplate reveal-on-scroll reveal-delay-${i}" style="border-top-color: var(--accent-on-red);">
                 <div class="action-card-icon" style="color: var(--accent-on-red); font-size: 1.8rem; margin-bottom: 1rem;">
                   <span style="font-size: 1.2rem; font-weight: 800; opacity: 0.9; margin-right: 12px; font-family: monospace;">${resp.id}</span>${resp.icon}
                 </div>
@@ -1359,6 +1203,7 @@ function buildDetailHTML(res, idx, prev, next) {
       `;
     }
 
+
     let quotesHTML = '';
     if (res.quoteBlocks && res.quoteBlocks.length > 0) {
       quotesHTML = `
@@ -1368,18 +1213,7 @@ function buildDetailHTML(res, idx, prev, next) {
           </h2>
           <div>
             ${res.quoteBlocks.map((q, i) => `
-              <div class="glass-impact-card readable-glass-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*50}ms;"
-                   data-ai-context="true"
-                   data-context-id="nq${res.id}.quotes.${i+1}"
-                   data-resolution-id="${res.id}"
-                   data-section-id="quoteBlocks"
-                   data-section-type="quotes"
-                   data-item-index="${i}"
-                   data-context-title="${q.speaker.replace(/"/g, '&quot;')}"
-                   data-context-summary="${q.quote.replace(/"/g, '&quot;')}"
-                   data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                   data-context-type="quote"
-                   data-related-context="nq${res.id}.quotes.${i+1}">
+              <div class="glass-impact-card readable-glass-card reveal-on-scroll" style="--card-color: ${res.color}; --text-color: ${getContrastColor(res.color)}; transition-delay: ${i*50}ms;">
                 <div class="glass-impact-text readable-text" style="font-size: 1.25rem; font-style: italic; margin-bottom: 1rem; color: #fff;">"${q.quote}"</div>
                 <div class="glass-impact-speaker high-contrast-heading" style="color: var(--clr-accent-light); font-size: 1.1rem;">- ${q.speaker}${q.context ? `<br><span style="font-size:0.85em; font-weight:normal; opacity:0.8;">${q.context}</span>` : ''}</div>
               </div>
@@ -1389,6 +1223,7 @@ function buildDetailHTML(res, idx, prev, next) {
       `;
     }
 
+    
     return `
       <div class="detail-page theme-on-red">
         ${res.id === "57" ? '<canvas id="particles-bg"></canvas>' : ''}
@@ -1555,13 +1390,7 @@ function updatingNotice(label) {
                  loading="lazy"
                  onerror="this.closest('figure').style.display='none'"
                  onclick="APP.openLightbox('${encodeURIComponent(JSON.stringify(allImgs))}', ${galleryIdx >= 0 ? galleryIdx : 0})"
-                 style="cursor:zoom-in; ${res.id === '80' ? 'object-fit: contain; max-height: none; height: auto;' : ''}"
-                 data-ai-context="true"
-                 data-context-id="nq${res.id}.image.${afterSection}.${galleryIdx >= 0 ? galleryIdx : 0}"
-                 data-resolution-id="${res.id}"
-                 data-section-id="${afterSection}"
-                 data-section-type="image"
-                 data-context-summary="${img.caption}">
+                 style="cursor:zoom-in; ${res.id === '80' ? 'object-fit: contain; max-height: none; height: auto;' : ''}">
             <div class="inline-figure-zoom">ðŸ” Nhấn để phóng to</div>
           </div>
           <figcaption class="inline-figure-caption">${img.caption}</figcaption>
@@ -1581,31 +1410,9 @@ function updatingNotice(label) {
         </h2>
         <div class="gallery-strip">
           ${res.gallery.map((g, i) => `
-            <figure class="gallery-item interactive-surface" onclick="APP.openLightbox('${allImgsJson}', ${i})"
-                    data-ai-context="true"
-                    data-context-id="nq${res.id}.gallery.${i}"
-                    data-resolution-id="${res.id}"
-                    data-section-id="gallery"
-                    data-section-type="gallery-item"
-                    data-item-index="${i}"
-                    data-context-title="Thư viện ảnh"
-                    data-context-summary="${g.caption.replace(/"/g, '&quot;')}"
-                    data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                    data-context-type="gallery-item"
-                    data-related-context="nq${res.id}.gallery.img.${i}">
+            <figure class="gallery-item interactive-surface" onclick="APP.openLightbox('${allImgsJson}', ${i})">
               <img src="${g.src}" alt="${g.caption}" class="gallery-thumb"
-                   loading="lazy" onerror="this.closest('figure').style.display='none'"
-                   data-ai-context="true"
-                   data-context-id="nq${res.id}.gallery.img.${i}"
-                   data-resolution-id="${res.id}"
-                   data-section-id="gallery"
-                   data-section-type="image"
-                   data-item-index="${i}"
-                   data-context-title="Hình ảnh thư viện"
-                   data-context-summary="${g.caption.replace(/"/g, '&quot;')}"
-                   data-source-anchor="Tài liệu NQ ${res.id}.pdf"
-                   data-context-type="image"
-                   data-related-context="nq${res.id}.gallery.${i}">
+                   loading="lazy" onerror="this.closest('figure').style.display='none'">
               <figcaption class="gallery-caption">${g.caption}</figcaption>
             </figure>
           `).join('')}
