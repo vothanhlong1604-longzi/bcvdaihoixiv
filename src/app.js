@@ -1291,8 +1291,10 @@ function buildDetailHTML(res, idx, prev, next) {
       `;
     }
 
-    let newPointsHTML = '';
+        let newPointsHTML = '';
     if (res.newPoints && res.newPoints.length > 0) {
+      const accentColor = res.color || '#4facfe';
+      const accentGlow  = res.colorGlow || 'rgba(79,172,254,0.35)';
       newPointsHTML = `
         <div class="action-section theme-on-red reveal-on-scroll" style="margin-top: 3rem;">
           <h2 class="action-section-title theme-on-red" style="color: var(--accent-on-red) !important;">
@@ -1300,7 +1302,10 @@ function buildDetailHTML(res, idx, prev, next) {
           </h2>
           <div class="action-grid">
             ${res.newPoints.map((point, i) => `
-              <div class="action-card readable-glass-card theme-on-red reveal-on-scroll reveal-delay-${i}" style="border-top-color: var(--accent-on-red);"
+              <div class="action-card readable-glass-card theme-on-red reveal-on-scroll reveal-delay-${i}"
+                   style="border-top: 3px solid ${accentColor};
+                          background: linear-gradient(135deg, ${accentColor}18 0%, rgba(255,255,255,0.03) 60%);
+                          position: relative; overflow: hidden;"
                    data-ai-context="true"
                    data-context-id="nq${res.id}.new-points.${i+1}"
                    data-resolution-id="${res.id}"
@@ -1312,7 +1317,10 @@ function buildDetailHTML(res, idx, prev, next) {
                    data-source-anchor="Tài liệu NQ ${res.id}.pdf"
                    data-context-type="card"
                    data-related-context="nq${res.id}.new-points.${i+1}">
-                <div class="action-card-icon" style="background: rgba(255,231,163,0.15); color: var(--accent-on-red);"><i class="fas fa-star"></i></div>
+                <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:${accentColor};opacity:0.7;"></div>
+                <div class="action-card-icon"
+                     style="background:${accentColor}; color:#fff; font-size:1.05rem; font-weight:700;
+                            box-shadow:0 3px 10px ${accentGlow}; min-width:40px;">${i + 1}</div>
                 <div class="action-card-text readable-text">${point}</div>
               </div>
             `).join('')}
