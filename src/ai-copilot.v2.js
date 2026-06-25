@@ -900,19 +900,19 @@ ${query}`;
       }
     }
 
-    // 3. Kiểm tra Q1 và Q2 (QUOTE_PARTY_LEADERSHIP & SUMMARIZE_PARTY_LEADERSHIP)
-    if (!matchedPriority) {
-        let scoreQuote = scoreIntent(normText, 'QUOTE_PARTY_LEADERSHIP', state);
-        let scoreSumm = scoreIntent(normText, 'SUMMARIZE_PARTY_LEADERSHIP', state);
-        
-        if (scoreQuote >= 0.55 || scoreSumm >= 0.55) {
-            matchedPriority = true;
-            
-            const quoteText = "Tiếp tục đẩy mạnh xây dựng, chỉnh đốn Đảng trong sạch, vững mạnh toàn diện; nâng cao năng lực lãnh đạo, cầm quyền và sức chiến đấu của Đảng. Tăng cường xây dựng, chỉnh đốn, tự đổi mới để Đảng ta thật sự là đạo đức, là văn minh";
-            const points = [
-              { title: "Đẩy mạnh xây dựng chỉnh đốn Đảng", content: "Tiếp tục nâng cao chất lượng xây dựng Đảng về chính trị, tư tưởng, đạo đức và tổ chức." },
-              { title: "Xây dựng đội ngũ cán bộ chủ chốt", content: "Đào tạo đội ngũ lãnh đạo, quản lý và người đứng đầu có đủ phẩm chất, năng lực, uy tín, ngang tầm nhiệm vụ." },
-              { title: "Đổi mới phương thức lãnh đạo", content: "Nâng cao năng lực cầm quyền và hiệu quả tổ chức thực hiện các chủ trương, nghị quyết của Đảng." },
+   // 3. Kiểm tra Q1 và Q2 (QUOTE_PARTY_LEADERSHIP & SUMMARIZE_PARTY_LEADERSHIP)
+// Chỉ áp dụng khi câu hỏi KHÔNG đề cập đến một nghị quyết cụ thể (57, 59, 66, 68, 70, 71, 72, 79, 80).
+// Nếu câu hỏi hỏi về "nội dung cơ bản của Nghị quyết 71" thì phải ra kết quả NQ71,
+// KHÔNG được trả về nội dung "5 nội dung cơ bản" của văn kiện Đại hội XIV.
+if (!matchedPriority) {
+    const _specificResNums = ['57', '59', '66', '68', '70', '71', '72', '79', '80'];
+    const _queryMentionsSpecificRes = _specificResNums.some(num =>
+      normText.includes(`nghi quyet ${num}`) || normText.includes(`nq ${num}`) || normText.includes(`nq${num}`)
+    );
+    let scoreQuote = _queryMentionsSpecificRes ? 0 : scoreIntent(normText, 'QUOTE_PARTY_LEADERSHIP', state);
+    let scoreSumm = _queryMentionsSpecificRes ? 0 : scoreIntent(normText, 'SUMMARIZE_PARTY_LEADERSHIP', state);
+
+    if (scoreQuote >= 0.55 || scoreSumm >= 0.55) {
               { title: "Kiểm soát chặt chẽ quyền lực", content: "Kiên quyết đấu tranh phòng chống tham nhũng, lãng phí, tiêu cực và suy thoái tư tưởng chính trị." },
               { title: "Bảo vệ nền tảng tư tưởng của Đảng", content: "Đấu tranh phản bác các quan điểm sai trái, thù địch, củng cố lòng tin của Nhân dân." }
             ];
