@@ -1326,8 +1326,8 @@ function buildDetailHTML(res, idx, prev, next) {
       responsibilityHTML = `
         <div class="action-section theme-on-red content-backplate reveal-on-scroll" style="margin-top: 4rem; padding: 3rem 2rem; border-radius: var(--radius-lg); background: rgba(0,0,0,0.2);">
           <div class="action-section-subtitle" style="text-align: center; color: var(--accent-on-red); font-weight: 700; letter-spacing: 2px; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 0.5rem;">TỪ NGHỊ QUYẾT ĐẾN HÀNH ĐỘNG</div>
-          <h2 class="action-section-title" style="color: #fff !important; text-align: center; margin-bottom: 1rem; font-size: 1.8rem;">
-            ${res.responsibilityTitle || 'TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND'}
+          <h2 class="action-section-title" style="color: #fff !important; text-align: center; margin-bottom: 1rem; font-size: 1.8rem; line-height: 1.4;">
+            ${(res.responsibilityTitle || 'TRÁCH NHIỆM CÁN BỘ, ĐẢNG VIÊN TRƯỜNG ĐẠI HỌC CSND').replace('TRƯỜNG ĐẠI HỌC CSND', '<br><span style="white-space:nowrap">TRƯỜNG ĐẠI HỌC CSND</span>')}
           </h2>
           <div style="text-align: center; color: var(--text-on-red-secondary); margin-bottom: 2.5rem; font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
             ${res.responsibilitySubtitle || 'Cụ thể hóa nghị quyết thành nhận thức, trách nhiệm và hành động trong giáo dục, đào tạo, nghiên cứu khoa học và xây dựng lực lượng CAND.'}
