@@ -429,6 +429,7 @@ const RESOLUTIONS_DATA = [
     title: "Đột phá phát triển giáo dục và đào tạo",
     shortTitle: "Đột phá Giáo dục & Đào tạo",
     date: "22/8/2025",
+    issuedBy: "Bộ Chính trị",
     theme: "Giáo dục",
     color: "#00897B",
     colorLight: "rgba(0, 137, 123, 0.12)",
