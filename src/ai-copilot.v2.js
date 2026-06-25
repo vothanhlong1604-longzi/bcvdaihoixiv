@@ -306,7 +306,6 @@
        .replace(/\bNQ\b/g, 'Nghị quyết')
        .replace(/\bTW\b/g, 'Trung ương');
    }
- 
    function speakDynamicText(text) {
      synth.cancel();
      if (currentAudio) {
